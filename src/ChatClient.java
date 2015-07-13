@@ -1,46 +1,72 @@
-
-
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-
 // Class to manage Client chat Box.
 public class ChatClient {
 
-	public static JFrame frame;
-	
-    /** Chat client access */
+    public static JFrame frame;
+
+    public static void main(String[] args) {
+        String server = "127.0.0.1";
+        int port = 2009;
+        ChatAccess access = null;
+        try {
+            access = new ChatAccess(server, port);
+        } catch (IOException ex) {
+            System.out.println("Cannot connect to " + server + ":" + port);
+            ex.printStackTrace();
+            System.exit(0);
+        }
+        frame = new ChatFrame(access);
+        frame.setTitle("Launcher YT");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
+
+    public static void start() {
+        frame.setVisible(false);
+        String server = "127.0.0.1";
+        int port = 2009;
+        ChatAccess access = null;
+        try {
+            access = new ChatAccess(server, port);
+        } catch (IOException ex) {
+            System.out.println("Cannot connect to " + server + ":" + port);
+            ex.printStackTrace();
+            System.exit(0);
+        }
+        JFrame frame = new ChatFrame(access);
+        frame.setTitle("YoutuberTycoon V0.0.2");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
+
+    /**
+     * Chat client access
+     */
     static class ChatAccess extends Observable {
+        private static final String CRLF = "\r\n"; // newline
         private Socket socket;
         private OutputStream outputStream;
         private PrintWriter out = null;
 
-        @Override
-        public void notifyObservers(Object arg) {
-            super.setChanged();
-            super.notifyObservers(arg);
-        }
-
-        /** Create socket, and receiving thread */
+        /**
+         * Create socket, and receiving thread
+         */
         public ChatAccess(String server, int port) throws IOException {
             socket = new Socket(server, port);
             outputStream = socket.getOutputStream();
@@ -53,10 +79,10 @@ public class ChatClient {
                                 new InputStreamReader(socket.getInputStream()));
                         String line;
                         while ((line = in.readLine()) != null)
-                        	if (!line.contains("connecte")){
-                        		notifyObservers(line);
-                        	}else{
-                        		frame.setVisible(false);
+                            if (!line.contains("connecte")) {
+                                notifyObservers(line);
+                            } else {
+                                frame.setVisible(false);
                                 JFrame frame = new JFrame();
                                 frame.setTitle("YoutuberTycoon V0.0.2");
                                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,8 +90,8 @@ public class ChatClient {
                                 frame.setLocationRelativeTo(null);
                                 frame.setResizable(false);
                                 frame.setVisible(true);
-                        	}
-                            
+                            }
+
                     } catch (IOException ex) {
                         notifyObservers(ex);
                     }
@@ -74,9 +100,15 @@ public class ChatClient {
             receivingThread.start();
         }
 
-        private static final String CRLF = "\r\n"; // newline
+        @Override
+        public void notifyObservers(Object arg) {
+            super.setChanged();
+            super.notifyObservers(arg);
+        }
 
-        /** Send a line of text */
+        /**
+         * Send a line of text
+         */
         public void send(String text) {
             try {
                 outputStream.write((text + CRLF).getBytes());
@@ -86,7 +118,9 @@ public class ChatClient {
             }
         }
 
-        /** Close the socket */
+        /**
+         * Close the socket
+         */
         public void close() {
             try {
                 socket.close();
@@ -96,7 +130,9 @@ public class ChatClient {
         }
     }
 
-    /** Chat client UI */
+    /**
+     * Chat client UI
+     */
     static class ChatFrame extends JFrame implements Observer {
 
         private JTextArea textArea;
@@ -111,7 +147,7 @@ public class ChatClient {
         }
 
         /* Builds the user interface */
-        
+
         private void buildGUI() {
             textArea = new JTextArea(20, 50);
             textArea.setEditable(false);
@@ -121,7 +157,7 @@ public class ChatClient {
             Box box = Box.createHorizontalBox();
             add(box, BorderLayout.SOUTH);
             inputTextField = new JTextField();
-            sendButton = new JButton("Envoyé");
+            sendButton = new JButton("EnvoyÃ©");
             box.add(inputTextField);
             box.add(sendButton);
 
@@ -147,7 +183,9 @@ public class ChatClient {
             });
         }
 
-        /** Updates the UI depending on the Object argument */
+        /**
+         * Updates the UI depending on the Object argument
+         */
         public void update(Observable o, Object arg) {
             final Object finalArg = arg;
             SwingUtilities.invokeLater(new Runnable() {
@@ -157,46 +195,5 @@ public class ChatClient {
                 }
             });
         }
-    }
-
-
-    public static void main(String[] args) {
-        String server = "127.0.0.1";
-        int port =2009;
-        ChatAccess access = null;
-        try {
-            access = new ChatAccess(server, port);
-        } catch (IOException ex) {
-            System.out.println("Cannot connect to " + server + ":" + port);
-            ex.printStackTrace();
-            System.exit(0);
-        }
-        frame = new ChatFrame(access);
-        frame.setTitle("Launcher YT");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
-    }
-    public static void start(){
-    	frame.setVisible(false);
-    	String server = "127.0.0.1";
-        int port =2009;
-        ChatAccess access = null;
-        try {
-            access = new ChatAccess(server, port);
-        } catch (IOException ex) {
-            System.out.println("Cannot connect to " + server + ":" + port);
-            ex.printStackTrace();
-            System.exit(0);
-        }
-        JFrame frame = new ChatFrame(access);
-        frame.setTitle("YoutuberTycoon V0.0.2");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
     }
 }
