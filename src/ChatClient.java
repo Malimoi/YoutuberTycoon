@@ -1,3 +1,16 @@
+/*
+ * ******************************************************
+ *  * Copyright (C) 2015 Malimoi <sandeaujules975@gmail.com>
+ *  *
+ *  * This file (ChatClient) is part of YoutuberTycoon.
+ *  *
+ *  * Created by Malimoi on 13/07/15 11:42.
+ *  *
+ *  * YoutuberTycoon can not be copied and/or distributed without the express
+ *  * permission of Malimoi.
+ *  ******************************************************
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

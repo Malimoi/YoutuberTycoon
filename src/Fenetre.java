@@ -1,3 +1,16 @@
+/*
+ * ******************************************************
+ *  * Copyright (C) 2015 Malimoi <sandeaujules975@gmail.com>
+ *  *
+ *  * This file (Fenetre) is part of YoutuberTycoon.
+ *  *
+ *  * Created by Malimoi on 14/07/15 16:37.
+ *  *
+ *  * YoutuberTycoon can not be copied and/or distributed without the express
+ *  * permission of Malimoi.
+ *  ******************************************************
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,110 +39,106 @@ public class Fenetre extends JFrame{
 	public Fenetre() {
 		
 		
-		this.setTitle("Youtuber Tycoon by Malimoi");
-		this.setSize(1200,720);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setExtendedState(JFrame.NORMAL);
-		//this.setDefaultLookAndFeelDecorated(false);    
-		//this.setExtendedState(this.MAXIMIZED_BOTH);
-		this.setUndecorated(false);
-		this.setResizable(true);
+	this.setTitle("Youtuber Tycoon by Malimoi");
+	this.setSize(1200,720);
+	this.setLocationRelativeTo(null);
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.setExtendedState(JFrame.NORMAL);
+	//this.setDefaultLookAndFeelDecorated(false);    
+	//this.setExtendedState(this.MAXIMIZED_BOTH);
+	this.setUndecorated(false);
+	this.setResizable(true);
 		
-		JPanel content = new JPanel();
+	JPanel content = new JPanel();
 
 				
-				content.setLayout(new BorderLayout());
-				int TotalInt = 0;
+	content.setLayout(new BorderLayout());
+	int TotalInt = 0;
 				
-				//-- HAUT
-				JPanel haut = new JPanel();
-				haut.setPreferredSize(new Dimension(largeur, hauteur/29));
-				haut.setBackground(Color.WHITE);
-				JPanel acc = new ACC();
-				acc.setPreferredSize(new Dimension(hauteur/29, hauteur/29));
-				acc.setBounds(0, 0, hauteur/29, hauteur/29);
-				acc.setBackground(Color.BLACK);
-				JPanel name = new ACC();
-				name.setPreferredSize(new Dimension(largeur/11-hauteur/29, hauteur/29));
-				name.setBounds(hauteur/29+1, 0, largeur/11-hauteur/29-1, hauteur/29);
-				name.setBackground(Color.CYAN);
-				TotalInt = largeur/11-hauteur/29+hauteur/29;
-				JPanel nbgold = new ACC();
-				nbgold.setPreferredSize(new Dimension((largeur-(TotalInt+1))/8, hauteur/29));
-				nbgold.setBounds(TotalInt+1, 0, (largeur-(TotalInt+1))/8, hauteur/29);
-				TotalInt=TotalInt+1+(largeur-(TotalInt+1))/8;
-				JPanel nbsubs = new ACC();
-				nbsubs.setPreferredSize(new Dimension((largeur-(TotalInt+1))/4, hauteur/29));
-				nbsubs.setBounds(TotalInt+1, 0, (largeur-(TotalInt+1))/4, hauteur/29);
-				TotalInt=TotalInt+1+(largeur-(TotalInt+1))/4;
+	//-- HAUT
+	JPanel haut = new JPanel();
+	haut.setPreferredSize(new Dimension(largeur, hauteur/29));
+	haut.setBackground(Color.WHITE);
+	JPanel acc = new ACC();
+	acc.setPreferredSize(new Dimension(hauteur/29, hauteur/29));
+	acc.setBounds(0, 0, hauteur/29, hauteur/29);
+	acc.setBackground(Color.BLACK);
+	JPanel name = new ACC();
+	name.setPreferredSize(new Dimension(largeur/11-hauteur/29, hauteur/29));
+	name.setBounds(hauteur/29+1, 0, largeur/11-hauteur/29-1, hauteur/29);
+	name.setBackground(Color.CYAN);
+	TotalInt = largeur/11-hauteur/29+hauteur/29;
+	JPanel nbgold = new ACC();
+	nbgold.setPreferredSize(new Dimension((largeur-(TotalInt+1))/8, hauteur/29));
+	nbgold.setBounds(TotalInt+1, 0, (largeur-(TotalInt+1))/8, hauteur/29);
+	TotalInt=TotalInt+1+(largeur-(TotalInt+1))/8;
+	JPanel nbsubs = new ACC();
+	nbsubs.setPreferredSize(new Dimension((largeur-(TotalInt+1))/4, hauteur/29));
+	nbsubs.setBounds(TotalInt+1, 0, (largeur-(TotalInt+1))/4, hauteur/29);
+	TotalInt=TotalInt+1+(largeur-(TotalInt+1))/4;
 				
-				//--
-				JLabel label = new JLabel();
-				label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				label.setText("Malimoi");
-				label.setForeground(Color.WHITE);
-				label.setHorizontalAlignment(JLabel.CENTER);
-				//--
-				JLabel labelMoney = new JLabel();
-				labelMoney.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				labelMoney.setText("1200 EUR");
-				labelMoney.setForeground(Color.WHITE);
-				labelMoney.setHorizontalAlignment(JLabel.CENTER);
-				//--
-				JLabel labelSubs = new JLabel();
-				labelSubs.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				labelSubs.setText("10997 SUBSCRIBERS");
-				labelSubs.setForeground(Color.WHITE);
-				labelSubs.setHorizontalAlignment(JLabel.CENTER);
-				//--
+	//--
+	JLabel label = new JLabel();
+	label.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	label.setText("Malimoi");
+	label.setForeground(Color.WHITE);
+	label.setHorizontalAlignment(JLabel.CENTER);
+	//--
+	JLabel labelMoney = new JLabel();
+	labelMoney.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	labelMoney.setText("1200 EUR");
+	labelMoney.setForeground(Color.WHITE);
+	labelMoney.setHorizontalAlignment(JLabel.CENTER);
+	//--
+	JLabel labelSubs = new JLabel();
+	labelSubs.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	labelSubs.setText("10997 SUBSCRIBERS");
+	labelSubs.setForeground(Color.WHITE);
+	labelSubs.setHorizontalAlignment(JLabel.CENTER);
+	//--
 				
-				JPanel end = new ACC();
-				end.setBounds(TotalInt+1, 0, largeur-(TotalInt+1), hauteur/29);
+	JPanel end = new ACC();
+	end.setBounds(TotalInt+1, 0, largeur-(TotalInt+1), hauteur/29);
 				
-				name.setLayout(new BorderLayout());
-				name.add(label, BorderLayout.CENTER);
-				nbgold.setLayout(new BorderLayout());
-				nbgold.add(labelMoney, BorderLayout.CENTER);
-				nbsubs.setLayout(new BorderLayout());
-				nbsubs.add(labelSubs, BorderLayout.CENTER);
-				haut.setLayout(null);
-				haut.add(acc);
-				haut.add(name);
-				//haut.add(goldimg);
-				haut.add(nbgold);
-				haut.add(nbsubs);
-				haut.add(end);
+	name.setLayout(new BorderLayout());
+	name.add(label, BorderLayout.CENTER);
+	nbgold.setLayout(new BorderLayout());
+	nbgold.add(labelMoney, BorderLayout.CENTER);
+	nbsubs.setLayout(new BorderLayout());
+	nbsubs.add(labelSubs, BorderLayout.CENTER);
+	haut.setLayout(null);
+	haut.add(acc);
+	haut.add(name);
+	//haut.add(goldimg);
+	haut.add(nbgold);
+	haut.add(nbsubs);
+	haut.add(end);
 				
-				//-- WEST
-				JPanel west = new JPanel();
-				west.setPreferredSize(new Dimension(largeur/11, hauteur));
-				west.setBackground(Color.decode("#454C53"));
-				west.setLayout(new GridLayout(12,1));
-				JButton bouton = new Bouton("1");
-				JButton bouton2 = new Bouton("2");
-				JButton bouton3 = new Bouton("3");
-				west.add(bouton);
-				west.add(bouton2);
-				west.add(bouton3);
+	//-- WEST
+	JPanel west = new JPanel();
+	west.setPreferredSize(new Dimension(largeur/11, hauteur));
+	west.setBackground(Color.decode("#454C53"));
+	west.setLayout(new GridLayout(12,1));
+	JButton bouton = new Bouton("1");
+	JButton bouton2 = new Bouton("2");
+	JButton bouton3 = new Bouton("3");
+	west.add(bouton);
+	west.add(bouton2);
+	west.add(bouton3);
 				
-				//-- CENTER
-				JPanel center = new JPanel();
-				center.setBackground(Color.BLACK);
+	//-- CENTER
+	JPanel center = new JPanel();
+	center.setBackground(Color.BLACK);
 				
-				content.add(haut, BorderLayout.NORTH);
-				content.add(west, BorderLayout.WEST);
-				content.add(center, BorderLayout.CENTER);
-				//content.add(name);
-				content.setPreferredSize(new Dimension(largeur, hauteur));
-				//content.add(money);
-		this.setContentPane(content);
-		this.setVisible(true);	
-
-	}
-	
-	private void init(){
+	content.add(haut, BorderLayout.NORTH);
+	content.add(west, BorderLayout.WEST);
+	content.add(center, BorderLayout.CENTER);
+	//content.add(name);
+	content.setPreferredSize(new Dimension(largeur, hauteur));
+	//content.add(money);
 		
+	this.setContentPane(content);
+	this.setVisible(true);	
 
 	}
 	
@@ -157,11 +166,6 @@ public class Fenetre extends JFrame{
 	}
 	
 	public class ACC extends JPanel {
-		private String name;
-		private int posX;
-		private int posY;
-		private int width;
-		private int height;
 		public ACC(){
 			
 		}
