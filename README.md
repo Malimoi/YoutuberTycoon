@@ -1,10 +1,10 @@
 # YoutuberTycoon (Client)
 ![Logo] (http://img15.hostingpics.net/pics/610077YoutuberTycoon.png)
 
--Informations:
+###Informations:
 Je met mon projet de jeu vidéo open source (uniquement du côté client, le reste, private)
 
-Le jeu ? Simulation de Youtuber.
+**Le jeu ?** Simulation de Youtuber.
 Pour le moment, il y a seulement la communication client-server qui a été effectué correctement, et la mise en page à commencé à être élaboré.
 
 Voici un premier screen montrant un peu le pannel:
