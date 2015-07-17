@@ -7,7 +7,6 @@ Si vous avez des idées ou si vous trouvez des améliorations à faire, n'hésit
 ![Logo] (http://img15.hostingpics.net/pics/610077YoutuberTycoon.png)
 Informations:
 -------------
----------
 
 **Le jeu ?** Simulation de *Youtuber*.
 Pour le moment, il y a seulement la communication client-server qui a été effectué correctement, et la mise en page a commencé à être élaboré.
@@ -23,11 +22,15 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 > - Connexion *Client/Server*.
 > - Mise en page : **forme générale**.
 
-Voici maintenant un **screen** de la mise en page :
+<u>Mise à jour du 17/07/2015 à 12:18 :</u></br>
+La mise en page à totalement changé, et ressemble maintenant beaucoup plus à celle de YouTube. Car oui, c'est mieux l'interface ressemble plus à YouTube qu'à FM2015 ! (<i>Screen disponible dans la journée</i>)
+
+<u>Mise à jour du 15/07/2015 à 18:32 :</u></br>
+Voici le premier "**screen**" de la mise en page :
 
 ![Image] (http://img11.hostingpics.net/pics/562827YTycoon1.png)
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 15/07/2015 à 28:32)
+(dèrnière modification le 17/07/2015 à 12:21)
 
