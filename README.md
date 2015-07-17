@@ -22,6 +22,10 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 > - Connexion *Client/Server*.
 > - Mise en page : **forme générale**.
 
+<u>Mise à jour du 17/07/2015 à 22:33 :</u></br>
+Je n'ai pas encore <i>push</i> mon code mais je vous met un deuxième "screen", qui change totalement du premier x)
+![Screen2] (http://i.gyazo.com/8296db66ee6efa043f16470456ba03a5.png)
+
 <u>Mise à jour du 17/07/2015 à 12:18 :</u></br>
 La mise en page à totalement changé, et ressemble maintenant beaucoup plus à celle de YouTube. Car oui, c'est mieux l'interface ressemble plus à YouTube qu'à FM2015 ! (<i>Screen disponible dans la journée</i>)
 
@@ -32,5 +36,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 17/07/2015 à 12:21)
+(dèrnière modification le 17/07/2015 à 22:36)
 
