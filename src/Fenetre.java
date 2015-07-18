@@ -129,7 +129,7 @@ public class Fenetre extends JFrame{
 				
 	JPanel end = new NOR();
 	end.setBounds(TotalInt+1, 0, largeur-(TotalInt+1), 60);
-				
+		
 	/*
 	 * Valeurs fictives, je m'occupe uniquement de la mise en page pour le moment.
 	 */
