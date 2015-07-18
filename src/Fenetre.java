@@ -38,20 +38,20 @@ import javax.swing.JPanel;
 
 public class Fenetre extends JFrame{
 	/*
-	 * Je n'est aucune exp�rience en mise en page, je pense qu'il peut y avoir quelques am�liorations � faire.
+	 * Je n'est aucune expérience en mise en page, je pense qu'il peut y avoir quelques améliorations à faire.
 	 */
-	public GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
+	public GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
 	//get maximum window bounds
-	public Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
+	public Rectangle maximumWindowBounds = graphicsEnvironment.getMaximumWindowBounds();
 
 	public int hauteur = (int) maximumWindowBounds.getHeight();
 	public int largeur = (int) maximumWindowBounds.getWidth();
 
-	public JButton bouton = new Bouton("Page d'accueil",1);
-	public JButton bouton2 = new Bouton("Mon planning",2);
-	public JButton bouton3 = new Bouton("Mes notifications",3);
-	public JButton bouton4 = new Bouton("Gestionnaires de vid�os",4);
+	public JButton bouton = new Bouton("Page d'accueil", 1);
+	public JButton bouton2 = new Bouton("Mon planning", 2);
+	public JButton bouton3 = new Bouton("Mes notifications", 3);
+	public JButton bouton4 = new Bouton("Gestionnaires de vidéos", 4);
 
 	//-CONTENT
 	public JPanel content = new JPanel();
@@ -97,7 +97,7 @@ public class Fenetre extends JFrame{
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.NORMAL);
-        //this.setDefaultLookAndFeelDecorated(false);    /*Plein �cran.*/
+        //this.setDefaultLookAndFeelDecorated(false);    /*Plein écran.*/
         //this.setExtendedState(this.MAXIMIZED_BOTH);
         this.setUndecorated(false);
         this.setResizable(true);
@@ -135,7 +135,7 @@ public class Fenetre extends JFrame{
 
         //Subs
         lab_c_n_subs.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        lab_c_n_subs.setText("Abonn�s");
+        lab_c_n_subs.setText("Abonnés");
         lab_c_n_subs.setForeground(Color.GRAY);
         lab_c_n_subs.setHorizontalAlignment(JLabel.CENTER);
         lab_c_n_subs.setPreferredSize(new Dimension(225, 30));
@@ -288,7 +288,7 @@ public class Fenetre extends JFrame{
             c_c_north3.setLayout(new GridLayout(4,1));
                 //Subs
                 lab_c_c_north_subs.setFont(new Font("Tahoma", Font.PLAIN, 13));
-                lab_c_c_north_subs.setText("Abonn�s");
+                lab_c_c_north_subs.setText("Abonnés");
                 lab_c_c_north_subs.setForeground(Color.GRAY);
                 lab_c_c_north_subs.setHorizontalAlignment(JLabel.CENTER);
                 lab_c_c_north_subs.setPreferredSize(new Dimension(((largeur-255)/8), 40));
@@ -385,7 +385,6 @@ public class Fenetre extends JFrame{
                 }
 
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -430,7 +429,6 @@ public class Fenetre extends JFrame{
                     this.img = ImageIO.read(new File("image/Video.png"));
                 }
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         }
@@ -450,7 +448,6 @@ public class Fenetre extends JFrame{
                     this.img = ImageIO.read(new File("image/Video2.png"));
                 }
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         }
@@ -470,14 +467,12 @@ public class Fenetre extends JFrame{
                     this.img = ImageIO.read(new File("image/Video.png"));
                 }
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            // TODO Auto-generated method stub
 
         }
 
