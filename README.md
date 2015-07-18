@@ -22,6 +22,9 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 > - Connexion *Client/Server*.
 > - Mise en page : **forme générale**.
 
+<u>Mise à jour du 18/07/2015 à 22:03 :</u></br>
+Voila, le code est enfin disponible :). Je rappelle juste que pour le moment je m'occupe uniquement de la mise en page et que les donnés présentes sur les "screens" sont totalement **factices**.
+
 <u>Mise à jour du 17/07/2015 à 22:33 :</u></br>
 Je n'ai pas encore <i>push</i> mon code mais je vous met un deuxième "screen", qui change totalement du premier x)
 ![Screen2] (http://i.gyazo.com/8296db66ee6efa043f16470456ba03a5.png)
@@ -36,5 +39,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 17/07/2015 à 22:36)
+(dèrnière modification le 18/07/2015 à 22:04)
 
