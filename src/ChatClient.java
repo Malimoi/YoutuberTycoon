@@ -1,3 +1,16 @@
+/*
+ * ******************************************************
+ *  * Copyright (C) 2015 Malimoi <sandeaujules975@gmail.com>
+ *  *
+ *  * This file (ChatClient) is part of YoutuberTycoon.
+ *  *
+ *  * Created by Malimoi on 13/07/15 11:42.
+ *  *
+ *  * YoutuberTycoon can not be copied and/or distributed without the express
+ *  * permission of Malimoi.
+ *  ******************************************************
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,27 +47,6 @@ public class ChatClient {
         frame.setVisible(true);
     }
 
-    public static void start() {
-        frame.setVisible(false);
-        String server = "127.0.0.1";
-        int port = 2009;
-        ChatAccess access = null;
-        try {
-            access = new ChatAccess(server, port);
-        } catch (IOException ex) {
-            System.out.println("Cannot connect to " + server + ":" + port);
-            ex.printStackTrace();
-            System.exit(0);
-        }
-        JFrame frame = new ChatFrame(access);
-        frame.setTitle("YoutuberTycoon V0.0.2");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
-    }
-
     /**
      * Chat client access
      */
@@ -83,6 +75,8 @@ public class ChatClient {
                                 notifyObservers(line);
                             } else {
                                 frame.setVisible(false);
+                                new Fenetre();
+                                /*
                                 JFrame frame = new JFrame();
                                 frame.setTitle("YoutuberTycoon V0.0.2");
                                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,6 +84,7 @@ public class ChatClient {
                                 frame.setLocationRelativeTo(null);
                                 frame.setResizable(false);
                                 frame.setVisible(true);
+                                */
                             }
 
                     } catch (IOException ex) {
