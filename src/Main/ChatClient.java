@@ -12,7 +12,11 @@ package Main;
  *  ******************************************************
  */
 
+
 import javax.swing.*;
+
+import utilities.Planning;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,12 +24,17 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Observable;
 import java.util.Observer;
 
 // Class to manage Client chat Box.
 public class ChatClient {
 
+	public static ArrayList<Planning> planning = new ArrayList<Planning>();
+	public static ArrayList<String> datapl = new ArrayList<String>();
     public static JFrame frame;
 
     public static void main(String[] args) {
@@ -75,6 +84,41 @@ public class ChatClient {
                             if (!line.contains("connecte")) {
                                 notifyObservers(line);
                             } else {
+                            	/*
+                        		 * Ceci sont des valeurs fictives. Il faudra seulement get toutes les horraires sur le server.
+                        		 */
+                        		planning.add(new Planning(18, 19, 22, 7, 15, 1));
+                        		planning.add(new Planning(11, 18, 22, 7, 15, 2));
+                        		for (int a = 0;a<planning.size();a++){
+                        			datapl.add(planning.get(a).getHour_start()+" "+planning.get(a).getHour()+" "+planning.get(a).getDay()+" "
+                        					+planning.get(a).getMonth()+" "+planning.get(a).getYear()+" "+planning.get(a).getId());
+                        		}
+                        		planning.add(new Planning(0, 0, 0, 0, 0, null));
+                        		Collections.sort(datapl, new Comparator<String>() {
+                        			   public int compare(String a, String b) {
+                        			    int aVal = Integer.parseInt(a.split(" ")[1]);
+                        			    int bVal = Integer.parseInt(b.split(" ")[1]);
+
+                        			    return Integer.compare(aVal, bVal);
+                        			   }
+                        			  });
+                        		Collections.reverse(datapl);
+                        		planning.clear();
+                        		for (int i = 0; i < datapl.size(); i++) {
+                        			   String line2 = datapl.get(i);
+                        			   
+                        			   String hour_start = line2.split(" ")[0];
+                        			   String hour = line2.split(" ")[1];
+                        			   String day = line2.split(" ")[2];
+                        			   String month = line2.split(" ")[3];
+                        			   String year = line2.split(" ")[4];
+                        			   String id = line2.split(" ")[5];
+                        			   
+                        			   planning.add(new Planning(Integer.valueOf(hour_start),Integer.valueOf(hour),Integer.valueOf(day),Integer.valueOf(month),
+                        					   Integer.valueOf(year),Integer.valueOf(id)));
+                        			   
+                        			  }
+                        		planning.add(new Planning(0, 0, 0, 0, 0, null));
                                 frame.setVisible(false);
                                 new Fenetre();
                                 /*
