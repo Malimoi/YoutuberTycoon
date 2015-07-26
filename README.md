@@ -15,12 +15,17 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 
 > - Fin de la mise en forme des pages principales.
 > - Mise en place de l'emploi du temps (du jeu)
+> - Mise en place du <i>gestionnaire de vidéos</i>
 
 
 > **Fait:**
 
-> - Connexion *Client/Server*.
+> - Connexion *Client/Server*. (**forme générale**)
 > - Mise en page : **forme générale**.
+> - Planning v1 sur la <i>page principale</i>
+
+<u>Mise à jour du 23/07/2015 à 11:06 :</u></br>
+Ahhhh, ça fait longtemps que j'ai pas écrit dans le README.md ^^'. Alors voilà, c'est pour vous parler du dernier <i>push</i> que j'ai fait, pour vous expliquer les mises à jour qui ont été faites : j'ai terminé l'interface **+** le fonctionnement du planning (uniquement dans la page principale). Il reste maintenant à ajouter au planning les <i>évenements</i> et tout sera bon ;).
 
 <u>Mise à jour du 18/07/2015 à 22:03 :</u></br>
 Voila, le code est enfin disponible :). Je rappelle juste que pour le moment je m'occupe uniquement de la mise en page et que les donnés présentes sur les "screens" sont totalement **factices**.
@@ -39,5 +44,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 18/07/2015 à 22:04)
+(dèrnière modification le 23/07/2015 à 11:11)
 
