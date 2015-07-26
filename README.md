@@ -24,6 +24,9 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 > - Mise en page : **forme générale**.
 > - Planning v1 sur la <i>page principale</i>
 
+<u>Mise à jour du 26/07/2015 à 23:42 :</u></br>
+Yoooo. Me voici de retour après une petite absence du aux vidéos x). Enfin bref, je reviens avec un mini-push, pour ouvrir la voie de demain ou du gros arrive ;).
+
 <u>Mise à jour du 23/07/2015 à 11:06 :</u></br>
 Ahhhh, ça fait longtemps que j'ai pas écrit dans le README.md ^^'. Alors voilà, c'est pour vous parler du dernier <i>push</i> que j'ai fait, pour vous expliquer les mises à jour qui ont été faites : j'ai terminé l'interface **+** le fonctionnement du planning (uniquement dans la page principale). Il reste maintenant à ajouter au planning les <i>évenements</i> et tout sera bon ;).
 
@@ -44,5 +47,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 23/07/2015 à 11:11)
+(dèrnière modification le 26/07/2015 à 23:43)
 
