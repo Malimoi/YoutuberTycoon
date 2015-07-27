@@ -12,12 +12,12 @@ package Main;
  *  ******************************************************
  */
 
-
 import javax.swing.*;
 
 import utilities.Evenement;
 import utilities.Planning;
 import utilities.StringComparator;
+import utilities.Videos;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,10 +32,12 @@ import java.util.List;
 // Class to manage Client chat Box.
 public class ChatClient {
 
-    public static List<Planning> planning = new ArrayList<Planning>();
-    public static List<Evenement> evenements = new ArrayList<Evenement>();
-    public static List<String> datapl = new ArrayList<String>();
-    public static List<String> dataev = new ArrayList<String>();
+	public static List<String> TEST = new ArrayList<String>();
+	public static List<Videos> videos = new ArrayList<Videos>();
+	public static List<Planning> planning = new ArrayList<Planning>();
+	public static List<Evenement> evenements = new ArrayList<Evenement>();
+	public static List<String> datapl = new ArrayList<String>();
+	public static List<String> dataev = new ArrayList<String>();
     public static JFrame frame;
 
     public static void main(String[] args) {
@@ -85,19 +87,27 @@ public class ChatClient {
                             if (!line.contains("connecte")) {
                                 notifyObservers(line);
                             } else {
-                                /*
+                            	 /*
                                  * Ceci sont des valeurs fictives. Il faudra seulement get toutes les horraires sur le server.
                         		 */
                         		
                         		/*
+                        		 * On récupère les vidéos
+                        		 */
+                        		videos.add(new Videos("JE MANGE DES CHIPS !", 0L, 0L, 0L, 0L, null, 1L));
+                        		videos.add(new Videos("JE M'APPELLE BYSLIDE", 1254L, 215L, 3L, 3L, null, 2L));
+                        		
+                        		/*
                         		 * Evenements
                         		 */
-                                evenements.add(new Evenement(22, 7, 15, 1));
-                                evenements.add(new Evenement(22, 7, 15, 2));
+                                evenements.add(new Evenement(27, 7, 15, 5, 0L));
+                                evenements.add(new Evenement(28, 7, 15, 2, 1L));
+                                evenements.add(new Evenement(27, 7, 15, 2, 2L));
                                 for (int a = 0; a < evenements.size(); a++) {
-                                    dataev.add(evenements.get(a).getDay() + " " + evenements.get(a).getMonth() + " " + evenements.get(a).getYear() + " " + evenements.get(a).getId());
+                                    dataev.add(evenements.get(a).getDay() + " " + evenements.get(a).getMonth() + " " + evenements.get(a).getYear() + " " + evenements.get(a).getId()
+                                    		+ " " + evenements.get(a).getData());
                                 }
-                                evenements.add(new Evenement(0, 0, 0, null));
+                                evenements.add(new Evenement(0, 0, 0, null, 0L));
 
                                 Collections.sort(dataev, new StringComparator());
                                 Collections.reverse(dataev);
@@ -110,29 +120,32 @@ public class ChatClient {
                                     String month = line2.split(" ")[1];
                                     String year = line2.split(" ")[2];
                                     String id = line2.split(" ")[3];
+                                    String data = line2.split(" ")[4];
 
                                     evenements.add(new Evenement(Integer.valueOf(day), Integer.valueOf(month),
-                                            Integer.valueOf(year), Integer.valueOf(id)));
+                                            Integer.valueOf(year), Integer.valueOf(id), Long.valueOf(data)));
 
                                 }
-                                evenements.add(new Evenement(0, 0, 0, null));
+                                evenements.add(new Evenement(0, 0, 0, null, 0L));
                         		/*
-                        		 * Planngng
+                        		 * Planning
                         		 */
-                                planning.add(new Planning(20, 21, 23, 7, 15, 1));
-                                planning.add(new Planning(11, 20, 23, 7, 15, 2));
+                                planning.add(new Planning(16, 18, 27, 7, 15, 3, 1L));
+                                planning.add(new Planning(18, 23, 27, 7, 15, 4, 1L));
+                                planning.add(new Planning(8, 16, 27, 7, 15, 1, 0L));
+                                planning.add(new Planning(8, 16, 28, 7, 15, 1, 0L));
                                 for (int a = 0; a < planning.size(); a++) {
                                     datapl.add(planning.get(a).getHour_start() + " " + planning.get(a).getHour() + " " + planning.get(a).getDay() + " "
-                                            + planning.get(a).getMonth() + " " + planning.get(a).getYear() + " " + planning.get(a).getId());
+                                            + planning.get(a).getMonth() + " " + planning.get(a).getYear() + " " + planning.get(a).getId() + " " + planning.get(a).getData());
                                 }
-                                planning.add(new Planning(0, 0, 0, 0, 0, null));
+                                planning.add(new Planning(0, 0, 0, 0, 0, null, 0L));
 
                                 Collections.sort(datapl, new StringComparator());
                                 Collections.reverse(datapl);
 
                                 planning.clear();
                                 for (int i = 0; i < datapl.size(); i++) {
-                                    String line2 = datapl.get(i);
+                                    String line2 = datapl.get(datapl.size()-(i+1));
 
                                     String hour_start = line2.split(" ")[0];
                                     String hour = line2.split(" ")[1];
@@ -140,12 +153,12 @@ public class ChatClient {
                                     String month = line2.split(" ")[3];
                                     String year = line2.split(" ")[4];
                                     String id = line2.split(" ")[5];
+                                    String data = line2.split(" ")[6];
 
                                     planning.add(new Planning(Integer.valueOf(hour_start), Integer.valueOf(hour), Integer.valueOf(day), Integer.valueOf(month),
-                                            Integer.valueOf(year), Integer.valueOf(id)));
-
+                                            Integer.valueOf(year), Integer.valueOf(id), Long.valueOf(data)));
                                 }
-                                planning.add(new Planning(0, 0, 0, 0, 0, null));
+                                planning.add(new Planning(0, 0, 0, 0, 0, null, 0L));
 
                                 new Fenetre();
                                 /*
