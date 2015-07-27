@@ -14,15 +14,13 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 > **A venir:**
 
 > - Fin de la mise en forme des pages principales.
-> - Mise en place de l'emploi du temps (du jeu)
+> - Mise en place de <i>l'emploi du temps</i> (du jeu)
 > - Mise en place du <i>gestionnaire de vidéos</i>
 
 
 > **Fait:**
 
-> - Connexion *Client/Server*. (**forme générale**)
-> - Mise en page : **forme générale**.
-> - Planning v1 sur la <i>page principale</i>
+> - **Planning** sur la <i>page principale</i> !
 
 <u>Mise à jour du 27/07/2015 à 17:55 :</u></br>
 Nouvelle update du planning : ajout des vidéos (ce qui va nous ammener à commencer de coder le "gestionnaire de vidéos".
