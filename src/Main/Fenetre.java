@@ -1,4 +1,5 @@
- /*
+package Main;
+/*
  * ******************************************************
  *  * Copyright (C) 2015 Malimoi <sandeaujules975@gmail.com>
  *  *
@@ -11,13 +12,13 @@
  *  ******************************************************
  */
 
-package Main;
-
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
@@ -31,15 +32,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class Fenetre extends JFrame{
 	/*
@@ -54,14 +60,10 @@ public class Fenetre extends JFrame{
 	public int largeur = (int) maximumWindowBounds.getWidth();
 	
 	public JButton bouton = new Bouton("Page d'accueil",1);
-	public JButton bouton2 = new Bouton("Mon planning",2);
-	public JButton bouton3 = new Bouton("Mes notifications",3);
-	public JButton bouton4 = new Bouton("Gestionnaires de vidéos",4);
+	public JButton bouton4 = new Bouton("Gestionnaire de vidéos",2);
+	public JButton bouton2 = new Bouton("Mon planning",3);
+	public JButton bouton3 = new Bouton("Mes notifications",4);
 	
-	public ArrayList<Integer> DeuxHuitDays = new ArrayList<Integer>();
-	public ArrayList<Integer> TroisZeroDays = new ArrayList<Integer>();
-	public ArrayList<Integer> TroisUnDays = new ArrayList<Integer>();
-
 	//-CONTENT
 	public JPanel content = new JPanel();
 	
@@ -102,7 +104,7 @@ public class Fenetre extends JFrame{
 					public JPanel c_c_nt_c_jourj = new JPanel();
 					public JLabel lab_c_c_nt_c_jour = new JLabel();
 					public JLabel lab_c_c_nt_c_date = new JLabel();
-					public JLabel lab_c_c_nt_c_demain = new JLabel();
+					public JLabel lab_c_c_nt_c_deChatClient = new JLabel();
 					//public JPanel c_c_nt_c_even = new Even(1);
 					//public JPanel c_c_nt_c_prog = new Prog(2);
 	public JPanel center_planning = new JPanel();
@@ -336,155 +338,15 @@ public class Fenetre extends JFrame{
 			c_c_nt_east.setPreferredSize(new Dimension(26, hauteur));
 			c_c_nt_north.setPreferredSize(new Dimension(largeur, 5));
 			c_c_nt_south.setPreferredSize(new Dimension(largeur, 15));
-			c_c_nt_center.setLayout(null);
-				//Label : Name
-				int TotalNotifY = 0;
-				lab_c_c_nt_c_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				lab_c_c_nt_c_name.setText("PLANNING");
-				lab_c_c_nt_c_name.setForeground(Color.decode("#474848"));
-				lab_c_c_nt_c_name.setHorizontalAlignment(JLabel.LEFT);
-				lab_c_c_nt_c_name.setBounds(0, 0, (((largeur-255)-15-(largeur-255)/4))/2, 40);
-				TotalNotifY = TotalNotifY+40+3;
+			c_c_nt_center.setLayout(null);		
+			
 				/*
-				 * Set the planning (Main page)
+				 * Set the planning (ChatClient page)
+				   ---------------------------
+				 * Méthode qui renvoi à la construction du planning avec évenements.
 				 */
-				Boolean plan = true;
-				int i = 0;
-				SimpleDateFormat formater = null;
-				Date aujourdhui = new Date();
-				formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM");
-				String s = formater.format(aujourdhui);
-				String[] sf = s.split("/");
-				lab_c_c_nt_c_jour.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lab_c_c_nt_c_jour.setText(""+sf[4].toUpperCase()+"");
-				lab_c_c_nt_c_jour.setForeground(Color.RED);
-				lab_c_c_nt_c_jour.setHorizontalAlignment(JLabel.LEFT);
-				lab_c_c_nt_c_jour.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 16);
-				TotalNotifY = TotalNotifY+16;
-				lab_c_c_nt_c_date.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				lab_c_c_nt_c_date.setText(""+sf[2]+" "+sf[5].toUpperCase()+"");
-				lab_c_c_nt_c_date.setForeground(Color.RED);
-				lab_c_c_nt_c_date.setHorizontalAlignment(JLabel.LEFT);
-				lab_c_c_nt_c_date.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 20);
-				TotalNotifY = TotalNotifY+20+5;
-				/*
-				 * Boucle 1 (jour j)
-				 */
-				while(plan){
-					if (ChatClient.planning.size()-1==i){
-						plan=false;
-					}
-					else if (ChatClient.planning.get(i).getYear()<Integer.parseInt(sf[0])){
-						ChatClient.planning.remove(i);
-					}
-					else if (ChatClient.planning.get(i).getMonth()<Integer.parseInt(sf[1]) && !(ChatClient.planning.get(i).getYear()>Integer.parseInt(sf[0]))){
-						ChatClient.planning.remove(i);
-					}
-					else if (ChatClient.planning.get(i).getDay()<Integer.parseInt(sf[2]) && !(ChatClient.planning.get(i).getMonth()>Integer.parseInt(sf[1]))){
-						ChatClient.planning.remove(i);
-					}
-					else if (ChatClient.planning.get(i).getHour()<Integer.parseInt(sf[3]) && !(ChatClient.planning.get(i).getDay()>Integer.parseInt(sf[2]))){
-						ChatClient.planning.remove(i);
-					}else{
-						if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
-							JPanel panel = new COLOR(Color.decode("#DCDCDC"));
-							panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 50);
-							TotalNotifY=TotalNotifY+50+5;
-							panel.setLayout(new BorderLayout());
-							JPanel nordd = new COLOR(Color.decode("#DCDCDC"));
-							nordd.setPreferredSize(new Dimension(largeur,5));
-							JPanel sudd = new COLOR(Color.decode("#DCDCDC"));
-							sudd.setPreferredSize(new Dimension(largeur,5));
-							JPanel westt = new COLOR(Color.decode("#DCDCDC"));
-							westt.setPreferredSize(new Dimension(5,hauteur));
-							JPanel centerr = new COLOR(Color.decode("#DCDCDC"));
-							//centerr.setPreferredSize(new Dimension(largeur,hauteur));
-							panel.add(nordd,BorderLayout.NORTH);
-							panel.add(sudd,BorderLayout.SOUTH);
-							panel.add(westt,BorderLayout.WEST);
-							
-							centerr.setLayout(new BorderLayout());
-							JPanel norddd = new COLOR(Color.decode("#DCDCDC"));
-							norddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
-							norddd.setLayout(null);
-							JPanel suddd = new COLOR(Color.decode("#DCDCDC"));
-							suddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
-							
-							JPanel color = new COLOR(Col(ColId(ChatClient.planning.get(i).getId())));
-							color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
-							norddd.add(color);
-							centerr.add(norddd,BorderLayout.NORTH);
-							centerr.add(suddd,BorderLayout.SOUTH);
-							panel.add(centerr,BorderLayout.CENTER);
-							c_c_nt_center.add(panel);
-							System.out.println("(1) Jour égal à l'index : "+ChatClient.planning.get(i).getHour_start()+" -> "+ChatClient.planning.get(i).getHour()
-									+" : day "+ChatClient.planning.get(i).getDay());
-						}
-						i++;
-					}
-				}
-				/*
-				 * String "demain"
-				 */
-				lab_c_c_nt_c_demain.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lab_c_c_nt_c_demain.setText("DEMAIN");
-				lab_c_c_nt_c_demain.setForeground(Color.RED);
-				lab_c_c_nt_c_demain.setHorizontalAlignment(JLabel.LEFT);
-				lab_c_c_nt_c_demain.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 16);
-				TotalNotifY = TotalNotifY+16+5;
-				/*
-				 * Boucle 2 (next day)
-				 */
-				i=0; //On réinitialise i
-				plan=true; //A ne pas oublier xd
-				while(plan){
-					if (ChatClient.planning.size()-1==i){
-						plan=false;
-					}else{
-						if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])+1){
-							JPanel panel = new COLOR(Color.decode("#9A9A99"));
-							panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 50);
-							TotalNotifY=TotalNotifY+50+5;
-							panel.setLayout(new BorderLayout());
-							JPanel nordd = new COLOR(Color.decode("#DCDCDC"));
-							nordd.setPreferredSize(new Dimension(largeur,5));
-							JPanel sudd = new COLOR(Color.decode("#DCDCDC"));
-							sudd.setPreferredSize(new Dimension(largeur,5));
-							JPanel westt = new COLOR(Color.decode("#DCDCDC"));
-							westt.setPreferredSize(new Dimension(5,hauteur));
-							JPanel centerr = new COLOR(Color.decode("#DCDCDC"));
-							//centerr.setPreferredSize(new Dimension(largeur,hauteur));
-							panel.add(nordd,BorderLayout.NORTH);
-							panel.add(sudd,BorderLayout.SOUTH);
-							panel.add(westt,BorderLayout.WEST);
-							
-							centerr.setLayout(new BorderLayout());
-							JPanel norddd = new COLOR(Color.decode("#DCDCDC"));
-							norddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
-							norddd.setLayout(null);
-							JPanel suddd = new COLOR(Color.decode("#DCDCDC"));
-							suddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
-							
-							JPanel color = new COLOR(Col(ColId(ChatClient.planning.get(i).getId())));
-							color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
-							norddd.add(color);
-							centerr.add(norddd,BorderLayout.NORTH);
-							centerr.add(suddd,BorderLayout.SOUTH);
-							panel.add(centerr,BorderLayout.CENTER);
-							c_c_nt_center.add(panel);
-							System.out.println("(2) Jour égal à l'index : "+ChatClient.planning.get(i).getHour_start()+" -> "+ChatClient.planning.get(i).getHour()
-									+" : day "+ChatClient.planning.get(i).getDay());
-						}
-						i++;
-					}
-				}
-				
-				c_c_nt_center.add(lab_c_c_nt_c_name);
-				c_c_nt_center.add(lab_c_c_nt_c_jour);
-				c_c_nt_center.add(lab_c_c_nt_c_demain);
-				c_c_nt_center.add(lab_c_c_nt_c_date);
-				
-		c_c_notif.setBounds(0, 12+80, (((largeur-255)-15-(largeur-255)/4))/2, TotalNotifY+20);	
+				setPlanning();
+		
 		c_c_notif.add(c_c_nt_west,BorderLayout.WEST);
 		c_c_notif.add(c_c_nt_east,BorderLayout.EAST);
 		c_c_notif.add(c_c_nt_south,BorderLayout.SOUTH);
@@ -546,6 +408,37 @@ public class Fenetre extends JFrame{
 			System.out.println("Nous sommes la même heure que le planning");
 		}
 	}
+	
+	public void resetPlanning(){
+		c_c_nt_center.removeAll();
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		try{
+			content.updateUI();
+		}catch(Exception e){
+			System.out.println("Erreur : "+test);
+		}
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		setPlanning();
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		try{
+			content.updateUI();
+		}catch(Exception e){
+			System.out.println("Erreur : "+test);
+		}
+	}
+	
 	public String ColId (Integer i){
 		String s = "f";
 		if (i==1){
@@ -553,10 +446,48 @@ public class Fenetre extends JFrame{
 		}if (i==2){
 			s="2";
 		}if (i==3){
-			s="3";
+			s="2";
+		}if (i==4){
+			s="b";
+		}if (i==5){
+			s="d";
 		}
 		return s;
 	}
+	public String ActivityId (Integer i, Long l){
+		String s = "Glandouillette";
+		String name = "";
+		if (i==1){
+			s="Travail";
+		}if (i==2){
+			for (int a = 0;a<ChatClient.videos.size();a++){
+				if (ChatClient.videos.get(a).getID()==l){
+					name = ChatClient.videos.get(a).getName();
+				}
+			}
+			s="Nouvelle vidéo \""+name+"\"";
+		}if (i==3){
+			for (int a = 0;a<ChatClient.videos.size();a++){
+				if (ChatClient.videos.get(a).getID()==l){
+					name = ChatClient.videos.get(a).getName();
+				}
+			}
+			s="Tournage \""+name+"\"";
+		}if (i==4){
+			for (int a = 0;a<ChatClient.videos.size();a++){
+				if (ChatClient.videos.get(a).getID()==l){
+					name = ChatClient.videos.get(a).getName();
+				}
+			}
+			s="Montage \""+name+"\"";
+		}if (i==5){
+			s="Jour de paye";
+		}
+		return s;
+	}
+	/*
+	 * Code couleur !
+	 */
 	public Color Col(String i){
 		Color c = Color.WHITE;
 		if(i=="1"){
@@ -930,6 +861,7 @@ public class Fenetre extends JFrame{
 			}catch(Exception e){
 				System.out.println("Erreur : "+test);
 			}
+			resetPlanning();
 		}
 	}
 	
@@ -944,7 +876,7 @@ public class Fenetre extends JFrame{
 			if (test==1){
 				content.remove(center);
 			}
-			if (test==2){
+			else if (test==2){
 				content.remove(center_planning);
 			}
 			test=3;
@@ -972,7 +904,7 @@ public class Fenetre extends JFrame{
 			if (test==1){
 				content.remove(center);
 			}
-			if (test==2){
+			else if (test==2){
 				content.remove(center_planning);
 			}
 			test=4;
@@ -988,5 +920,285 @@ public class Fenetre extends JFrame{
 				System.out.println("Erreur : "+test);
 			}
 		}
+	}
+	
+	public void setPlanning(){
+		System.out.println("Execution de setPlanning");
+		//Label : Name
+		int TotalNotifY = 0;
+		lab_c_c_nt_c_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lab_c_c_nt_c_name.setText("PLANNING");
+		lab_c_c_nt_c_name.setForeground(Color.decode("#474848"));
+		lab_c_c_nt_c_name.setHorizontalAlignment(JLabel.LEFT);
+		lab_c_c_nt_c_name.setBounds(0, 0, (((largeur-255)-15-(largeur-255)/4))/2, 40);
+		TotalNotifY = TotalNotifY+40+3;
+		
+		Boolean plan = true;
+		int i = 0;
+		SimpleDateFormat formater = null;
+		Date aujourdhui = new Date();
+		formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM");
+		String s = formater.format(aujourdhui);
+		String[] sf = s.split("/");
+		lab_c_c_nt_c_jour.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lab_c_c_nt_c_jour.setText(""+sf[4].toUpperCase()+"");
+		lab_c_c_nt_c_jour.setForeground(Color.RED);
+		lab_c_c_nt_c_jour.setHorizontalAlignment(JLabel.LEFT);
+		lab_c_c_nt_c_jour.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+		TotalNotifY = TotalNotifY+16;
+		lab_c_c_nt_c_date.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lab_c_c_nt_c_date.setText(""+sf[2]+" "+sf[5].toUpperCase()+"");
+		lab_c_c_nt_c_date.setForeground(Color.RED);
+		lab_c_c_nt_c_date.setHorizontalAlignment(JLabel.LEFT);
+		lab_c_c_nt_c_date.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 20);
+		TotalNotifY = TotalNotifY+20+5;
+		/*
+		 * Boucle 1 - évenement
+		 */
+		while(plan){
+			if (ChatClient.evenements.size()-1==i){
+				plan=false;
+			}
+			else if (ChatClient.evenements.get(i).getYear()<Integer.parseInt(sf[0])){
+					ChatClient.evenements.remove(i);
+				}
+				else if (ChatClient.evenements.get(i).getMonth()<Integer.parseInt(sf[1]) && !(ChatClient.evenements.get(i).getYear()>Integer.parseInt(sf[0]))){
+					ChatClient.evenements.remove(i);
+				}
+				else if (ChatClient.evenements.get(i).getDay()<Integer.parseInt(sf[2]) && !(ChatClient.evenements.get(i).getMonth()>Integer.parseInt(sf[1]))){
+					ChatClient.evenements.remove(i);
+				}
+				else{
+					if (ChatClient.evenements.get(i).getDay()==Integer.parseInt(sf[2])){
+						JPanel panel = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+						panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 17);
+						TotalNotifY=TotalNotifY+15+5;
+						panel.setLayout(new BorderLayout());
+						JPanel nordd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+						nordd.setPreferredSize(new Dimension(largeur,1));
+						JPanel sudd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+						sudd.setPreferredSize(new Dimension(largeur,1));
+						JPanel westt = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+						westt.setPreferredSize(new Dimension(5,hauteur));
+						JPanel centerr = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+						//centerr.setPreferredSize(new Dimension(largeur,hauteur));
+						panel.add(nordd,BorderLayout.NORTH);
+						panel.add(sudd,BorderLayout.SOUTH);
+						panel.add(westt,BorderLayout.WEST);
+						centerr.setLayout(new BorderLayout());
+						
+						JLabel label = new JLabel();
+						label.setFont(new Font("Tahoma", Font.PLAIN, 15));
+						label.setText(ActivityId(ChatClient.evenements.get(i).getId(),ChatClient.evenements.get(i).getData()));
+						label.setForeground(Color.WHITE);
+						label.setHorizontalAlignment(JLabel.LEFT);
+						
+						centerr.add(label, BorderLayout.CENTER);
+						panel.add(centerr,BorderLayout.CENTER);
+						c_c_nt_center.add(panel);
+						System.out.println("(1-e) Jour égal à l'index : day "+ChatClient.evenements.get(i).getDay());
+					}
+					i++;
+				}
+		}
+		//On réinitialise
+		plan=true;
+		i=0;
+		/*
+		 * Boucle 1 - horraire (jour j)
+		 */
+		while(plan){
+			if (ChatClient.planning.size()-1==i){
+				plan=false;
+			}
+			else if (ChatClient.planning.get(i).getYear()<Integer.parseInt(sf[0])){
+					ChatClient.planning.remove(i);
+				}
+				else if (ChatClient.planning.get(i).getMonth()<Integer.parseInt(sf[1]) && !(ChatClient.planning.get(i).getYear()>Integer.parseInt(sf[0]))){
+					ChatClient.planning.remove(i);
+				}
+				else if (ChatClient.planning.get(i).getDay()<Integer.parseInt(sf[2]) && !(ChatClient.planning.get(i).getMonth()>Integer.parseInt(sf[1]))){
+					ChatClient.planning.remove(i);
+				}
+				else if (ChatClient.planning.get(i).getHour()<Integer.parseInt(sf[3]) && !(ChatClient.planning.get(i).getDay()>Integer.parseInt(sf[2]))){
+					ChatClient.planning.remove(i);
+				}else{
+					if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
+						JPanel panel = new COLOR(Color.decode("#DCDCDC"));
+						panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 50);
+						TotalNotifY=TotalNotifY+50+5;
+						panel.setLayout(new BorderLayout());
+						JPanel nordd = new COLOR(Color.decode("#DCDCDC"));
+						nordd.setPreferredSize(new Dimension(largeur,5));
+						JPanel sudd = new COLOR(Color.decode("#DCDCDC"));
+						sudd.setPreferredSize(new Dimension(largeur,5));
+						JPanel westt = new COLOR(Color.decode("#DCDCDC"));
+						westt.setPreferredSize(new Dimension(5,hauteur));
+						JPanel centerr = new COLOR(Color.decode("#DCDCDC"));
+						//centerr.setPreferredSize(new Dimension(largeur,hauteur));
+						panel.add(nordd,BorderLayout.NORTH);
+						panel.add(sudd,BorderLayout.SOUTH);
+						panel.add(westt,BorderLayout.WEST);
+						
+						centerr.setLayout(new BorderLayout());
+						JPanel norddd = new COLOR(Color.decode("#DCDCDC"));
+						norddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
+						norddd.setLayout(null);
+						JPanel suddd = new COLOR(Color.decode("#DCDCDC"));
+						suddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
+						suddd.setLayout(null);
+						
+						JPanel color = new COLOR(Col(ColId(ChatClient.planning.get(i).getId())));
+						color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
+						
+						JLabel label_name = new JLabel();
+						label_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
+						label_name.setText(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData()));
+						label_name.setForeground(Color.DARK_GRAY);
+						label_name.setHorizontalAlignment(JLabel.LEFT);
+						label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
+						
+						JLabel label_hours = new JLabel();
+						label_hours.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						String HourEnd = ChatClient.planning.get(i).getHour() < 22 ? ""+ChatClient.planning.get(i).getHour()+":00" : "<font color=red>"+
+								ChatClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
+						label_hours.setText("<html>"+ChatClient.planning.get(i).getHour_start()+":00 à "+HourEnd+"</html>");
+						//label_hours.setForeground(Color.GRAY);
+						label_hours.setHorizontalAlignment(JLabel.LEFT);
+						label_hours.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
+						
+						norddd.add(color);
+						norddd.add(label_name);
+						suddd.add(label_hours);
+						centerr.add(norddd,BorderLayout.NORTH);
+						centerr.add(suddd,BorderLayout.SOUTH);
+						panel.add(centerr,BorderLayout.CENTER);
+						c_c_nt_center.add(panel);
+						System.out.println("(1) Jour égal à l'index : "+ChatClient.planning.get(i).getHour_start()+" -> "+ChatClient.planning.get(i).getHour()
+								+" : day "+ChatClient.planning.get(i).getDay());
+					}
+					i++;
+				}
+		}
+		lab_c_c_nt_c_deChatClient.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lab_c_c_nt_c_deChatClient.setText("DEChatClient");
+		lab_c_c_nt_c_deChatClient.setForeground(Color.RED);
+		lab_c_c_nt_c_deChatClient.setHorizontalAlignment(JLabel.LEFT);
+		lab_c_c_nt_c_deChatClient.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+		TotalNotifY = TotalNotifY+16+5;
+		
+		/*
+		 * Boucle 2 - évenements
+		 */
+		i=0; //On réinitialise i
+		plan=true; //A ne pas oublier xd
+		while(plan){
+			if (ChatClient.evenements.size()-1==i){
+				plan=false;
+			}else{
+				if (ChatClient.evenements.get(i).getDay()==Integer.parseInt(sf[2])+1){
+					JPanel panel = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+					panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 17);
+					TotalNotifY=TotalNotifY+15+5;
+					panel.setLayout(new BorderLayout());
+					JPanel nordd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+					nordd.setPreferredSize(new Dimension(largeur,1));
+					JPanel sudd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+					sudd.setPreferredSize(new Dimension(largeur,1));
+					JPanel westt = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+					westt.setPreferredSize(new Dimension(5,hauteur));
+					JPanel centerr = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+					//centerr.setPreferredSize(new Dimension(largeur,hauteur));
+					panel.add(nordd,BorderLayout.NORTH);
+					panel.add(sudd,BorderLayout.SOUTH);
+					panel.add(westt,BorderLayout.WEST);
+					centerr.setLayout(new BorderLayout());
+					
+					JLabel label = new JLabel();
+					label.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					label.setText(ActivityId(ChatClient.evenements.get(i).getId(),ChatClient.evenements.get(i).getData()));
+					label.setForeground(Color.WHITE);
+					label.setHorizontalAlignment(JLabel.LEFT);
+					
+					centerr.add(label, BorderLayout.CENTER);
+					panel.add(centerr,BorderLayout.CENTER);
+					c_c_nt_center.add(panel);
+					System.out.println("(2-e) Jour égal à l'index : day "+ChatClient.evenements.get(i).getDay());
+				}
+				i++;
+			}
+		}
+		
+		/*
+		 * Boucle 2 (next day)
+		 */
+		i=0; //On réinitialise i
+		plan=true; //A ne pas oublier xd
+		while(plan){
+			if (ChatClient.planning.size()-1==i){
+				plan=false;
+			}else{
+				if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])+1){
+					JPanel panel = new COLOR(Color.decode("#DCDCDC"));
+					panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 50);
+					TotalNotifY=TotalNotifY+50+5;
+					panel.setLayout(new BorderLayout());
+					JPanel nordd = new COLOR(Color.decode("#DCDCDC"));
+					nordd.setPreferredSize(new Dimension(largeur,5));
+					JPanel sudd = new COLOR(Color.decode("#DCDCDC"));
+					sudd.setPreferredSize(new Dimension(largeur,5));
+					JPanel westt = new COLOR(Color.decode("#DCDCDC"));
+					westt.setPreferredSize(new Dimension(5,hauteur));
+					JPanel centerr = new COLOR(Color.decode("#DCDCDC"));
+					//centerr.setPreferredSize(new Dimension(largeur,hauteur));
+					panel.add(nordd,BorderLayout.NORTH);
+					panel.add(sudd,BorderLayout.SOUTH);
+					panel.add(westt,BorderLayout.WEST);
+					
+					centerr.setLayout(new BorderLayout());
+					JPanel norddd = new COLOR(Color.decode("#DCDCDC"));
+					norddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
+					norddd.setLayout(null);
+					JPanel suddd = new COLOR(Color.decode("#DCDCDC"));
+					suddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
+					suddd.setLayout(null);
+					
+					JPanel color = new COLOR(Col(ColId(ChatClient.planning.get(i).getId())));
+					color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
+					
+					JLabel label_name = new JLabel();
+					label_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
+					label_name.setText(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData()));
+					label_name.setForeground(Color.DARK_GRAY);
+					label_name.setHorizontalAlignment(JLabel.LEFT);
+					label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
+					
+					JLabel label_hours = new JLabel();
+					label_hours.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					String HourEnd = ChatClient.planning.get(i).getHour() < 22 ? ""+ChatClient.planning.get(i).getHour()+":00" : "<font color=red>"+
+							ChatClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
+					label_hours.setText("<html>"+ChatClient.planning.get(i).getHour_start()+":00 à "+HourEnd+"</html>");
+					//label_hours.setForeground(Color.GRAY);
+					label_hours.setHorizontalAlignment(JLabel.LEFT);
+					label_hours.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
+					
+					norddd.add(color);
+					norddd.add(label_name);
+					suddd.add(label_hours);
+					centerr.add(norddd,BorderLayout.NORTH);
+					centerr.add(suddd,BorderLayout.SOUTH);
+					panel.add(centerr,BorderLayout.CENTER);
+					c_c_nt_center.add(panel);
+					System.out.println("(2) Jour égal à l'index : "+ChatClient.planning.get(i).getHour_start()+" -> "+ChatClient.planning.get(i).getHour()
+							+" : day "+ChatClient.planning.get(i).getDay());
+				}
+				i++;
+			}
+		}
+		c_c_nt_center.add(lab_c_c_nt_c_name);
+		c_c_nt_center.add(lab_c_c_nt_c_jour);
+		c_c_nt_center.add(lab_c_c_nt_c_deChatClient);
+		c_c_nt_center.add(lab_c_c_nt_c_date);
+		c_c_notif.setBounds(0, 12+80, (((largeur-255)-15-(largeur-255)/4))/2, TotalNotifY+20);
 	}
 }
