@@ -24,11 +24,16 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 > - Mise en page : **forme générale**.
 > - Planning v1 sur la <i>page principale</i>
 
+<u>Mise à jour du 27/07/2015 à 17:55 :</u></br>
+Nouvelle update du planning : ajout des vidéos (ce qui va nous ammener à commencer de coder le "gestionnaire de vidéos".
+Voici le dernier screen du jour :
+![Screen3] (http://img15.hostingpics.net/pics/610389Screenshot24.png)
+
 <u>Mise à jour du 26/07/2015 à 23:42 :</u></br>
-Yoooo. Me voici de retour après une petite absence du aux vidéos x). Enfin bref, je reviens avec un mini-push, pour ouvrir la voie de demain ou du gros arrive ;).
+Yoooo. Me voici de retour après une petite absence du aux vidéos x). Enfin bref, je reviens avec un mini-push, pour ouvrir la voie de demain ou du gros arrivent ;).
 
 <u>Mise à jour du 23/07/2015 à 11:06 :</u></br>
-Ahhhh, ça fait longtemps que j'ai pas écrit dans le README.md ^^'. Alors voilà, c'est pour vous parler du dernier <i>push</i> que j'ai fait, pour vous expliquer les mises à jour qui ont été faites : j'ai terminé l'interface **+** le fonctionnement du planning (uniquement dans la page principale). Il reste maintenant à ajouter au planning les <i>évenements</i> et tout sera bon ;).
+Ahhhh, ça fait longtemps que je n'ai pas écrit dans le README.md ^^'. Alors voilà, c'est pour vous parler du dernier <i>push</i> que j'ai fait, pour vous expliquer les mises à jour qui ont été faites : j'ai terminé l'interface **+** le fonctionnement du planning (uniquement dans la page principale). Il reste maintenant à ajouter au planning les <i>évenements</i> et tout sera bon ;).
 
 <u>Mise à jour du 18/07/2015 à 22:03 :</u></br>
 Voila, le code est enfin disponible :). Je rappelle juste que pour le moment je m'occupe uniquement de la mise en page et que les donnés présentes sur les "screens" sont totalement **factices**.
