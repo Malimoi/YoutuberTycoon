@@ -1,27 +1,65 @@
 package utilities;
-import java.util.List;
 
-
-public class Videos {
+public class Video {
 	
 	private String name;
+	private Integer day;
+	private Integer month;
+	private Integer year;
 	private Long views;
 	private Long likes;
 	private Long dislikes;
+	private String videogenre;
 	private Long share;
-	private List<String> comments;
+	
 	private Long ID;
 	
-	public Videos (String name, Long views, Long likes, Long dislikes, Long share, List<String> comments, Long ID){
+	public Video (String name, Integer day, Integer month, Integer year, Long views, Long likes, Long dislikes, Long share,
+			String videogenre, Long ID){
 		
+		this.day=day;
+		this.month=month;
+		this.year=year;
 		this.name=name;
 		this.views=views;
 		this.likes=likes;
 		this.dislikes=dislikes;
 		this.share=share;
-		this.comments=comments;
+		this.videogenre=videogenre;
 		this.ID=ID;
 		
+	}
+
+	public String getVideogenre() {
+		return videogenre;
+	}
+
+	public void setVideogenre(String videogenre) {
+		this.videogenre = videogenre;
+	}
+
+	public Integer getDay() {
+		return day;
+	}
+
+	public void setDay(Integer day) {
+		this.day = day;
+	}
+
+	public Integer getMonth() {
+		return month;
+	}
+
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 	public String getName() {
@@ -62,18 +100,6 @@ public class Videos {
 
 	public void setShare(Long share) {
 		this.share = share;
-	}
-
-	public List<String> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<String> comments) {
-		this.comments = comments;
-	}
-
-	public void addComments(String s) {
-		this.comments.add(s);
 	}
 	
 	public Long getID() {
