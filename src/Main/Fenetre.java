@@ -40,18 +40,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import frames.ACC;
+import frames.COLOR;
+import frames.MINI;
+import frames.MINIA;
+import frames.NAME_ACC;
+import frames.NOR;
+import frames.PROF_ACC;
+import frames.SUBS;
+import frames.buttons.Bouton;
+
 @SuppressWarnings("serial")
 public class Fenetre extends JFrame{
 	/*
 	 * Je n'est aucune expérience en mise en page, je pense qu'il peut y avoir quelques améliorations à faire.
 	 */
-	public GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
+	public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
     
 	//get maximum window bounds
-	public Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
+	public static Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
 			
-	public int hauteur = (int) maximumWindowBounds.getHeight();
-	public int largeur = (int) maximumWindowBounds.getWidth();
+	public static int hauteur = (int) maximumWindowBounds.getHeight();
+	public static int largeur = (int) maximumWindowBounds.getWidth();
 	
 	public JButton bouton = new Bouton("Page d'accueil",1);
 	public JButton bouton4 = new Bouton("Gestionnaire de vidéos",2);
@@ -107,8 +117,6 @@ public class Fenetre extends JFrame{
 				public JPanel c_c_vp_center = new NOR();
 					public JLabel lab_c_c_vp_c_name = new JLabel();
 	public JPanel center_planning = new JPanel();
-	
-	public JPanel delete = new DEL();
 	
 	public Thread t;
 	public int test = 0;
@@ -536,334 +544,6 @@ public class Fenetre extends JFrame{
 		return c;	
 	}
 	
-	class Bouton extends JButton implements MouseListener{
-		private String name;
-		private Integer i;
-		private Color FOND;
-		private Color FONT;
-		private Image img;
-		
-		public Bouton(String str, Integer i){
-			super(str);
-			this.name = str;
-			this.i = i;
-			this.FOND=Color.WHITE;
-			this.FONT=Color.decode("#424242");
-			this.setBorderPainted(false);
-			this.addMouseListener(this);
-			try {
-				if (i==1){
-					this.img = ImageIO.read(new File("image/Home2.png"));
-				}else if (i==2){
-					this.img = ImageIO.read(new File("image/Planning2.png"));
-				}else if(i==3){
-					this.img = ImageIO.read(new File("image/Notif2.png"));
-				}else if(i==4){
-					this.img = ImageIO.read(new File("image/Video2.png"));
-				}
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(FOND);
-			g2d.fillRect(0, 0, hauteur, this.getHeight());
-			g2d.setColor(FONT);
-			g2d.setFont(new Font("Tahoma", Font.PLAIN, 17));
-			FontMetrics fm = g2d.getFontMetrics();
-			int height = fm.getHeight();
-			//int width = fm.stringWidth(this.name);
-			g2d.setRenderingHint(
-			        RenderingHints.KEY_TEXT_ANTIALIASING,
-			        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g2d.drawString(this.name, 12+22+7, (this.getHeight()/2)+(height/4)+1);
-			g2d.drawImage(img, 12, this.getHeight()/7, 22, 22, this);
-		}
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			
-		}
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			this.FOND=Color.decode("#393939");	
-			this.FONT=Color.WHITE;
-			try {
-				if (i==1){
-					this.img = ImageIO.read(new File("image/Home.png"));
-				}else if (i==2){
-					this.img = ImageIO.read(new File("image/Planning.png"));
-				}else if(i==3){
-					this.img = ImageIO.read(new File("image/Notif.png"));
-				}else if(i==4){
-					this.img = ImageIO.read(new File("image/Video.png"));
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		@Override
-		public void mouseExited(MouseEvent e) {
-			this.FOND=Color.WHITE;
-			this.FONT=Color.decode("#424242");	
-			try {
-				if (i==1){
-					this.img = ImageIO.read(new File("image/Home2.png"));
-				}else if (i==2){
-					this.img = ImageIO.read(new File("image/Planning2.png"));
-				}else if(i==3){
-					this.img = ImageIO.read(new File("image/Notif2.png"));
-				}else if(i==4){
-					this.img = ImageIO.read(new File("image/Video2.png"));
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		@Override
-		public void mousePressed(MouseEvent e) {
-			this.FOND=Color.decode("#D10E00");	
-			this.FONT=Color.WHITE;
-			try {
-				if (i==1){
-					this.img = ImageIO.read(new File("image/Home.png"));
-				}else if (i==2){
-					this.img = ImageIO.read(new File("image/Planning.png"));
-				}else if(i==3){
-					this.img = ImageIO.read(new File("image/Notif.png"));
-				}else if(i==4){
-					this.img = ImageIO.read(new File("image/Video.png"));
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-	}
-	class BoutonSep extends JButton{
-		private String name;
-		public BoutonSep(String str){
-			super(str);
-			this.name = str;
-			this.setBorderPainted(false);
-		}
-		public void paintComponent(Graphics g){
-			Color c = Color.decode("#1C2935");//Gris
-			Graphics2D g2d = (Graphics2D)g;
-			//GradientPaint gp = new GradientPaint(0,0,Color.WHITE,0,this.getHeight(),c2,true);
-			//g2d.setPaint(gp);
-			g2d.setColor(c);
-			g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
-			g2d.setColor(Color.BLACK);
-			g2d.setFont(new Font("Alternate Gothic No3 D", Font.PLAIN, 20));
-			FontMetrics fm = g2d.getFontMetrics();
-			int height = fm.getHeight();
-			int width = fm.stringWidth(this.name);			
-			g2d.setRenderingHint(
-			        RenderingHints.KEY_TEXT_ANTIALIASING,
-			        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			
-			g2d.drawString(this.name, this.getWidth()/2 - (width/2), (this.getHeight()/2)+(height/4));
-			g2d.setColor(Color.decode("#454C53"));
-			g2d.drawLine(0, this.getHeight()-1, this.getWidth(), this.getHeight()-1);
-			try {
-				g2d.drawImage(ImageIO.read(new File("image/Home.png")), 0, 0, 25, 25, this);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public class ACC extends JPanel {
-		public ACC(){
-			
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(Color.WHITE);		
-			g2d.fillRect(0, 0, largeur, 60);
-			try {
-				g2d.drawImage(ImageIO.read(new File("image/LogoHaut.png")), 0, 0, 225, 60, this);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public class MINI extends JPanel {
-		private String path;
-		public MINI(String path){
-			this.path=path;
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setRenderingHint(
-			        RenderingHints.KEY_ANTIALIASING,
-			        RenderingHints.VALUE_ANTIALIAS_ON);
-			
-			try {
-				g2d.drawImage(ImageIO.read(new File(path)), 0, 0, 25, 25, this);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public class MINIA extends JPanel {
-		private String path;
-		public MINIA(String path){
-			this.path=path;
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setRenderingHint(
-			        RenderingHints.KEY_ANTIALIASING,
-			        RenderingHints.VALUE_ANTIALIAS_ON);
-			
-			try {
-				g2d.drawImage(ImageIO.read(new File(path)), 0, 0, 165, 95, this);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public class PROF_ACC extends JPanel {
-		public PROF_ACC(){
-			
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(Color.ORANGE);		
-			g2d.fillRect(0, 0, 50, 50);
-		}
-	}
-	
-	public class NAME_ACC extends JPanel {
-		public NAME_ACC(){
-			
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(Color.WHITE);
-			g2d.fillRect(0, 0, 300, 50);	
-		}
-	}
-	
-	public class NOR extends JPanel {
-		public NOR(){
-			
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(Color.WHITE);
-			g2d.fillRect(0, 0, largeur, hauteur);	
-		}
-	}
-	
-	public class COLOR extends JPanel {
-		private Color c;
-		public COLOR(Color c){
-			this.c=c;
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(c);
-			g2d.fillRect(0, 0, largeur, hauteur);	
-		}
-	}
-	
-	public class Prog extends JPanel {
-		private Integer i;
-		public Prog(Integer i){
-			this.i=i;
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(Color.decode("#F3F3F3"));
-			g2d.fillRect(0, 0, largeur, hauteur);	
-			/*
-			 * A faire : liste de tous les IDs.
-			 */
-			if (i==1){
-				g2d.setColor(Color.GREEN);
-			}else if(i==2){
-				g2d.setColor(Color.BLUE);
-			}
-			g2d.fillRect(0, 0, largeur, hauteur);	
-		}
-	}
-	
-	public class Even extends JPanel {
-		private Integer i;
-		public Even(Integer i){
-			this.i=i;
-		}
-		public void paintComponent(Graphics g){
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(Color.WHITE);
-			if (i==1){
-				g2d.setColor(Color.GREEN);
-			}else if(i==2){
-				g2d.setColor(Color.BLUE);
-			}			
-			g2d.fillRect(0, 0, largeur, hauteur);	
-		}
-	}
-	
-	public class SUBS extends JPanel {
-		public SUBS(){
-			
-		}
-		public void paintComponent(Graphics g){
-			Color c = Color.decode("#D7D7D7");//Gris
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(Color.WHITE);
-			g2d.fillRect(0, 0, ((largeur-255)/8), 80);	
-			g2d.setColor(c);
-			g2d.drawLine(((largeur-255)/8)-1, 20, ((largeur-255)/8)-1, 60);
-		}
-	}
-	
-	public class DEL extends JPanel {
-		public DEL(){
-			
-		}
-		public void paintComponent(Graphics g){
-			Color c = Color.decode("#D7D7D7");//Gris
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(c);
-			g2d.fillRect(0, 0, largeur, hauteur*5);	
-		}
-	}
-	
-	
-	public class CENTER extends JPanel {
-		public CENTER(){
-			
-		}
-		public void paintComponent(Graphics g){
-			Color c = Color.decode("#D7D7D7");//Gris
-			Graphics2D g2d = (Graphics2D)g;
-			g2d.setColor(c);
-			g2d.fillRect(0, 0, largeur, hauteur);	
-		}
-	}
-	
 	class BoutonAccListener implements ActionListener{
 
 		@Override
@@ -1181,6 +861,12 @@ public class Fenetre extends JFrame{
 		lab_c_c_vp_c_name.setBounds(0, 0, (((largeur-255)-15-(largeur-255)/4))/2, 40);
 		TotalNotifY = TotalNotifY+40+5;
 		
+		SimpleDateFormat formater = null;
+		Date now = new Date();
+		formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM/MMM");
+		String s = formater.format(now);
+		String[] sf = s.split("/");
+		
 		Boolean vid = true;
 		int i = 0;
 		
@@ -1188,49 +874,59 @@ public class Fenetre extends JFrame{
 			if (ChatClient.videos.size()-1==i || i == 5){
 				vid=false;
 			}else{
-				JPanel miniature = new MINIA("image/CLASSES/"+ChatClient.videos.get(i).getVideogenre()+".png");
-				miniature.setBounds(0, TotalNotifY, 165, 95);
-				JLabel titre = new JLabel();
-				titre.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				titre.setText(ChatClient.videos.get(i).getName());
-				titre.setForeground(Color.GRAY);
-				titre.setHorizontalAlignment(JLabel.LEFT);
-				titre.setBounds(182, TotalNotifY+5, (((largeur-255)-15-(largeur-255)/4))/2, 18);
-				JPanel views = new MINI("image/views.png");
-				views.setBounds(180,TotalNotifY+(95-(30+35)),25,25);
-				JLabel nbviews = new JLabel();
-				nbviews.setFont(new Font("Tahoma", Font.PLAIN, 16));
-				nbviews.setText(ChatClient.videos.get(i).getViews()+"");
-				nbviews.setForeground(Color.GRAY);
-				nbviews.setHorizontalAlignment(JLabel.LEFT);
-				nbviews.setBounds(180+30, TotalNotifY+(95-(30+35))+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
-				JPanel likes = new MINI("image/likes.png");
-				likes.setBounds(180,TotalNotifY+(95-30),25,25);
-				JLabel nblikes = new JLabel();
-				nblikes.setFont(new Font("Tahoma", Font.PLAIN, 16));
-				nblikes.setText(ChatClient.videos.get(i).getLikes()+"");
-				nblikes.setForeground(Color.GRAY);
-				nblikes.setHorizontalAlignment(JLabel.LEFT);
-				nblikes.setBounds(180+30, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
-				JPanel dislikes = new MINI("image/dislikes.png");
-				dislikes.setBounds(275,TotalNotifY+(95-30),25,25);
-				JLabel nbdis = new JLabel();
-				nbdis.setFont(new Font("Tahoma", Font.PLAIN, 16));
-				nbdis.setText(ChatClient.videos.get(i).getDislikes()+"");
-				nbdis.setForeground(Color.GRAY);
-				nbdis.setHorizontalAlignment(JLabel.LEFT);
-				nbdis.setBounds(275+30, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
-				
-				c_c_vp_center.add(miniature);
-				c_c_vp_center.add(titre);
-				c_c_vp_center.add(nbviews);
-				c_c_vp_center.add(nblikes);
-				c_c_vp_center.add(nbdis);
-				c_c_vp_center.add(views);
-				c_c_vp_center.add(likes);
-				c_c_vp_center.add(dislikes);
-				TotalNotifY=TotalNotifY+95+15;
-				
+				if (ChatClient.videos.get(i).getYear()>Integer.parseInt(sf[0])){
+
+				}
+				else if (ChatClient.videos.get(i).getMonth()>Integer.parseInt(sf[1])){
+					
+				}
+				else if (ChatClient.videos.get(i).getDay()>Integer.parseInt(sf[2])){
+					
+				}else{
+					JPanel miniature = new MINIA("image/CLASSES/"+ChatClient.videos.get(i).getVideogenre()+".png");
+					miniature.setBounds(0, TotalNotifY, 165, 95);
+					JLabel titre = new JLabel();
+					titre.setFont(new Font("Tahoma", Font.PLAIN, 18));
+					titre.setText(ChatClient.videos.get(i).getName());
+					titre.setForeground(Color.GRAY);
+					titre.setHorizontalAlignment(JLabel.LEFT);
+					titre.setBounds(182, TotalNotifY+5, (((largeur-255)-15-(largeur-255)/4))/2, 18);
+					JPanel views = new MINI("image/views.png");
+					views.setBounds(180,TotalNotifY+(95-(30+35)),25,25);
+					JLabel nbviews = new JLabel();
+					nbviews.setFont(new Font("Tahoma", Font.PLAIN, 16));
+					nbviews.setText(ChatClient.videos.get(i).getViews()+"");
+					nbviews.setForeground(Color.GRAY);
+					nbviews.setHorizontalAlignment(JLabel.LEFT);
+					nbviews.setBounds(180+30, TotalNotifY+(95-(30+35))+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					JPanel likes = new MINI("image/likes.png");
+					likes.setBounds(180,TotalNotifY+(95-30),25,25);
+					JLabel nblikes = new JLabel();
+					nblikes.setFont(new Font("Tahoma", Font.PLAIN, 16));
+					nblikes.setText(ChatClient.videos.get(i).getLikes()+"");
+					nblikes.setForeground(Color.GRAY);
+					nblikes.setHorizontalAlignment(JLabel.LEFT);
+					nblikes.setBounds(180+30, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					JPanel dislikes = new MINI("image/dislikes.png");
+					dislikes.setBounds(275,TotalNotifY+(95-30),25,25);
+					JLabel nbdis = new JLabel();
+					nbdis.setFont(new Font("Tahoma", Font.PLAIN, 16));
+					nbdis.setText(ChatClient.videos.get(i).getDislikes()+"");
+					nbdis.setForeground(Color.GRAY);
+					nbdis.setHorizontalAlignment(JLabel.LEFT);
+					nbdis.setBounds(275+30, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					
+					c_c_vp_center.add(miniature);
+					c_c_vp_center.add(titre);
+					c_c_vp_center.add(nbviews);
+					c_c_vp_center.add(nblikes);
+					c_c_vp_center.add(nbdis);
+					c_c_vp_center.add(views);
+					c_c_vp_center.add(likes);
+					c_c_vp_center.add(dislikes);
+					TotalNotifY=TotalNotifY+95+15;
+					
+				}
 				i++;
 			}	
 		}
