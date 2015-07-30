@@ -22,6 +22,9 @@ Pour le moment, il y a seulement la communication client-server qui a été effe
 
 > - **Planning** sur la <i>page principale</i> !
 
+<u>Mise à jour du 30/07/2015 à 23:31 :</u></br>
+Je suis en train de tout r�organiser mon travail car avant je ne travaillais pas directement sur Youtuber Tycoon mais sur une save, mais c'est devenu trop difficile � g�rer.
+
 <u>Mise à jour du 27/07/2015 à 17:55 :</u></br>
 Nouvelle update du planning : ajout des vidéos (ce qui va nous ammener à commencer de coder le "gestionnaire de vidéos".
 Voici le dernier screen du jour :
@@ -50,5 +53,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 26/07/2015 à 23:43)
+(dèrnière modification le 30/07/2015 à 23:33)
 
