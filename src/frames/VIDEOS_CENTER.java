@@ -9,14 +9,10 @@ import javax.swing.JPanel;
 import Main.Fenetre;
 
 @SuppressWarnings("serial")
-public class COLOR extends JPanel {
-	private Color c;
-	public COLOR(Color c){
-		this.c=c;
-	}
+public class VIDEOS_CENTER extends JPanel {
 	public void paintComponent(Graphics g){
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.setColor(c);
-		g2d.fillRect(0, 0, Fenetre.largeur, Fenetre.hauteur);	
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(0, 0, Fenetre.largeur-(225+10+10+10+10+9), Fenetre.hauteur);	
 	}
 }
