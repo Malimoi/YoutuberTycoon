@@ -24,7 +24,6 @@ public class MINI extends JPanel {
 		try {
 			g2d.drawImage(ImageIO.read(new File(path)), 0, 0, 25, 25, this);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

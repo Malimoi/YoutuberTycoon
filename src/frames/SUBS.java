@@ -10,9 +10,6 @@ import Main.Fenetre;
 
 @SuppressWarnings("serial")
 public class SUBS extends JPanel {
-	public SUBS(){
-		
-	}
 	public void paintComponent(Graphics g){
 		Color c = Color.decode("#D7D7D7");//Gris
 		Graphics2D g2d = (Graphics2D)g;

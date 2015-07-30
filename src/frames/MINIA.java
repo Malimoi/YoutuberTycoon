@@ -24,7 +24,6 @@ public class MINIA extends JPanel {
 		try {
 			g2d.drawImage(ImageIO.read(new File(path)), 0, 0, 165, 95, this);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

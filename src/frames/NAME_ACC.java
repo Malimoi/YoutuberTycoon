@@ -8,9 +8,6 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class NAME_ACC extends JPanel {
-	public NAME_ACC(){
-		
-	}
 	public void paintComponent(Graphics g){
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.WHITE);
