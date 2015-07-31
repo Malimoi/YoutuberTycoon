@@ -15,11 +15,11 @@ Pour le moment, il y a seulement la communication client-server qui a été effect
 
 > - Fin de la mise en forme des pages principales.
 > - Mise en place de <i>l'emploi du temps</i> (du jeu)
-> - Mise en place du <i>gestionnaire de vidéos</i>
 
 
 > **Fait:**
 
+> - Mise en place du <i>gestionnaire de vidéos</i>
 > - **Planning** sur la <i>page principale</i> !
 
 <u>Mise à  jour du 31/07/2015 à  12:30 :</u></br>
