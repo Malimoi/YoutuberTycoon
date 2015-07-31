@@ -16,11 +16,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,13 +34,10 @@ import java.util.Date;
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import frames.ACC;
 import frames.COLOR;
@@ -44,10 +47,8 @@ import frames.NAME_ACC;
 import frames.NOR;
 import frames.PROF_ACC;
 import frames.SUBS;
-import frames.VIDEOS_CENTER;
 import frames.VIDEOS_NORTH;
 import frames.buttons.Bouton;
-import frames.buttons.ClassicButton;
 import frames.buttons.ToutAfficher;
 
 @SuppressWarnings("serial")
@@ -63,9 +64,9 @@ public class Fenetre extends JFrame{
 	public static int hauteur = (int) maximumWindowBounds.getHeight();
 	public static int largeur = (int) maximumWindowBounds.getWidth();
 	
-	public JButton bouton = new Bouton("Page d'accueil",1);
-	public JButton bouton4 = new Bouton("Gestionnaire de vidéos",2);
-	public JButton bouton2 = new Bouton("Mon planning",3);
+	public JButton boutonAcc = new Bouton("Page d'accueil",1);
+	public JButton boutonVideoGest = new Bouton("Gestionnaire de vidéos",2);
+	public JButton boutonPlanning = new Bouton("Mon planning",3);
 	public JButton bouton3 = new Bouton("Mes notifications",4);
 	
 	//-CONTENT
@@ -134,6 +135,7 @@ public class Fenetre extends JFrame{
 	
 	public Thread t;
 	public int test = 0;
+	public static int videopage = 1;
 	
 	public Fenetre() {
 		
@@ -264,20 +266,20 @@ public class Fenetre extends JFrame{
 	gl.setHgap(6);
 	w_center.setLayout(null);
 	
-	bouton.addActionListener(new BoutonAccListener());
-	bouton2.addActionListener(new BoutonPlanningListener());
+	boutonAcc.addActionListener(new BoutonAccListener());
+	boutonPlanning.addActionListener(new BoutonPlanningListener());
 	bouton3.addActionListener(new BoutonNotifListener());
-	bouton4.addActionListener(new BoutonVideosListener());
+	boutonVideoGest.addActionListener(new BoutonVideosListener());
 	vid_affich.addActionListener(new BoutonToutaffichListener());
 	
-	bouton.setBounds(0, 0, 225, 35);
-	bouton2.setBounds(0, 105, 225, 35);
-	bouton3.setBounds(0, 70, 225, 35);
-	bouton4.setBounds(0, 35, 225, 35);
-	w_center.add(bouton);
-	w_center.add(bouton2);
+	boutonAcc.setBounds(0, 0, 225, 35);
+	boutonVideoGest.setBounds(0, 105, 225, 35);
+	boutonPlanning.setBounds(0, 70, 225, 35);
+	bouton3.setBounds(0, 35, 225, 35);
+	w_center.add(boutonAcc);
+	w_center.add(boutonVideoGest);
+	w_center.add(boutonPlanning);
 	w_center.add(bouton3);
-	w_center.add(bouton4);
 	
 	west.add(w_center,BorderLayout.CENTER);
 				
@@ -607,6 +609,83 @@ public class Fenetre extends JFrame{
 		return c;	
 	}
 	
+	public class ClassicButton extends JButton implements MouseListener{
+		private String name;
+		private Color FOND;
+		private Color FONT;
+		
+		public ClassicButton(String str){
+			super(str);
+			this.name = str;
+			this.FOND=Color.WHITE;
+			if (str.equals(""+Fenetre.videopage)){
+				this.FOND=Color.decode("#D3D3D3");	
+				this.setEnabled(false);
+			}
+			this.FONT=Color.decode("#424242");
+			this.setBorderPainted(false);
+			this.addMouseListener(this);
+		}
+		public void paintComponent(Graphics g){
+			Graphics2D g2d = (Graphics2D)g;
+			g2d.setColor(FOND);
+			g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+			g2d.setColor(FONT);
+			g2d.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			FontMetrics fm = g2d.getFontMetrics();
+			int height = fm.getHeight();
+			//int width = fm.stringWidth(this.name);
+			g2d.setRenderingHint(
+			        RenderingHints.KEY_TEXT_ANTIALIASING,
+			        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			g2d.drawString(this.name, 15, (this.getHeight()/2)+(height/4)+1);
+			g2d.setColor(Color.decode("#D7D7D7"));
+			g2d.drawLine(0, 0, this.getWidth(), 0);
+			g2d.drawLine(0, this.getHeight()-1, this.getWidth(), this.getHeight()-1);
+			g2d.drawLine(0, 0, 0, this.getHeight());
+			g2d.drawLine(this.getWidth()-1, 0, this.getWidth()-1, this.getHeight()-1);
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			this.FOND=Color.decode("#D3D3D3");	
+			if (!name.contains("Faire une vidéo")){
+				int page = Integer.parseInt(name);
+				Fenetre.videopage=page;
+				cv_c_south.removeAll();
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+				setVideosGestionnaire();
+				cv_center.add(cv_c_south,BorderLayout.SOUTH);
+				try{
+					content.updateUI();
+				}catch(Exception ex){
+					System.out.println("Erreur : "+test);
+				}
+			}
+		}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			this.FOND=Color.decode("#D3D3D3");	
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			this.FOND=Color.WHITE;
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
 	class BoutonToutaffichListener implements ActionListener{
 
 		@Override
@@ -634,10 +713,10 @@ public class Fenetre extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			bouton.setEnabled(false);
-			bouton2.setEnabled(true);
+			boutonAcc.setEnabled(false);
+			boutonVideoGest.setEnabled(true);
+			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(true);
-			bouton4.setEnabled(true);
 			if (test==2){
 				content.remove(center_planning);
 			}else if (test==4){
@@ -665,10 +744,10 @@ public class Fenetre extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			bouton.setEnabled(true);
-			bouton2.setEnabled(false);
+			boutonAcc.setEnabled(true);
+			boutonPlanning.setEnabled(false);
+			boutonVideoGest.setEnabled(true);
 			bouton3.setEnabled(true);
-			bouton4.setEnabled(true);
 			if (test==1){
 				content.remove(center);
 			}else if (test==4){
@@ -695,10 +774,10 @@ public class Fenetre extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			bouton.setEnabled(true);
-			bouton2.setEnabled(true);
-			bouton3.setEnabled(false);
-			bouton4.setEnabled(true);
+			boutonAcc.setEnabled(true);
+			boutonVideoGest.setEnabled(true);
+			boutonPlanning.setEnabled(false);
+			bouton3.setEnabled(true);
 			
 			if (test==1){
 				content.remove(center);
@@ -727,10 +806,10 @@ public class Fenetre extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			bouton.setEnabled(true);
-			bouton2.setEnabled(true);
-			bouton3.setEnabled(true);
-			bouton4.setEnabled(false);
+			boutonAcc.setEnabled(true);
+			boutonVideoGest.setEnabled(true);
+			boutonPlanning.setEnabled(true);
+			bouton3.setEnabled(false);
 			
 			if (test==1){
 				content.remove(center);
@@ -996,6 +1075,14 @@ public class Fenetre extends JFrame{
 					nbviews.setForeground(Color.GRAY);
 					nbviews.setHorizontalAlignment(JLabel.LEFT);
 					nbviews.setBounds(180+30, TotalNotifY+(95-(30+35))+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					JPanel shares = new MINI("image/Shares.png");
+					shares.setBounds(275,TotalNotifY+(95-(30+35)),25,25);
+					JLabel nbshares = new JLabel();
+					nbshares.setFont(new Font("Tahoma", Font.PLAIN, 16));
+					nbshares.setText(ChatClient.videos.get(i).getShare()+"");
+					nbshares.setForeground(Color.GRAY);
+					nbshares.setHorizontalAlignment(JLabel.LEFT);
+					nbshares.setBounds(275+30, TotalNotifY+(95-(30+35))+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
 					JPanel likes = new MINI("image/likes.png");
 					likes.setBounds(180,TotalNotifY+(95-30),25,25);
 					JLabel nblikes = new JLabel();
@@ -1016,6 +1103,8 @@ public class Fenetre extends JFrame{
 					c_c_vp_center.add(miniature);
 					c_c_vp_center.add(titre);
 					c_c_vp_center.add(nbviews);
+					c_c_vp_center.add(shares);
+					c_c_vp_center.add(nbshares);
 					c_c_vp_center.add(nblikes);
 					c_c_vp_center.add(nbdis);
 					c_c_vp_center.add(views);
@@ -1027,6 +1116,15 @@ public class Fenetre extends JFrame{
 				i++;
 			}	
 		}
+		int b = 1;
+		
+		for (int g = 0;g<ChatClient.videos.size()-1;g++){
+			if (g%5==0&&g!=0){
+				b++;
+			}
+		}
+		System.out.println("B: "+b+" ("+(ChatClient.videos.size()-1)+")");
+		
 		c_c_vp_south.setLayout(null);
 		vid_affich.setBounds(0, 0, 500, 50);
 		c_c_vp_south.add(vid_affich);
@@ -1046,10 +1144,10 @@ public class Fenetre extends JFrame{
 		String[] sf = s.split("/");
 		
 		Boolean vid = true;
-		int i = 0;
+		int i = (videopage-1)*5;
 		
 		while(vid){
-			if (ChatClient.videos.size()-1==i){
+			if (ChatClient.videos.size()-1==i || i==videopage*5){
 				vid=false;
 			}else{
 				if (ChatClient.videos.get(i).getYear()>Integer.parseInt(sf[0])){
@@ -1069,44 +1167,74 @@ public class Fenetre extends JFrame{
 					titre.setForeground(Color.DARK_GRAY);
 					titre.setHorizontalAlignment(JLabel.LEFT);
 					titre.setBounds(182+50, TotalNotifY+5, (((largeur-255)-15-(largeur-255)/4))/2, 18);
+					JLabel publie = new JLabel();
+					publie.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					publie.setText("PUBLIÉE LE "+ChatClient.videos.get(i).getDay()+"/"+ChatClient.videos.get(i).getMonth()+"/"+ChatClient.videos.get(i).getYear());
+					publie.setForeground(Color.GRAY);
+					publie.setHorizontalAlignment(JLabel.LEFT);
+					publie.setBounds(182+50, TotalNotifY+5+26, (((largeur-255)-15-(largeur-255)/4))/2, 18);
 					JPanel views = new MINI("image/views.png");
-					views.setBounds((largeur-225-20)-200,TotalNotifY+(95-(30+35)),25,25);
+					views.setBounds((largeur-225-20)-200,TotalNotifY+(95-(30+35+35)+4),25,25);
 					JLabel nbviews = new JLabel();
 					nbviews.setFont(new Font("Tahoma", Font.PLAIN, 16));
 					nbviews.setText(ChatClient.videos.get(i).getViews()+"");
 					nbviews.setForeground(Color.GRAY);
 					nbviews.setHorizontalAlignment(JLabel.LEFT);
-					nbviews.setBounds((largeur-225-20)-170, TotalNotifY+(95-(30+35))+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					nbviews.setBounds((largeur-225-20)-170, TotalNotifY+(95-(30+35+35)+4)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
 					JPanel likes = new MINI("image/likes.png");
-					likes.setBounds((largeur-225-20)-200,TotalNotifY+(95-30),25,25);
+					likes.setBounds((largeur-225-20)-200,TotalNotifY+(95-30-35),25,25);
 					JLabel nblikes = new JLabel();
 					nblikes.setFont(new Font("Tahoma", Font.PLAIN, 16));
 					nblikes.setText(ChatClient.videos.get(i).getLikes()+"");
 					nblikes.setForeground(Color.GRAY);
 					nblikes.setHorizontalAlignment(JLabel.LEFT);
-					nblikes.setBounds((largeur-225-20)-170, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					nblikes.setBounds((largeur-225-20)-170, TotalNotifY+(95-30-35)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
 					JPanel dislikes = new MINI("image/dislikes.png");
-					dislikes.setBounds((largeur-225-20)-115,TotalNotifY+(95-30),25,25);
+					dislikes.setBounds((largeur-225-20)-115,TotalNotifY+(95-30-35),25,25);
 					JLabel nbdis = new JLabel();
 					nbdis.setFont(new Font("Tahoma", Font.PLAIN, 16));
 					nbdis.setText(ChatClient.videos.get(i).getDislikes()+"");
 					nbdis.setForeground(Color.GRAY);
 					nbdis.setHorizontalAlignment(JLabel.LEFT);
-					nbdis.setBounds((largeur-225-20)-85, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					nbdis.setBounds((largeur-225-20)-85, TotalNotifY+(95-30-35)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
+					JPanel shares = new MINI("image/Shares.png");
+					shares.setBounds((largeur-225-20)-200,TotalNotifY+(95-34),25,25);
+					JLabel nbshares = new JLabel();
+					nbshares.setFont(new Font("Tahoma", Font.PLAIN, 16));
+					nbshares.setText(ChatClient.videos.get(i).getShare()+"");
+					nbshares.setForeground(Color.GRAY);
+					nbshares.setHorizontalAlignment(JLabel.LEFT);
+					nbshares.setBounds((largeur-225-20)-170, TotalNotifY+(95-34)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
 					
 					cv_c_south.add(miniature);
 					cv_c_south.add(titre);
+					cv_c_south.add(publie);
 					cv_c_south.add(nbviews);
 					cv_c_south.add(nblikes);
 					cv_c_south.add(nbdis);
 					cv_c_south.add(views);
 					cv_c_south.add(likes);
 					cv_c_south.add(dislikes);
+					cv_c_south.add(shares);
+					cv_c_south.add(nbshares);
 					TotalNotifY=TotalNotifY+95+20;
 					
 				}
 				i++;
 			}	
+		}
+		int b = 1;
+		for (int g =0;g<ChatClient.videos.size()-1;g++){
+			if (g%5==0&&g!=0){
+				b++;
+			}
+		}
+		int TotalX = 50;
+		for (int bu = 0;bu<b;bu++){
+			JButton buttonpage = new ClassicButton(""+(bu+1));
+			buttonpage.setBounds(TotalX, TotalNotifY, 40, 40);
+			cv_c_south.add(buttonpage);
+			TotalX=TotalX+50;
 		}
 	}
 }

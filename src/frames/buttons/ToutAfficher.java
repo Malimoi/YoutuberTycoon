@@ -16,19 +16,15 @@ import Main.Fenetre;
 
 @SuppressWarnings("serial")
 public class ToutAfficher extends JButton implements MouseListener{
-	private String name;
-	private Integer i;
+	private Integer i; //On s'en servira plus tard ;)
 	private Color FOND;
-	private Color FONT;
 	private JLabel lab;
 	
 	public ToutAfficher(String str, Integer i){
 		super(str);
 		this.setLayout(new BorderLayout());
-		this.name = "Tout afficher"; //Nom du button ;)
 		this.i = i;
 		this.FOND=Color.WHITE;
-		this.FONT=Color.decode("#424242");
 		this.setBorderPainted(false);
 		this.addMouseListener(this);
 		this.lab=new JLabel();

@@ -85,6 +85,10 @@ public class ChatClient {
  		videos.add(new Video("MON CHAT QUI JOUIT LOL", 29, 07, 15, 15254L, 2155L, 28L, 3L, "ANIMAUX", 3L));
  		videos.add(new Video("5 CHOSES EXTRAORDINAIRES ET DROLES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 4L));
  		videos.add(new Video("VLOG #1 : LA MONTAGNE", 31, 07, 15, 125L, 112L, 0L, 0L, "VLOG", 5L));
+ 		videos.add(new Video("MAKEUP #1", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 6L));
+ 		videos.add(new Video("MAKEUP #2", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 7L));
+ 		videos.add(new Video("MAKEUP #3", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 8L));
+ 		videos.add(new Video("MAKEUP #4", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 9L));
  		for (int a = 0; a < videos.size(); a++) {
  			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
              		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
@@ -117,11 +121,14 @@ public class ChatClient {
  		/*
  		 * Evenements
  		 */
-         evenements.add(new Evenement(27, 7, 15, 5, 0L));
-         evenements.add(new Evenement(28, 7, 15, 2, 1L));
-         evenements.add(new Evenement(29, 7, 15, 2, 3L));
-         evenements.add(new Evenement(30, 7, 15, 2, 4L));
-         evenements.add(new Evenement(31, 7, 15, 2, 5L));
+         for (int i = 0; i < datavi.size(); i++){
+         	String line2 = datavi.get(i);
+         	String day = line2.split("§")[1];
+             String month = line2.split("§")[2];
+             String year = line2.split("§")[3];
+             String ID = line2.split("§")[9];
+         	evenements.add(new Evenement(Integer.valueOf(day), Integer.valueOf(month), Integer.valueOf(year), 2, Long.valueOf(ID)));
+         }
          for (int a = 0; a < evenements.size(); a++) {
              dataev.add(evenements.get(a).getDay() + " " + evenements.get(a).getMonth() + " " + evenements.get(a).getYear() + " " + evenements.get(a).getId()
              		+ " " + evenements.get(a).getData());
