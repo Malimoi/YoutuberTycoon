@@ -1159,7 +1159,14 @@ public class Fenetre extends JFrame{
 					titre.setBounds(182+50, TotalNotifY+5, (((largeur-255)-15-(largeur-255)/4))/2, 18);
 					JLabel publie = new JLabel();
 					publie.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					publie.setText("PUBLIÉE LE "+ChatClient.videos.get(i).getDay()+"/"+ChatClient.videos.get(i).getMonth()+"/"+ChatClient.videos.get(i).getYear());
+					if (ChatClient.videos.get(i).getYear()>Integer.parseInt(sf[0]) || (ChatClient.videos.get(i).getMonth()>Integer.parseInt(sf[1]))
+							|| (ChatClient.videos.get(i).getDay()>Integer.parseInt(sf[2]))){
+						publie.setText("<html><font color=red>PLANIFIÉE LE "+Zero(ChatClient.videos.get(i).getDay())+"/"+Zero(ChatClient.videos.get(i).getMonth())+"/"+Zero(ChatClient.videos.get(i).getYear())+"</font></html>");
+					}
+					else{
+						publie.setText("PUBLIÉE LE "+Zero(ChatClient.videos.get(i).getDay())+"/"+Zero(ChatClient.videos.get(i).getMonth())+"/"+Zero(ChatClient.videos.get(i).getYear()));
+					}
+					
 					publie.setForeground(Color.GRAY);
 					publie.setHorizontalAlignment(JLabel.LEFT);
 					publie.setBounds(182+50, TotalNotifY+5+26, (((largeur-255)-15-(largeur-255)/4))/2, 18);
@@ -1228,5 +1235,10 @@ public class Fenetre extends JFrame{
 			cv_c_south.add(buttonpage);
 			TotalX=TotalX+50;
 		}
+	}
+	public String Zero(Integer z){
+		String i = z<10?"0"+z:""+z;
+		
+		return i;
 	}
 }
