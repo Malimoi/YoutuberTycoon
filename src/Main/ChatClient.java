@@ -15,6 +15,7 @@ package Main;
 
 import javax.swing.*;
 
+import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import utilities.Evenement;
 import utilities.Planning;
 import utilities.StringComparator;
@@ -49,6 +50,11 @@ public class ChatClient {
     public static JFrame frame;
 
     public static void main(String[] args) {
+    	try {
+			UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
     	if (!IsTest){
     		String server = "127.0.0.1";
             int port = 2009;
@@ -82,13 +88,10 @@ public class ChatClient {
  		 */
  		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 1L));
  		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 2L));
- 		videos.add(new Video("MON CHAT QUI JOUIT LOL", 29, 07, 15, 15254L, 2155L, 28L, 3L, "ANIMAUX", 3L));
- 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES ET DROLES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 4L));
- 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 31, 07, 15, 125L, 112L, 0L, 0L, "VLOG", 5L));
- 		videos.add(new Video("MAKEUP #1", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 6L));
- 		videos.add(new Video("MAKEUP #2", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 7L));
- 		videos.add(new Video("MAKEUP #3", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 8L));
- 		videos.add(new Video("MAKEUP #4", 31, 07, 15, 125L, 112L, 0L, 0L, "MAKEUP_MODE", 9L));
+ 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 3L));
+ 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 4L));
+ 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 125L, 112L, 0L, 0L, "VLOG", 5L));
+ 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 125L, 112L, 0L, 0L, "GAMING", 6L));
  		for (int a = 0; a < videos.size(); a++) {
  			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
              		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +

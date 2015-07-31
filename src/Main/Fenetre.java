@@ -138,12 +138,6 @@ public class Fenetre extends JFrame{
 	public static int videopage = 1;
 	
 	public Fenetre() {
-		
-		try {
-			UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
 	
 	test();
 		
@@ -154,7 +148,7 @@ public class Fenetre extends JFrame{
 	this.setExtendedState(JFrame.NORMAL);
 	//this.setDefaultLookAndFeelDecorated(false);    /*-> Plein écran.*/
 	//this.setExtendedState(this.MAXIMIZED_BOTH);
-	this.setUndecorated(false);
+	this.setUndecorated(true);
 	this.setResizable(true);
 				
 	content.setLayout(new BorderLayout());
@@ -691,6 +685,8 @@ public class Fenetre extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			boutonAcc.setEnabled(true);
+			boutonVideoGest.setEnabled(false);
 			content.remove(center);
 			try {
 				Thread.sleep(10);
@@ -698,7 +694,7 @@ public class Fenetre extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			test=4;
+			test=2;
 			content.add(center_videos,BorderLayout.CENTER);
 			/* Existe-t-il une meilleur méthode ? */
 			try{
@@ -1046,9 +1042,10 @@ public class Fenetre extends JFrame{
 		
 		Boolean vid = true;
 		int i = 0;
+		int p =0;
 		
 		while(vid){
-			if (ChatClient.videos.size()-1==i || i == 5){
+			if (ChatClient.videos.size()-1==i || p == 5){
 				vid=false;
 			}else{
 				if (ChatClient.videos.get(i).getYear()>Integer.parseInt(sf[0])){
@@ -1112,7 +1109,7 @@ public class Fenetre extends JFrame{
 					c_c_vp_center.add(likes);
 					c_c_vp_center.add(dislikes);
 					TotalNotifY=TotalNotifY+95+15;
-					
+					p++;
 				}
 				i++;
 			}	
@@ -1124,7 +1121,7 @@ public class Fenetre extends JFrame{
 				b++;
 			}
 		}
-		System.out.println("B: "+b+" ("+(ChatClient.videos.size()-1)+")");
+		System.out.println("B: "+b+" ("+(ChatClient.videos.size()-1)+") + I:"+i);
 		
 		c_c_vp_south.setLayout(null);
 		vid_affich.setBounds(0, 0, 500, 50);
@@ -1146,20 +1143,12 @@ public class Fenetre extends JFrame{
 		
 		Boolean vid = true;
 		int i = (videopage-1)*5;
-		
+		int p = (videopage-1)*5;
 		while(vid){
-			if (ChatClient.videos.size()-1==i || i==videopage*5){
+			if (ChatClient.videos.size()-1==i || p==videopage*5){
 				vid=false;
 			}else{
-				if (ChatClient.videos.get(i).getYear()>Integer.parseInt(sf[0])){
 
-				}
-				else if (ChatClient.videos.get(i).getMonth()>Integer.parseInt(sf[1])){
-					
-				}
-				else if (ChatClient.videos.get(i).getDay()>Integer.parseInt(sf[2])){
-					
-				}else{
 					JPanel miniature = new MINIA("image/CLASSES/"+ChatClient.videos.get(i).getVideogenre()+".png");
 					miniature.setBounds(50, TotalNotifY, 165, 95);
 					JLabel titre = new JLabel();
@@ -1220,9 +1209,11 @@ public class Fenetre extends JFrame{
 					cv_c_south.add(nbshares);
 					TotalNotifY=TotalNotifY+95+20;
 					
+					p++;
+					
 				}
 				i++;
-			}	
+				
 		}
 		int b = 1;
 		for (int g =0;g<ChatClient.videos.size()-1;g++){
