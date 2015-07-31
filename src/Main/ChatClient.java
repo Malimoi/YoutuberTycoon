@@ -293,7 +293,7 @@ public class ChatClient {
             Box box = Box.createHorizontalBox();
             add(box, BorderLayout.SOUTH);
             inputTextField = new JTextField();
-            sendButton = new JButton("EnvoyÃ©");
+            sendButton = new JButton("Envoyé");
             box.add(inputTextField);
             box.add(sendButton);
 
