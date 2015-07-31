@@ -37,11 +37,11 @@ public class Bouton extends JButton implements MouseListener{
 			if (i==1){
 				this.img = ImageIO.read(new File("image/Home2.png"));
 			}else if (i==2){
-				this.img = ImageIO.read(new File("image/Planning2.png"));
-			}else if(i==3){
-				this.img = ImageIO.read(new File("image/Notif2.png"));
-			}else if(i==4){
 				this.img = ImageIO.read(new File("image/Video2.png"));
+			}else if(i==3){
+				this.img = ImageIO.read(new File("image/Planning2.png"));
+			}else if(i==4){
+				this.img = ImageIO.read(new File("image/Notif2.png"));
 			}
 			
 		} catch (IOException e) {
@@ -76,11 +76,11 @@ public class Bouton extends JButton implements MouseListener{
 			if (i==1){
 				this.img = ImageIO.read(new File("image/Home.png"));
 			}else if (i==2){
-				this.img = ImageIO.read(new File("image/Planning.png"));
-			}else if(i==3){
-				this.img = ImageIO.read(new File("image/Notif.png"));
-			}else if(i==4){
 				this.img = ImageIO.read(new File("image/Video.png"));
+			}else if(i==3){
+				this.img = ImageIO.read(new File("image/Planning.png"));
+			}else if(i==4){
+				this.img = ImageIO.read(new File("image/Notif.png"));
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -95,11 +95,11 @@ public class Bouton extends JButton implements MouseListener{
 			if (i==1){
 				this.img = ImageIO.read(new File("image/Home2.png"));
 			}else if (i==2){
-				this.img = ImageIO.read(new File("image/Planning2.png"));
-			}else if(i==3){
-				this.img = ImageIO.read(new File("image/Notif2.png"));
-			}else if(i==4){
 				this.img = ImageIO.read(new File("image/Video2.png"));
+			}else if(i==3){
+				this.img = ImageIO.read(new File("image/Planning2.png"));
+			}else if(i==4){
+				this.img = ImageIO.read(new File("image/Notif2.png"));
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -114,11 +114,11 @@ public class Bouton extends JButton implements MouseListener{
 			if (i==1){
 				this.img = ImageIO.read(new File("image/Home.png"));
 			}else if (i==2){
-				this.img = ImageIO.read(new File("image/Planning.png"));
-			}else if(i==3){
-				this.img = ImageIO.read(new File("image/Notif.png"));
-			}else if(i==4){
 				this.img = ImageIO.read(new File("image/Video.png"));
+			}else if(i==3){
+				this.img = ImageIO.read(new File("image/Planning.png"));
+			}else if(i==4){
+				this.img = ImageIO.read(new File("image/Notif.png"));
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block

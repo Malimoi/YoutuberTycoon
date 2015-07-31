@@ -273,9 +273,10 @@ public class Fenetre extends JFrame{
 	vid_affich.addActionListener(new BoutonToutaffichListener());
 	
 	boutonAcc.setBounds(0, 0, 225, 35);
-	boutonVideoGest.setBounds(0, 105, 225, 35);
+	boutonVideoGest.setBounds(0, 35, 225, 35);
 	boutonPlanning.setBounds(0, 70, 225, 35);
-	bouton3.setBounds(0, 35, 225, 35);
+	bouton3.setBounds(0, 105, 225, 35);
+	
 	w_center.add(boutonAcc);
 	w_center.add(boutonVideoGest);
 	w_center.add(boutonPlanning);
@@ -717,9 +718,9 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(true);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(true);
-			if (test==2){
+			if (test==3){
 				content.remove(center_planning);
-			}else if (test==4){
+			}else if (test==2){
 				content.remove(center_videos);
 			}
 			test=1;
@@ -750,10 +751,10 @@ public class Fenetre extends JFrame{
 			bouton3.setEnabled(true);
 			if (test==1){
 				content.remove(center);
-			}else if (test==4){
+			}else if (test==2){
 				content.remove(center_videos);
 			}
-			test=2;
+			test=3;
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -776,18 +777,18 @@ public class Fenetre extends JFrame{
 		public void actionPerformed(ActionEvent arg0) {
 			boutonAcc.setEnabled(true);
 			boutonVideoGest.setEnabled(true);
-			boutonPlanning.setEnabled(false);
-			bouton3.setEnabled(true);
+			boutonPlanning.setEnabled(true);
+			bouton3.setEnabled(false);
 			
 			if (test==1){
 				content.remove(center);
 			}
-			else if (test==2){
+			else if (test==3){
 				content.remove(center_planning);
-			}else if (test==4){
+			}else if (test==2){
 				content.remove(center_videos);
 			}
-			test=3;
+			test=4;
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -807,17 +808,17 @@ public class Fenetre extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			boutonAcc.setEnabled(true);
-			boutonVideoGest.setEnabled(true);
+			boutonVideoGest.setEnabled(false);
 			boutonPlanning.setEnabled(true);
-			bouton3.setEnabled(false);
+			bouton3.setEnabled(true);
 			
 			if (test==1){
 				content.remove(center);
 			}
-			else if (test==2){
+			else if (test==3){
 				content.remove(center_planning);
 			}
-			test=4;
+			test=2;
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
