@@ -29,12 +29,23 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
 // Class to manage Client chat Box.
 public class ChatClient {
 
+	/*
+	 * Client propieties
+	 */
+	public static String Pseudo = "";
+	/*
+	 *	0=null;1=lundi/mardi/jeudi/vendredi;2=lundi/mardi/mercredi/jeudi/vendredi;3=lundi/mardi/mercredi/jeudi/vendredi/samedi;
+	 *	4=lundi/mardi/mercredi/jeudi/vendredi/samedi/dimanche;
+	 */
+	public static Integer work = 1; 
+	
 	/*
 	 * ICI : PRESENT QUE DANS LES VERSIONS TEST POUR NE PAS PASSER PAS LE LAUCHER / SERVER
 	 */
@@ -90,8 +101,8 @@ public class ChatClient {
  		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 2L));
  		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 3L));
  		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 4L));
- 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 125L, 112L, 0L, 0L, "VLOG", 5L));
- 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 125L, 112L, 0L, 0L, "GAMING", 6L));
+ 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 5L));
+ 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 6L));
  		for (int a = 0; a < videos.size(); a++) {
  			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
              		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
@@ -124,6 +135,7 @@ public class ChatClient {
  		/*
  		 * Evenements
  		 */
+         evenements.add(new Evenement(31, 7, 15, 5, 0L));
          for (int i = 0; i < datavi.size(); i++){
          	String line2 = datavi.get(i);
          	String day = line2.split("§")[1];
@@ -158,11 +170,30 @@ public class ChatClient {
          evenements.add(new Evenement(0, 0, 0, null, 0L));
  		/*
  		 * Planning
- 		 */
-         planning.add(new Planning(16, 18, 29, 7, 15, 3, 3L));
-         planning.add(new Planning(18, 22, 28, 7, 15, 4, 2L));
-         planning.add(new Planning(8, 16, 28, 7, 15, 1, 0L));
-         planning.add(new Planning(8, 16, 29, 7, 15, 1, 0L));
+ 		 
+         int d = 1;
+         
+         while (d!=7){
+        	 SimpleDateFormat formater = null;
+ 			Date now = new Date();
+ 			Calendar cal = Calendar.getInstance();
+ 			cal.setTime(now);
+ 			cal.add(Calendar.DAY_OF_YEAR, d-1); // <--
+ 			Date date = cal.getTime();
+ 			formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM/MMM");
+ 			String s = formater.format(date);
+ 			String[] sf = s.split("/");
+ 			if (sf[])
+ 			
+ 			d++;
+         }
+         */
+         planning.add(new Planning(8, 16, 2, 8, 15, 1, 0L));
+         planning.add(new Planning(16, 22, 1, 8, 15, 3, 6L));
+         planning.add(new Planning(8, 16, 1, 8, 15, 1, 0L));
+         planning.add(new Planning(16, 22, 2, 8, 15, 4, 6L));
+         planning.add(new Planning(16, 21, 31, 7, 15, 4, 5L));
+         planning.add(new Planning(8, 16, 30, 7, 15, 1, 0L));
          for (int a = 0; a < planning.size(); a++) {
              datapl.add(planning.get(a).getHour_start() + " " + planning.get(a).getHour() + " " + planning.get(a).getDay() + " "
                      + planning.get(a).getMonth() + " " + planning.get(a).getYear() + " " + planning.get(a).getId() + " " + planning.get(a).getData());

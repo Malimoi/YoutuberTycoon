@@ -857,7 +857,7 @@ public class Fenetre extends JFrame{
 			formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM/MMM");
 			String s = formater.format(date);
 			String[] sf = s.split("/");
-			System.out.println("date:"+sf[2]+"/"+sf[1]+"/"+sf[0]);
+			
 			if (d==1){
 				lab_c_c_nt_c_jour.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lab_c_c_nt_c_jour.setText(""+sf[4].toUpperCase()+"");
@@ -871,27 +871,18 @@ public class Fenetre extends JFrame{
 				lab_c_c_nt_c_date.setHorizontalAlignment(JLabel.LEFT);
 				lab_c_c_nt_c_date.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 20);
 				TotalNotifY = TotalNotifY+20+5;
-				if (ChatClient.evenements.get(i).getYear()<Integer.parseInt(sf[0])){
-					ChatClient.evenements.remove(i);
+				while(plan){
+					if (ChatClient.planning.size()-1==i){
+						plan=false;
+					}
+					else if (ChatClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && Integer.parseInt(sf[2])==ChatClient.planning.get(i).getDay()){
+							ChatClient.planning.remove(i);
+							System.out.println("planning remove hour : "+i);
+					}
+					i++;
 				}
-				else if (ChatClient.evenements.get(i).getMonth()<Integer.parseInt(sf[1]) && !(ChatClient.evenements.get(i).getYear()>Integer.parseInt(sf[0]))){
-					ChatClient.evenements.remove(i);
-				}
-				else if (ChatClient.evenements.get(i).getDay()<Integer.parseInt(sf[2]) && !(ChatClient.evenements.get(i).getMonth()>Integer.parseInt(sf[1]))){
-					ChatClient.evenements.remove(i);
-				}
-				if (ChatClient.planning.get(i).getYear()<Integer.parseInt(sf[0])){
-					ChatClient.planning.remove(i);
-				}
-				else if (ChatClient.planning.get(i).getMonth()<Integer.parseInt(sf[1]) && !(ChatClient.planning.get(i).getYear()>Integer.parseInt(sf[0]))){
-					ChatClient.planning.remove(i);
-				}
-				else if (ChatClient.planning.get(i).getDay()<Integer.parseInt(sf[2]) && !(ChatClient.planning.get(i).getMonth()>Integer.parseInt(sf[1]))){
-					ChatClient.planning.remove(i);
-				}
-				else if (ChatClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && !(ChatClient.planning.get(i).getDay()>Integer.parseInt(sf[2]))){
-					ChatClient.planning.remove(i);
-				}
+				i=0;
+				plan=true;
 			}else{
 				JLabel next_day = new JLabel();
 				next_day.setFont(new Font("Tahoma", Font.PLAIN, 14));
