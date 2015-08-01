@@ -132,6 +132,13 @@ public class Fenetre extends JFrame{
 				public JButton mettreenligne = new ClassicButton("Faire une vidéo");
 			public JPanel cv_c_south = new NOR();
 	public JPanel center_planning = new JPanel();
+		public JPanel cp_east = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel cp_west = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel cp_north = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel cp_center = new NOR();
+			public JPanel cp_c_north = new VIDEOS_NORTH();
+				public JLabel lab_planning = new JLabel();
+				public JLabel lab_planningInfo = new JLabel();
 	
 	public Thread t;
 	public int test = 0;
@@ -461,8 +468,37 @@ public class Fenetre extends JFrame{
 	 * End Center
 	 * Start Center_Planning
 	 */
-	
-	center_planning.setBackground(Color.RED);
+	center_planning.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10),hauteur));
+	center_planning.setLayout(new BorderLayout());
+		cp_west.setPreferredSize(new Dimension(10, hauteur));
+		cp_east.setPreferredSize(new Dimension(10, hauteur));
+		cp_north.setPreferredSize(new Dimension(largeur, 10));
+		cp_center.setLayout(new BorderLayout());
+			cp_c_north.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), Fenetre.hauteur/7));
+			cp_c_north.setLayout(null);
+			lab_planning.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			lab_planning.setText("Planning");
+			lab_planning.setForeground(Color.decode("#424242"));
+			lab_planning.setHorizontalAlignment(JLabel.CENTER);
+			lab_planning.setBounds(8, 22, 120, 30);
+			lab_planningInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			lab_planningInfo.setText("C'est ici que vous gérez votre emploi du temps !");
+			lab_planningInfo.setForeground(Color.decode("#424242"));
+			lab_planningInfo.setHorizontalAlignment(JLabel.CENTER);
+			lab_planningInfo.setBounds(10, 22+50, 400, 20);
+			
+			cp_c_north.add(lab_planning);
+			cp_c_north.add(lab_planningInfo);
+		cp_center.add(cp_c_north,BorderLayout.NORTH);
+	center_planning.add(cp_west,BorderLayout.WEST);
+	center_planning.add(cp_east,BorderLayout.EAST);
+	center_planning.add(cp_north,BorderLayout.NORTH);
+	center_planning.add(cp_center,BorderLayout.CENTER);
+			
+	/*
+	 * End Center_Planning
+	 * Start
+	 */
 	
 	content.add(haut, BorderLayout.NORTH);
 	content.add(west, BorderLayout.WEST);
@@ -877,7 +913,6 @@ public class Fenetre extends JFrame{
 					}
 					else if (ChatClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && Integer.parseInt(sf[2])==ChatClient.planning.get(i).getDay()){
 							ChatClient.planning.remove(i);
-							System.out.println("planning remove hour : "+i);
 					}
 					i++;
 				}
@@ -1152,7 +1187,7 @@ public class Fenetre extends JFrame{
 					publie.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					if (ChatClient.videos.get(i).getYear()>Integer.parseInt(sf[0]) || (ChatClient.videos.get(i).getMonth()>Integer.parseInt(sf[1]))
 							|| (ChatClient.videos.get(i).getDay()>Integer.parseInt(sf[2]))){
-						publie.setText("<html><font color=red>PLANIFIÉE LE "+Zero(ChatClient.videos.get(i).getDay())+"/"+Zero(ChatClient.videos.get(i).getMonth())+"/"+Zero(ChatClient.videos.get(i).getYear())+"</font></html>");
+						publie.setText("<html><font color=red>PLANIFIÉE POUR LE "+Zero(ChatClient.videos.get(i).getDay())+"/"+Zero(ChatClient.videos.get(i).getMonth())+"/"+Zero(ChatClient.videos.get(i).getYear())+"</font></html>");
 					}
 					else{
 						publie.setText("PUBLIÉE LE "+Zero(ChatClient.videos.get(i).getDay())+"/"+Zero(ChatClient.videos.get(i).getMonth())+"/"+Zero(ChatClient.videos.get(i).getYear()));
