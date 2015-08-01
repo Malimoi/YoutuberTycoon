@@ -22,13 +22,15 @@ Pour le moment, il y a seulement la communication client-server qui a été effect
 > - Mise en place du <i>gestionnaire de vidéos</i>
 > - **Planning** sur la <i>page principale</i> !
 
+<u>Mise à  jour du 01/08/2015 à  15:27 :</u></br>
+Je ne serais pas beaucoup présent aujourd'hui pour avancer : cause -> tournage de vidéos. J'esserais tout de même de mettre en ligne les nouveaux <i>screens</i> du jeu ;)
+
 <u>Mise à  jour du 31/07/2015 à  12:30 :</u></br>
 Annonce pour annoncer les objectifs à terminer aujourd'hui.
 
 > **Objectifs du jour:**
 
 > - Fin de la mise en page du <i>gestionnaire de vidéos</i>.
-> - Fin de la mise en page du <i>planning</i> (le vrai).
 
 
 <u>Mise à  jour du 30/07/2015 à  23:31 :</u></br>
@@ -62,5 +64,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 30/07/2015 à  23:33)
+(dèrnière modification le 01/08/2015 à  15:27)
 
