@@ -22,6 +22,13 @@ Pour le moment, il y a seulement la communication client-server qui a été effect
 > - Mise en place du <i>gestionnaire de vidéos</i>
 > - **Planning** sur la <i>page principale</i> !
 
+<u>Mise à  jour du 02/08/2015 à  23:00 :</u></br>
+J'étais occupé malheureusement aujourd'hui encore une fois par mes vidéos. Mais voici tout de même les <i>screens</i>.</br>
+Comme vous pouvez le voir sur le premier screen, le pannel "<i>vidéos</i>" a bien été mis en place avec succès sur la page d'accueil.
+![Screen4] (http://img15.hostingpics.net/pics/982672SCREEN1.png)
+Ce deuxième <i>screen</i> montre l'onglet <i>gestionnaire de vidéos</i>. Les boutons qui servent à switcher de pages se crées automatiquement suivant le nombre de vidéos.
+![Screen5] (http://img15.hostingpics.net/pics/242622SCREEN2.png)
+
 <u>Mise à  jour du 01/08/2015 à  15:27 :</u></br>
 Je ne serais pas beaucoup présent aujourd'hui pour avancer : cause -> tournage de vidéos. J'esserais tout de même de mettre en ligne les nouveaux <i>screens</i> du jeu ;)
 
