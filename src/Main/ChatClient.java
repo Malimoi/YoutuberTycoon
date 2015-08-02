@@ -170,7 +170,7 @@ public class ChatClient {
          evenements.add(new Evenement(0, 0, 0, null, 0L));
  		/*
  		 * Planning
- 		 
+ 		 */
          int d = 1;
          
          while (d!=7){
@@ -183,17 +183,31 @@ public class ChatClient {
  			formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM/MMM");
  			String s = formater.format(date);
  			String[] sf = s.split("/");
- 			if (sf[])
+ 			if (work==1){
+ 				if (sf[4].contains("lundi")||sf[4].contains("mardi")||sf[4].contains("jeudi")||sf[4].contains("vendredi")){
+ 					planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
+ 							1, 0L));
+ 				}
+ 			}if (work==2){
+ 				if (sf[4].contains("lundi")||sf[4].contains("mardi")||sf[4].contains("mercredi")||sf[4].contains("jeudi")||sf[4].contains("vendredi")){
+ 					planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
+ 							1, 0L));
+ 				}
+ 			}if (work==3){
+ 				if (sf[4].contains("lundi")||sf[4].contains("mardi")||sf[4].contains("mercredi")||sf[4].contains("jeudi")
+ 						||sf[4].contains("vendredi")||sf[4].contains("samedi")){
+ 					planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
+ 							1, 0L));
+ 				}
+ 			}if (work==4){
+ 				planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
+ 						1, 0L));
+ 				
+ 			}
  			
  			d++;
          }
-         */
-         planning.add(new Planning(8, 16, 2, 8, 15, 1, 0L));
-         planning.add(new Planning(16, 22, 1, 8, 15, 3, 6L));
-         planning.add(new Planning(8, 16, 1, 8, 15, 1, 0L));
-         planning.add(new Planning(16, 22, 2, 8, 15, 4, 6L));
-         planning.add(new Planning(16, 21, 31, 7, 15, 4, 5L));
-         planning.add(new Planning(8, 16, 30, 7, 15, 1, 0L));
+
          for (int a = 0; a < planning.size(); a++) {
              datapl.add(planning.get(a).getHour_start() + " " + planning.get(a).getHour() + " " + planning.get(a).getDay() + " "
                      + planning.get(a).getMonth() + " " + planning.get(a).getYear() + " " + planning.get(a).getId() + " " + planning.get(a).getData());

@@ -22,6 +22,9 @@ Pour le moment, il y a seulement la communication client-server qui a été effect
 > - Mise en place du <i>gestionnaire de vidéos</i>
 > - **Planning** sur la <i>page principale</i> !
 
+<u>Mise à  jour du 02/08/2015 à  23:36 :</u></br>
+Dans le planning se place automatiquement la tâche **Travail** selon le statut du joueur. (Si il travail 4j/7, 5j/7, etc...)
+
 <u>Mise à  jour du 02/08/2015 à  23:00 :</u></br>
 J'étais occupé malheureusement aujourd'hui encore une fois par mes vidéos. Mais voici tout de même les <i>screens</i>.</br>
 Comme vous pouvez le voir sur le premier screen, le pannel "<i>vidéos</i>" a bien été mis en place avec succès sur la page d'accueil.
@@ -71,5 +74,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 01/08/2015 à  15:27)
+(dèrnière modification le 02/08/2015 à  23:36)
 
