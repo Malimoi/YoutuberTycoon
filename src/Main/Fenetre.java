@@ -39,7 +39,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import utilities.Video;
 import frames.ACC;
+import frames.BORDER_PL;
 import frames.COLOR;
 import frames.MINI;
 import frames.MINIA;
@@ -140,12 +142,14 @@ public class Fenetre extends JFrame{
 				public JLabel lab_planning = new JLabel();
 				public JLabel lab_planningInfo = new JLabel();
 			public JPanel cp_c_center = new COLOR(Color.decode("#F3F3F3"));
-				public JPanel cp_c_c_north = new COLOR(Color.decode("#F3F3F3"));
-				public JPanel cp_c_c_west = new COLOR(Color.decode("#F3F3F3"));
-				public JPanel cp_c_c_east = new COLOR(Color.decode("#F3F3F3"));
-				public JPanel cp_c_c_center = new COLOR(Color.decode("#F3F3F3"));
+				public JPanel cp_c_c_north = new COLOR(Color.decode("#ffffff"));
+				public JPanel cp_c_c_west = new COLOR(Color.decode("#ffffff"));
+				public JPanel cp_c_c_east = new COLOR(Color.decode("#ffffff"));
+				public JPanel cp_c_c_center = new COLOR(Color.decode("#ffffff"));
 					public JPanel cp_c_c_c_1 = new NOR();
+						public JPanel cp_c_c_c_1_center = new NOR();
 					public JPanel cp_c_c_c_2 = new NOR();
+						public JPanel cp_c_c_c_2_center = new NOR();
 					
 	public Thread t;
 	public int test = 0;
@@ -161,7 +165,7 @@ public class Fenetre extends JFrame{
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setExtendedState(JFrame.NORMAL);
 	//this.setDefaultLookAndFeelDecorated(false);    /*-> Plein écran.*/
-	//this.setExtendedState(this.MAXIMIZED_BOTH);
+	this.setExtendedState(this.MAXIMIZED_BOTH);
 	this.setUndecorated(true);
 	this.setResizable(true);
 				
@@ -464,7 +468,7 @@ public class Fenetre extends JFrame{
 			cv_c_north.add(video);
 			cv_c_north.add(mettreenligne);
 			cv_center.add(cv_c_north, BorderLayout.NORTH);
-			cv_center.add(cv_c_south, BorderLayout.SOUTH);
+			cv_center.add(cv_c_south, BorderLayout.CENTER);
 		
 	center_videos.add(cv_west,BorderLayout.WEST);
 	center_videos.add(cv_east,BorderLayout.EAST);
@@ -502,13 +506,40 @@ public class Fenetre extends JFrame{
 			cp_c_center.setLayout(new BorderLayout());
 			cp_c_center.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), hauteur-Fenetre.hauteur/7));
 			cp_c_c_north.setPreferredSize(new Dimension(largeur,15));
-			cp_c_c_west.setPreferredSize(new Dimension((largeur-(255+10+10))/2/4,hauteur));
-			cp_c_c_east.setPreferredSize(new Dimension((largeur-(255+10+10))/2/4,hauteur));
+			cp_c_c_west.setPreferredSize(new Dimension(15,hauteur));
+			cp_c_c_east.setPreferredSize(new Dimension(15,hauteur));
 			cp_c_c_center.setLayout(null);
-				cp_c_c_c_1.setBounds(0,0,((largeur-(255+10+10))/2/4)*3-7,500);
-				cp_c_c_c_1.setLayout(null);
-				cp_c_c_c_2.setBounds(((largeur-(255+10+10))/2/4)*3+7,0,((largeur-(255+10+10))/2/4)*3-2,500);
-				cp_c_c_c_2.setLayout(null);
+				
+				cp_c_c_c_1.setBounds(0,100,400,450);
+				cp_c_c_c_1.setLayout(new BorderLayout());
+				cp_c_c_c_2.setBounds(399,100,400,450);
+				cp_c_c_c_2.setLayout(new BorderLayout());
+				cp_c_c_c_1_center.setLayout(null);
+				cp_c_c_c_2_center.setLayout(null);
+				for (int a = 0;a<2;a++){
+					JPanel n = new BORDER_PL(1);
+					JPanel s = new BORDER_PL(2);
+					JPanel w = new BORDER_PL(3);
+					JPanel e = new BORDER_PL(4);
+					w.setPreferredSize(new Dimension(26,450));
+					e.setPreferredSize(new Dimension(26,450));
+					n.setPreferredSize(new Dimension(400,5));
+					s.setPreferredSize(new Dimension(400,15));
+					if (a==1){
+						cp_c_c_c_1.add(w,BorderLayout.WEST);
+						cp_c_c_c_1.add(e,BorderLayout.EAST);
+						cp_c_c_c_1.add(n,BorderLayout.NORTH);
+						cp_c_c_c_1.add(s,BorderLayout.SOUTH);
+						cp_c_c_c_1.add(cp_c_c_c_1_center,BorderLayout.CENTER);
+					}else{
+						cp_c_c_c_2.add(w,BorderLayout.WEST);
+						cp_c_c_c_2.add(e,BorderLayout.EAST);
+						cp_c_c_c_2.add(n,BorderLayout.NORTH);
+						cp_c_c_c_2.add(s,BorderLayout.SOUTH);
+						cp_c_c_c_2.add(cp_c_c_c_2_center,BorderLayout.CENTER);
+					}
+				}
+				
 				
 				setPlanningPage();
 				
@@ -723,7 +754,7 @@ public class Fenetre extends JFrame{
 					ex.printStackTrace();
 				}
 				setVideosGestionnaire();
-				cv_center.add(cv_c_south,BorderLayout.SOUTH);
+				cv_center.add(cv_c_south,BorderLayout.CENTER);
 				try{
 					content.updateUI();
 				}catch(Exception ex){
@@ -1192,7 +1223,7 @@ public class Fenetre extends JFrame{
 	}
 	
 	public void setVideosGestionnaire(){
-		int TotalNotifY=hauteur/7-5;
+		int TotalNotifY=20;
 		
 		SimpleDateFormat formater = null;
 		Date now = new Date();
@@ -1323,24 +1354,21 @@ public class Fenetre extends JFrame{
 			
 			JLabel jour = new JLabel();
 			jour.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			jour.setText(""+sf[4].toUpperCase()+"");
-			jour.setForeground(Color.RED);
+			jour.setText("AUJOURD'HUI");
+			jour.setForeground(Color.decode("#66A563"));
 			jour.setHorizontalAlignment(JLabel.LEFT);
-			jour.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 18);
-			TotalNotifY = TotalNotifY+20;
-			JLabel date1 = new JLabel();
-			date1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-			date1.setText(""+sf[2]+" "+sf[5].toUpperCase()+"");
-			date1.setForeground(Color.RED);
-			date1.setHorizontalAlignment(JLabel.LEFT);
-			date1.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 24);
-			TotalNotifY = TotalNotifY+26+5;
+			jour.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 18);
+			JLabel dem = new JLabel();
+			dem.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			dem.setText("DEMAIN");
+			dem.setForeground(Color.DARK_GRAY);
+			dem.setHorizontalAlignment(JLabel.LEFT);
+			dem.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 18);
+			TotalNotifY = TotalNotifY+20+5+15;
 			if (d==1){
-				cp_c_c_c_1.add(jour);
-				cp_c_c_c_1.add(date1);
+				cp_c_c_c_1_center.add(jour);
 			}else{
-				cp_c_c_c_2.add(jour);
-				cp_c_c_c_2.add(date1);
+				cp_c_c_c_2_center.add(dem);
 			}
 			
 			/*
@@ -1378,9 +1406,9 @@ public class Fenetre extends JFrame{
 							centerr.add(label, BorderLayout.CENTER);
 							panel.add(centerr,BorderLayout.CENTER);
 							if (d==1){
-								cp_c_c_c_1.add(panel);
+								cp_c_c_c_1_center.add(panel);
 							}else{
-								cp_c_c_c_2.add(panel);
+								cp_c_c_c_2_center.add(panel);
 							}				
 							System.out.println("(1-e) Jour égal à l'index : day "+ChatClient.evenements.get(i).getDay());
 						}
@@ -1454,9 +1482,9 @@ public class Fenetre extends JFrame{
 							centerr.add(suddd,BorderLayout.SOUTH);
 							panel.add(centerr,BorderLayout.CENTER);
 							if (d==1){
-								cp_c_c_c_1.add(panel);
+								cp_c_c_c_1_center.add(panel);
 							}else{
-								cp_c_c_c_2.add(panel);
+								cp_c_c_c_2_center.add(panel);
 							}
 							System.out.println("(1) Jour égal à l'index : "+ChatClient.planning.get(i).getHour_start()+" -> "+ChatClient.planning.get(i).getHour()
 									+" : day "+ChatClient.planning.get(i).getDay());
@@ -1464,9 +1492,13 @@ public class Fenetre extends JFrame{
 						i++;
 					}
 			}
+			if (d==1){
+				cp_c_c_c_1_center.setBounds(0,0,400,450);
+			}else{
+				cp_c_c_c_2_center.setBounds(((largeur-(255+10+10))/2/4)*3+7,0
+						,400,450);
+			}
 			d++;
-		}		
-
-		c_c_notif.setBounds(0, 12+80, (((largeur-255)-15-(largeur-255)/4))/2, TotalNotifY+20);
+		}			
 	}
 }
