@@ -103,6 +103,7 @@ public class ChatClient {
  		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 4L));
  		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 5L));
  		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 6L));
+ 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 7L));
  		for (int a = 0; a < videos.size(); a++) {
  			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
              		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
