@@ -146,6 +146,8 @@ public class Fenetre extends JFrame{
 				public JPanel cp_c_c_west = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_east = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_center = new COLOR(Color.decode("#ffffff"));
+					public JLabel DATE_OF_DAY = new JLabel();
+					public JLabel Agenda = new JLabel();
 					public JPanel cp_c_c_c_1 = new NOR();
 						public JPanel cp_c_c_c_1_center = new NOR();
 					public JPanel cp_c_c_c_2 = new NOR();
@@ -515,34 +517,12 @@ public class Fenetre extends JFrame{
 				cp_c_c_c_2.setBounds(399,100,400,450);
 				cp_c_c_c_2.setLayout(new BorderLayout());
 				cp_c_c_c_1_center.setLayout(null);
-				cp_c_c_c_2_center.setLayout(null);
-				for (int a = 0;a<2;a++){
-					JPanel n = new BORDER_PL(1);
-					JPanel s = new BORDER_PL(2);
-					JPanel w = new BORDER_PL(3);
-					JPanel e = new BORDER_PL(4);
-					w.setPreferredSize(new Dimension(26,450));
-					e.setPreferredSize(new Dimension(26,450));
-					n.setPreferredSize(new Dimension(400,5));
-					s.setPreferredSize(new Dimension(400,15));
-					if (a==1){
-						cp_c_c_c_1.add(w,BorderLayout.WEST);
-						cp_c_c_c_1.add(e,BorderLayout.EAST);
-						cp_c_c_c_1.add(n,BorderLayout.NORTH);
-						cp_c_c_c_1.add(s,BorderLayout.SOUTH);
-						cp_c_c_c_1.add(cp_c_c_c_1_center,BorderLayout.CENTER);
-					}else{
-						cp_c_c_c_2.add(w,BorderLayout.WEST);
-						cp_c_c_c_2.add(e,BorderLayout.EAST);
-						cp_c_c_c_2.add(n,BorderLayout.NORTH);
-						cp_c_c_c_2.add(s,BorderLayout.SOUTH);
-						cp_c_c_c_2.add(cp_c_c_c_2_center,BorderLayout.CENTER);
-					}
-				}
-				
+				cp_c_c_c_2_center.setLayout(null);			
 				
 				setPlanningPage();
 				
+				cp_c_c_center.add(DATE_OF_DAY);
+				cp_c_c_center.add(Agenda);
 				cp_c_c_center.add(cp_c_c_c_1);
 				cp_c_c_center.add(cp_c_c_c_2);
 				
@@ -1333,7 +1313,29 @@ public class Fenetre extends JFrame{
 	}
 	
 	public void setPlanningPage(){
-		System.out.println("Execution de setPlanning");
+		for (int a = 0;a<2;a++){
+			JPanel n = new BORDER_PL(1);
+			JPanel s = new BORDER_PL(2);
+			JPanel w = new BORDER_PL(3);
+			JPanel e = new BORDER_PL(4);
+			w.setPreferredSize(new Dimension(26,450));
+			e.setPreferredSize(new Dimension(26,450));
+			n.setPreferredSize(new Dimension(400,5));
+			s.setPreferredSize(new Dimension(400,15));
+			if (a==1){
+				cp_c_c_c_1.add(w,BorderLayout.WEST);
+				cp_c_c_c_1.add(e,BorderLayout.EAST);
+				cp_c_c_c_1.add(n,BorderLayout.NORTH);
+				cp_c_c_c_1.add(s,BorderLayout.SOUTH);
+				cp_c_c_c_1.add(cp_c_c_c_1_center,BorderLayout.CENTER);
+			}else{
+				cp_c_c_c_2.add(w,BorderLayout.WEST);
+				cp_c_c_c_2.add(e,BorderLayout.EAST);
+				cp_c_c_c_2.add(n,BorderLayout.NORTH);
+				cp_c_c_c_2.add(s,BorderLayout.SOUTH);
+				cp_c_c_c_2.add(cp_c_c_c_2_center,BorderLayout.CENTER);
+			}
+		}
 		//Label : Name
 		int TotalNotifY = 0;
 		Boolean encours = true;
@@ -1346,11 +1348,15 @@ public class Fenetre extends JFrame{
 			Date now = new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(now);
-			cal.add(Calendar.DAY_OF_YEAR, d-1); // <--
+			if (d==1){
+				cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+			}else{
+				cal.add(Calendar.DAY_OF_YEAR, d-1); // <--	
+			}
 			Date date = cal.getTime();
 			formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM/MMM");
 			String s = formater.format(date);
-			String[] sf = s.split("/");
+			String[] sf = s.split("/");		
 			
 			JLabel jour = new JLabel();
 			jour.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -1366,6 +1372,24 @@ public class Fenetre extends JFrame{
 			dem.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 18);
 			TotalNotifY = TotalNotifY+20+5+15;
 			if (d==1){
+				String jour_sem = "";
+				String mois = "";
+				char[] stringArray = sf[4].toCharArray();
+				stringArray[0] = Character.toUpperCase(stringArray[0]);
+				jour_sem = new String(stringArray);
+				stringArray = sf[5].toCharArray();
+				stringArray[0] = Character.toUpperCase(stringArray[0]);
+				mois = new String(stringArray);
+				DATE_OF_DAY.setFont(new Font("Tahoma", Font.PLAIN, 45));
+				DATE_OF_DAY.setText(jour_sem+", "+sf[2]+" "+mois);
+				DATE_OF_DAY.setForeground(Color.GRAY);
+				DATE_OF_DAY.setHorizontalAlignment(JLabel.LEFT);
+				DATE_OF_DAY.setBounds(0, 0, 600, 45);
+				Agenda.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				Agenda.setText("Agenda :");
+				Agenda.setForeground(Color.GRAY);
+				Agenda.setHorizontalAlignment(JLabel.LEFT);
+				Agenda.setBounds(0, 60, 400, 25);
 				cp_c_c_c_1_center.add(jour);
 			}else{
 				cp_c_c_c_2_center.add(dem);
@@ -1410,7 +1434,6 @@ public class Fenetre extends JFrame{
 							}else{
 								cp_c_c_c_2_center.add(panel);
 							}				
-							System.out.println("(1-e) Jour égal à l'index : day "+ChatClient.evenements.get(i).getDay());
 						}
 						i++;
 					}
@@ -1486,8 +1509,6 @@ public class Fenetre extends JFrame{
 							}else{
 								cp_c_c_c_2_center.add(panel);
 							}
-							System.out.println("(1) Jour égal à l'index : "+ChatClient.planning.get(i).getHour_start()+" -> "+ChatClient.planning.get(i).getHour()
-									+" : day "+ChatClient.planning.get(i).getDay());
 						}
 						i++;
 					}
