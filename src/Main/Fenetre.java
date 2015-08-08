@@ -1556,7 +1556,7 @@ public class Fenetre extends JFrame{
 
 			JComboBox choix = new JComboBox(choicesStrings);
 			choix.setSelectedIndex(0);
-			choix.setBounds(0, 0, 350, 40);
+			choix.setBounds(0, 0, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
 			cp_c_c_c_right.add(choix);
 		}
 	}
