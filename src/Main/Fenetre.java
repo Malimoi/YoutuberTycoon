@@ -28,12 +28,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -51,6 +53,7 @@ import frames.PROF_ACC;
 import frames.SUBS;
 import frames.VIDEOS_NORTH;
 import frames.buttons.Bouton;
+import frames.buttons.Bouton_PlanningAddRemove;
 import frames.buttons.ToutAfficher;
 
 @SuppressWarnings("serial")
@@ -145,13 +148,16 @@ public class Fenetre extends JFrame{
 				public JPanel cp_c_c_north = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_west = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_east = new COLOR(Color.decode("#ffffff"));
-				public JPanel cp_c_c_center = new COLOR(Color.decode("#ffffff"));
+				public static JPanel cp_c_c_center = new COLOR(Color.decode("#ffffff"));
 					public JLabel DATE_OF_DAY = new JLabel();
 					public JLabel Agenda = new JLabel();
 					public JPanel cp_c_c_c_1 = new NOR();
 						public JPanel cp_c_c_c_1_center = new NOR();
 					public JPanel cp_c_c_c_2 = new NOR();
 						public JPanel cp_c_c_c_2_center = new NOR();
+					public static JPanel cp_c_c_c_right = new COLOR(Color.red);
+					public JButton plan_add = new Bouton_PlanningAddRemove(1);
+					public JButton plan_edit = new Bouton_PlanningAddRemove(2);
 					
 	public Thread t;
 	public int test = 0;
@@ -520,11 +526,21 @@ public class Fenetre extends JFrame{
 				cp_c_c_c_2_center.setLayout(null);			
 				
 				setPlanningPage();
+				/*
+				 * setModifPage(); ??
+				 */
+				plan_add.setBounds(largeur-255-10-10-15-15-110, 0, 60, 60);
+				plan_edit.setBounds(largeur-255-10-10-15-15-60, 0, 60, 60);
+				cp_c_c_c_right.setBounds(810,50,(largeur-10-10-255)-810-30,450);
+				cp_c_c_c_right.setLayout(null);
 				
 				cp_c_c_center.add(DATE_OF_DAY);
 				cp_c_c_center.add(Agenda);
 				cp_c_c_center.add(cp_c_c_c_1);
 				cp_c_c_center.add(cp_c_c_c_2);
+				cp_c_c_center.add(cp_c_c_c_right);
+				cp_c_c_center.add(plan_add);
+				cp_c_c_center.add(plan_edit);
 				
 			cp_c_north.add(lab_planning);
 			cp_c_north.add(lab_planningInfo);
@@ -611,7 +627,7 @@ public class Fenetre extends JFrame{
 		}
 		return s;
 	}
-	public String ActivityId (Integer i, Long l){
+	public static String ActivityId (Integer i, Long l){
 		String s = "Glandouillette";
 		String name = "";
 		if (i==1){
@@ -1306,7 +1322,7 @@ public class Fenetre extends JFrame{
 			TotalX=TotalX+50;
 		}
 	}
-	public String Zero(Integer z){
+	public static String Zero(Integer z){
 		String i = z<10?"0"+z:""+z;
 		
 		return i;
@@ -1346,7 +1362,7 @@ public class Fenetre extends JFrame{
 			int i = 0;
 			SimpleDateFormat formater = null;
 			Date now = new Date();
-			Calendar cal = Calendar.getInstance();
+			Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
 			cal.setTime(now);
 			if (d==1){
 				cal.add(Calendar.DAY_OF_YEAR, 0); // <--
@@ -1359,17 +1375,17 @@ public class Fenetre extends JFrame{
 			String[] sf = s.split("/");		
 			
 			JLabel jour = new JLabel();
-			jour.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			jour.setText("AUJOURD'HUI");
+			jour.setFont(new Font("Dominique", Font.PLAIN, 23));
+			jour.setText("Aujourd'hui");
 			jour.setForeground(Color.decode("#66A563"));
 			jour.setHorizontalAlignment(JLabel.LEFT);
-			jour.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 18);
+			jour.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 23);
 			JLabel dem = new JLabel();
-			dem.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			dem.setText("DEMAIN");
+			dem.setFont(new Font("Dominique", Font.PLAIN, 23));
+			dem.setText("Demain");
 			dem.setForeground(Color.DARK_GRAY);
 			dem.setHorizontalAlignment(JLabel.LEFT);
-			dem.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 18);
+			dem.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 23);
 			TotalNotifY = TotalNotifY+20+5+15;
 			if (d==1){
 				String jour_sem = "";
@@ -1380,16 +1396,16 @@ public class Fenetre extends JFrame{
 				stringArray = sf[5].toCharArray();
 				stringArray[0] = Character.toUpperCase(stringArray[0]);
 				mois = new String(stringArray);
-				DATE_OF_DAY.setFont(new Font("Tahoma", Font.PLAIN, 45));
-				DATE_OF_DAY.setText(jour_sem+", "+sf[2]+" "+mois);
-				DATE_OF_DAY.setForeground(Color.GRAY);
+				DATE_OF_DAY.setFont(new Font("Dominique", Font.PLAIN, 45));
+				DATE_OF_DAY.setText(jour_sem+", "+sf[2]+" "+(mois.contains("û")?mois.replace("û", "u"):mois));
+				DATE_OF_DAY.setForeground(Color.DARK_GRAY);
 				DATE_OF_DAY.setHorizontalAlignment(JLabel.LEFT);
 				DATE_OF_DAY.setBounds(0, 0, 600, 45);
-				Agenda.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				Agenda.setText("Agenda :");
+				Agenda.setFont(new Font("Dominique", Font.PLAIN, 25));
+				Agenda.setText("Mon agenda :");
 				Agenda.setForeground(Color.GRAY);
 				Agenda.setHorizontalAlignment(JLabel.LEFT);
-				Agenda.setBounds(0, 60, 400, 25);
+				Agenda.setBounds(0, 60, 400, 30);
 				cp_c_c_c_1_center.add(jour);
 			}else{
 				cp_c_c_c_2_center.add(dem);
@@ -1483,17 +1499,17 @@ public class Fenetre extends JFrame{
 							color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
 							
 							JLabel label_name = new JLabel();
-							label_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
-							label_name.setText(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData()));
+							label_name.setFont(new Font("Dominique", Font.PLAIN, 20));
+							label_name.setText(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData()).toLowerCase());
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
 							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
 							
 							JLabel label_hours = new JLabel();
-							label_hours.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							label_hours.setFont(new Font("Dominique", Font.PLAIN, 16));
 							String HourEnd = ChatClient.planning.get(i).getHour() < 22 ? ""+ChatClient.planning.get(i).getHour()+":00" : "<font color=red>"+
 									ChatClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
-							label_hours.setText("<html>"+ChatClient.planning.get(i).getHour_start()+":00 à "+HourEnd+"</html>");
+							label_hours.setText("<html>"+ChatClient.planning.get(i).getHour_start()+":00 a "+HourEnd+"</html>");
 							//label_hours.setForeground(Color.GRAY);
 							label_hours.setHorizontalAlignment(JLabel.LEFT);
 							label_hours.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -1521,5 +1537,27 @@ public class Fenetre extends JFrame{
 			}
 			d++;
 		}			
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void EDIT_PLAN(Integer i, Integer ID){
+		if(i==1){
+			ArrayList<String> ar = new ArrayList<String>();
+			ar.add("<html><font color=gray>Choix</font></html>");
+			for (int a = 0;a<ChatClient.planning.size();a++){
+				if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getId()!=1){
+					ar.add("<html>"+ActivityId(ChatClient.planning.get(a).getId(),ChatClient.planning.get(a).getData())+" le "+
+							Zero(ChatClient.planning.get(a).getDay())+"/"+Zero(ChatClient.planning.get(a).getMonth())+" de "+
+							ChatClient.planning.get(a).getHour_start()+"h à "+ChatClient.planning.get(a).getHour()+"h</html>");
+				}
+			}
+			String[] choicesStrings = new String[ar.size()];
+			choicesStrings = ar.toArray(choicesStrings);
+
+			JComboBox choix = new JComboBox(choicesStrings);
+			choix.setSelectedIndex(0);
+			choix.setBounds(0, 0, 350, 40);
+			cp_c_c_c_right.add(choix);
+		}
 	}
 }

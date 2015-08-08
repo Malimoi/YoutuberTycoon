@@ -104,6 +104,7 @@ public class ChatClient {
  		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 5L));
  		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 6L));
  		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 7L));
+ 		videos.add(new Video("MON SETUP DE FOU", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 8L));
  		for (int a = 0; a < videos.size(); a++) {
  			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
              		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
@@ -172,6 +173,7 @@ public class ChatClient {
  		/*
  		 * Planning
  		 */
+         planning.add(new Planning(23, 24, 7, 8, 15, 4, 8L));
          int d = 1;
          
          while (d!=7){
@@ -213,7 +215,7 @@ public class ChatClient {
              datapl.add(planning.get(a).getHour_start() + " " + planning.get(a).getHour() + " " + planning.get(a).getDay() + " "
                      + planning.get(a).getMonth() + " " + planning.get(a).getYear() + " " + planning.get(a).getId() + " " + planning.get(a).getData());
          }
-         planning.add(new Planning(0, 0, 0, 0, 0, null, 0L));
+         planning.add(new Planning(0, 0, 0, 0, 0, 0, 0L));
 
          Collections.sort(datapl, new StringComparator());
          Collections.reverse(datapl);
@@ -233,7 +235,7 @@ public class ChatClient {
              planning.add(new Planning(Integer.valueOf(hour_start), Integer.valueOf(hour), Integer.valueOf(day), Integer.valueOf(month),
                      Integer.valueOf(year), Integer.valueOf(id), Long.valueOf(data)));
          }
-         planning.add(new Planning(0, 0, 0, 0, 0, null, 0L));
+         planning.add(new Planning(0, 0, 0, 0, 0, 0, 0L));
 
          new Fenetre();
          /*

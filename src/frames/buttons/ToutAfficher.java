@@ -28,6 +28,11 @@ public class ToutAfficher extends JButton implements MouseListener{
 		this.setBorderPainted(false);
 		this.addMouseListener(this);
 		this.lab=new JLabel();
+		lab.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lab.setForeground(Color.decode("#296EF9"));
+		lab.setText("Tout afficher");
+		lab.setHorizontalAlignment(JLabel.CENTER);
+		this.add(lab,BorderLayout.CENTER);
 	}
 	public void paintComponent(Graphics g){
 		
@@ -37,16 +42,10 @@ public class ToutAfficher extends JButton implements MouseListener{
 		g2d.setRenderingHint(
 		        RenderingHints.KEY_TEXT_ANTIALIASING,
 		        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		
-		lab.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lab.setForeground(Color.decode("#296EF9"));
-		lab.setText("Tout afficher");
-		lab.setHorizontalAlignment(JLabel.CENTER);
-		this.add(lab,BorderLayout.CENTER);
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		this.FOND=Color.WHITE;
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
