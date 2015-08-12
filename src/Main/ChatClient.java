@@ -174,8 +174,8 @@ public class ChatClient {
  		/*
  		 * Planning
  		 */
-         planning.add(new Planning(23, 24, 12, 8, 15, 4, 8L, 1L));
-         planning.add(new Planning(16, 18, 13, 8, 15, 4, 5L, 2L));
+         planning.add(new Planning(23, 24, 13, 8, 15, 4, 8L, 1L));
+         planning.add(new Planning(16, 18, 14, 8, 15, 4, 5L, 2L));
          MAX_UUID_PLANNING=(long) planning.size()+1;
          int d = 1;
          

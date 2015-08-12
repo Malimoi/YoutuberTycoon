@@ -1734,10 +1734,10 @@ public class Fenetre extends JFrame{
 			ar.add("<html><font color=gray>Choix</font></html>");
 			for (int a = 0;a<ChatClient.planning.size();a++){
 				if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getId()!=1){
-					ar.add("<html>"+ActivityId(ChatClient.planning.get(a).getId(),ChatClient.planning.get(a).getData())+" le "+
+					ar.add(("<html>"+ActivityId(ChatClient.planning.get(a).getId(),ChatClient.planning.get(a).getData())+" le "+
 							Zero(ChatClient.planning.get(a).getDay())+"/"+Zero(ChatClient.planning.get(a).getMonth())+" de "+
-							ChatClient.planning.get(a).getHour_start()+"h à "+ChatClient.planning.get(a).getHour()+"h <hidden "+
-							ChatClient.planning.get(a).getUUID()+" /> </html>");
+							ChatClient.planning.get(a).getHour_start()+"h a "+ChatClient.planning.get(a).getHour()+"h <hidden "+
+							ChatClient.planning.get(a).getUUID()+" /> </html>").toLowerCase());
 				}
 			}
 			String[] choicesStrings = new String[ar.size()];
@@ -1745,11 +1745,13 @@ public class Fenetre extends JFrame{
 
 			edit_first_choice = new JComboBox(choicesStrings);
 			edit_first_choice.setSelectedIndex(0);
+			edit_first_choice.setFont(new Font("Dominique", Font.PLAIN, 14));
 			edit_first_choice.setBounds(0, 0, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
 			cp_c_c_c_right.add(edit_first_choice);
 			
 			edit_but_accept = new JButton("Suivant");
-			edit_but_accept.setBounds(0, 40+5, 75, 35);
+			edit_but_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
+			edit_but_accept.setBounds(0, 40+5, 110, 40);
 			cp_c_c_c_right.add(edit_but_accept);
 			edit_but_accept.addActionListener(new EditStepOne());
 			
@@ -1760,7 +1762,7 @@ public class Fenetre extends JFrame{
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void EDIT_PLAN_STEP_2(Planning pl){
-			
+
 		ArrayList<String> ardate = new ArrayList<String>();
 		for (int i = 0;i<=7;i++){
 			Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
@@ -1772,21 +1774,45 @@ public class Fenetre extends JFrame{
 		}
 			ArrayList<String> ar = new ArrayList<String>();
 			for (int i = 8;i<=21;i++){
-				ar.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
+				try{
+					ar.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
+				}catch(Exception ex){
+					
+				}		
 			}
 			ArrayList<String> arend = new ArrayList<String>();
 			for (int i = 9;i<=22;i++){
-				arend.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
+				try{
+					arend.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
+				}catch(Exception ex){
+					
+				}
 			}
 			
+			JLabel le = new JLabel("Le ");
+			le.setFont(new Font("Dominique", Font.PLAIN, 35));
+			le.setText("Le");
+			le.setForeground(Color.DARK_GRAY);
+			le.setHorizontalAlignment(JLabel.LEFT);
+			le.setBounds(0, 45+35+25, 40, 40);
+			cp_c_c_c_right.add(le);
 			
 			String[] choicesStringsDates = new String[ardate.size()];
 			choicesStringsDates = ardate.toArray(choicesStringsDates);
 			
 			edit_date_box = new JComboBox(choicesStringsDates);
-			edit_date_box.setSelectedIndex(0);
-			edit_date_box.setBounds(0, 45+35+25, 100, 40);
+			edit_date_box.setSelectedItem(Zero(pl.getDay()) + " / " + Zero(pl.getMonth()) + " / " + Zero(pl.getYear()));
+			edit_date_box.setFont(new Font("Dominique", Font.PLAIN, 14));
+			edit_date_box.setBounds(0+40+5, 45+35+25, 90, 40);
 			cp_c_c_c_right.add(edit_date_box);
+			
+			JLabel de = new JLabel("de");
+			de.setFont(new Font("Dominique", Font.PLAIN, 25));
+			de.setText("de");
+			de.setForeground(Color.DARK_GRAY);
+			de.setHorizontalAlignment(JLabel.LEFT);
+			de.setBounds(0+40+5+90+1, 45+35+25, 40, 35);
+			cp_c_c_c_right.add(de);
 			
 			String[] choicesStrings = new String[ar.size()];
 			choicesStrings = ar.toArray(choicesStrings);
@@ -1794,16 +1820,29 @@ public class Fenetre extends JFrame{
 			choicesStringsEnd = arend.toArray(choicesStringsEnd);
 
 			edit_hour_start = new JComboBox(choicesStrings);
-			edit_hour_start.setSelectedIndex(0);
-			edit_hour_start.setBounds(100+15, 45+35+25, 45, 40);
+			edit_hour_start.setSelectedItem("<html> "+pl.getHour_start()+"h <hidden "+pl.getUUID()+" /> </html>");
+			edit_hour_start.setFont(new Font("Dominique", Font.PLAIN, 14));
+			edit_hour_start.setBounds(100+15+40+5+5, 45+35+25, 45, 40);
 			cp_c_c_c_right.add(edit_hour_start);
+			
+			JLabel a = new JLabel("a");
+			a.setFont(new Font("Dominique", Font.PLAIN, 25));
+			a.setText("a");
+			a.setForeground(Color.DARK_GRAY);
+			a.setHorizontalAlignment(JLabel.LEFT);
+			a.setBounds(100+15+40+5+5+45+1, 45+35+25, 40, 35);
+			cp_c_c_c_right.add(a);
+			
+			cp_c_c_c_right.add(de);
 			edit_hour_end = new JComboBox(choicesStringsEnd);
-			edit_hour_end.setSelectedIndex(0);
-			edit_hour_end.setBounds(45+10+115, 45+35+25, 45, 40);
+			edit_hour_end.setSelectedItem("<html> "+pl.getHour()+"h <hidden "+pl.getUUID()+" /> </html>");
+			edit_hour_end.setFont(new Font("Dominique", Font.PLAIN, 14));
+			edit_hour_end.setBounds(45+10+115+40+15, 45+35+25, 45, 40);
 			cp_c_c_c_right.add(edit_hour_end);
 			
 			JButton but_accept = new JButton("Modifier");
-			but_accept.setBounds(0, 45+40+40+25, 75, 35);
+			but_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
+			but_accept.setBounds(0, 45+40+40+25, 110, 40);
 			cp_c_c_c_right.add(but_accept);
 			but_accept.addActionListener(new EditStepTwo());
 			
