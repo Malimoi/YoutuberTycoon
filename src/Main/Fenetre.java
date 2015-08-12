@@ -158,8 +158,10 @@ public class Fenetre extends JFrame{
 						public JPanel cp_c_c_c_2_center = new NOR();
 					public static JPanel cp_c_c_c_right = new NOR();
 						public static JComboBox edit_first_choice = new JComboBox();
+						public static JButton edit_but_accept;
 						public static JComboBox edit_hour_start = new JComboBox();
 						public static JComboBox edit_hour_end = new JComboBox();
+						public static JComboBox edit_date_box = new JComboBox();
 						public static JComboBox edit_date = new JComboBox();
 					public JButton plan_add = new Bouton_PlanningAddRemove(1);
 					public JButton plan_edit = new Bouton_PlanningAddRemove(2);
@@ -536,7 +538,7 @@ public class Fenetre extends JFrame{
 				 */
 				plan_add.setBounds(largeur-255-10-10-15-15-110, 0, 60, 60);
 				plan_edit.setBounds(largeur-255-10-10-15-15-60, 0, 60, 60);
-				cp_c_c_c_right.setBounds(810,70,(largeur-10-10-255)-810-30,450);
+				cp_c_c_c_right.setBounds(810,100,(largeur-10-10-255)-810-30,450);
 				cp_c_c_c_right.setLayout(null);
 				
 				cp_c_c_center.add(DATE_OF_DAY);
@@ -620,6 +622,9 @@ public class Fenetre extends JFrame{
 	public void resetPlanningPage(){
 		cp_c_c_c_1.removeAll();
 		cp_c_c_c_2.removeAll();
+		cp_c_c_c_1_center.removeAll();
+		cp_c_c_c_2_center.removeAll();
+		cp_c_c_c_right.removeAll();
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
@@ -969,6 +974,8 @@ public class Fenetre extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			edit_first_choice.setEnabled(false);
+			edit_but_accept.setEnabled(false);
 			String s = (String) edit_first_choice.getSelectedItem();
 			Boolean v = false;
 			Long l = 0L;
@@ -1002,11 +1009,20 @@ public class Fenetre extends JFrame{
 			ArrayList<Integer> ar = new ArrayList<Integer>();
 			String s = (String) edit_hour_start.getSelectedItem();
 			String s2 = (String) edit_hour_end.getSelectedItem();
+			String sd = (String) edit_date_box.getSelectedItem();
 			Boolean v = false;
 			Long l = 0L;
 			Planning pl = null;
 			Integer h1 = 0;
 			Integer h2 = 0;
+			Integer day = 0;
+			Integer month = 0;
+			Integer year = 0;
+
+			day=Integer.valueOf(sd.split(" ")[0]);
+			month=Integer.valueOf(sd.split(" ")[2]);
+			year=Integer.valueOf(sd.split(" ")[4]);
+			
 			if (!s.contains("Choix")){
 				for (String m : s.split(" ")){
 					if (v){
@@ -1021,8 +1037,8 @@ public class Fenetre extends JFrame{
 					}
 				}
 				for (int a = 0;a<ChatClient.planning.size();a++){
-					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==pl.getDay() &&
-							ChatClient.planning.get(a).getMonth()==pl.getMonth() && ChatClient.planning.get(a).getYear()==pl.getYear()){
+					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==day &&
+							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year){
 						for (int x = ChatClient.planning.get(a).getHour_start();x<ChatClient.planning.get(a).getHour();x++){
 							ar.add(x);
 						}
@@ -1038,8 +1054,8 @@ public class Fenetre extends JFrame{
 				}
 			}
 			ar.clear();
-			if (!s.contains("Choix")){
-				for (String m : s.split(" ")){
+			if (!s2.contains("Choix")){
+				for (String m : s2.split(" ")){
 					if (v){
 						l=Long.valueOf(m);
 						v=false;
@@ -1052,8 +1068,8 @@ public class Fenetre extends JFrame{
 					}
 				}
 				for (int a = 0;a<ChatClient.planning.size();a++){
-					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==pl.getDay() &&
-							ChatClient.planning.get(a).getMonth()==pl.getMonth() && ChatClient.planning.get(a).getYear()==pl.getYear()){
+					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==day &&
+							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year){
 						for (int x = ChatClient.planning.get(a).getHour_start()+1;x<ChatClient.planning.get(a).getHour();x++){
 							ar.add(x);
 						}
@@ -1087,9 +1103,12 @@ public class Fenetre extends JFrame{
 					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a)==pl){
 						ChatClient.planning.get(a).setHour_start(h1);
 						ChatClient.planning.get(a).setHour(h2);
-						System.out.println("CHANGEMMENT: "+ChatClient.planning.get(a).getDay()+"/"+ChatClient.planning.get(a).getMonth()+"/"+
-								ChatClient.planning.get(a).getYear()+" de "+ChatClient.planning.get(a).getHour_start()+"->"+
-								ChatClient.planning.get(a).getHour());
+						ChatClient.planning.get(a).setDay(day);
+						ChatClient.planning.get(a).setMonth(month);
+						ChatClient.planning.get(a).setYear(year);
+						/*
+						 * A faire : new tri des taches comme au lancement.
+						 */
 					}
 				}
 			}
@@ -1729,17 +1748,28 @@ public class Fenetre extends JFrame{
 			edit_first_choice.setBounds(0, 0, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
 			cp_c_c_c_right.add(edit_first_choice);
 			
-			JButton but_accept = new JButton("Suivant");
-			but_accept.setBounds(0, 40+5, 75, 35);
-			cp_c_c_c_right.add(but_accept);
-			but_accept.addActionListener(new EditStepOne());
+			edit_but_accept = new JButton("Suivant");
+			edit_but_accept.setBounds(0, 40+5, 75, 35);
+			cp_c_c_c_right.add(edit_but_accept);
+			edit_but_accept.addActionListener(new EditStepOne());
 			
 		}
+		edit_first_choice.setEnabled(true);
+		edit_but_accept.setEnabled(true);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void EDIT_PLAN_STEP_2(Planning pl){
-		
+			
+		ArrayList<String> ardate = new ArrayList<String>();
+		for (int i = 0;i<=7;i++){
+			Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
+			cal.add(Calendar.DAY_OF_YEAR, i); // <--
+			Date date = cal.getTime();
+			SimpleDateFormat formater = new SimpleDateFormat("dd / MM / yy");
+			String s = formater.format(date);
+			ardate.add(s);
+		}
 			ArrayList<String> ar = new ArrayList<String>();
 			for (int i = 8;i<=21;i++){
 				ar.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
@@ -1749,6 +1779,15 @@ public class Fenetre extends JFrame{
 				arend.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
 			}
 			
+			
+			String[] choicesStringsDates = new String[ardate.size()];
+			choicesStringsDates = ardate.toArray(choicesStringsDates);
+			
+			edit_date_box = new JComboBox(choicesStringsDates);
+			edit_date_box.setSelectedIndex(0);
+			edit_date_box.setBounds(0, 45+35+25, 100, 40);
+			cp_c_c_c_right.add(edit_date_box);
+			
 			String[] choicesStrings = new String[ar.size()];
 			choicesStrings = ar.toArray(choicesStrings);
 			String[] choicesStringsEnd = new String[arend.size()];
@@ -1756,15 +1795,15 @@ public class Fenetre extends JFrame{
 
 			edit_hour_start = new JComboBox(choicesStrings);
 			edit_hour_start.setSelectedIndex(0);
-			edit_hour_start.setBounds(0, 45+35+5, 45, 40);
+			edit_hour_start.setBounds(100+15, 45+35+25, 45, 40);
 			cp_c_c_c_right.add(edit_hour_start);
 			edit_hour_end = new JComboBox(choicesStringsEnd);
 			edit_hour_end.setSelectedIndex(0);
-			edit_hour_end.setBounds(45+10, 45+35+5, 45, 40);
+			edit_hour_end.setBounds(45+10+115, 45+35+25, 45, 40);
 			cp_c_c_c_right.add(edit_hour_end);
 			
-			JButton but_accept = new JButton("Valider");
-			but_accept.setBounds(0, 45+40+40+5, 75, 35);
+			JButton but_accept = new JButton("Modifier");
+			but_accept.setBounds(0, 45+40+40+25, 75, 35);
 			cp_c_c_c_right.add(but_accept);
 			but_accept.addActionListener(new EditStepTwo());
 			
