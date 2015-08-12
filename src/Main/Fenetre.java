@@ -41,6 +41,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import utilities.Planning;
 import utilities.Video;
 import frames.ACC;
 import frames.BORDER_PL;
@@ -155,7 +156,11 @@ public class Fenetre extends JFrame{
 						public JPanel cp_c_c_c_1_center = new NOR();
 					public JPanel cp_c_c_c_2 = new NOR();
 						public JPanel cp_c_c_c_2_center = new NOR();
-					public static JPanel cp_c_c_c_right = new COLOR(Color.red);
+					public static JPanel cp_c_c_c_right = new NOR();
+						public static JComboBox edit_first_choice = new JComboBox();
+						public static JComboBox edit_hour_start = new JComboBox();
+						public static JComboBox edit_hour_end = new JComboBox();
+						public static JComboBox edit_date = new JComboBox();
 					public JButton plan_add = new Bouton_PlanningAddRemove(1);
 					public JButton plan_edit = new Bouton_PlanningAddRemove(2);
 					
@@ -531,7 +536,7 @@ public class Fenetre extends JFrame{
 				 */
 				plan_add.setBounds(largeur-255-10-10-15-15-110, 0, 60, 60);
 				plan_edit.setBounds(largeur-255-10-10-15-15-60, 0, 60, 60);
-				cp_c_c_c_right.setBounds(810,50,(largeur-10-10-255)-810-30,450);
+				cp_c_c_c_right.setBounds(810,70,(largeur-10-10-255)-810-30,450);
 				cp_c_c_c_right.setLayout(null);
 				
 				cp_c_c_center.add(DATE_OF_DAY);
@@ -612,6 +617,37 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
+	public void resetPlanningPage(){
+		cp_c_c_c_1.removeAll();
+		cp_c_c_c_2.removeAll();
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		try{
+			content.updateUI();
+		}catch(Exception e){
+			System.out.println("Erreur : "+test);
+		}
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		setPlanningPage();
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		try{
+			content.updateUI();
+		}catch(Exception e){
+			System.out.println("Erreur : "+test);
+		}
+	}
+	
 	public String ColId (Integer i){
 		String s = "f";
 		if (i==1){
@@ -661,7 +697,7 @@ public class Fenetre extends JFrame{
 	/*
 	 * Code couleur !
 	 */
-	public Color Col(String i){
+	public static Color Col(String i){
 		Color c = Color.WHITE;
 		if(i=="1"){
 			c = Color.decode("#1E00DF");
@@ -829,7 +865,8 @@ public class Fenetre extends JFrame{
 			}catch(Exception e){
 				/* Petit test personnel pour vérifier le bon fonctionnement */
 				System.out.println("Erreur : "+test);
-			}				
+			}	
+			resetPlanning();
 		}
 	}
 	
@@ -859,7 +896,7 @@ public class Fenetre extends JFrame{
 			}catch(Exception e){
 				System.out.println("Erreur : "+test);
 			}
-			resetPlanning();
+			resetPlanningPage();
 		}
 	}
 	
@@ -926,6 +963,138 @@ public class Fenetre extends JFrame{
 			
 
 		}
+	}
+	
+	public static class EditStepOne implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			String s = (String) edit_first_choice.getSelectedItem();
+			Boolean v = false;
+			Long l = 0L;
+			Planning pl = null;
+			if (!s.contains("Choix")){
+				for (String m : s.split(" ")){
+					if (v){
+						l=Long.valueOf(m);
+						v=false;
+					}
+					if(m.equals("<hidden")){v=true;}
+				}
+				for (int i = 0;i<ChatClient.planning.size()-1;i++){
+					if(ChatClient.planning.get(i).getUUID().equals(l)){
+						System.out.println(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData())+" le "+
+							Zero(ChatClient.planning.get(i).getDay())+"/"+Zero(ChatClient.planning.get(i).getMonth())+" de "+
+							ChatClient.planning.get(i).getHour_start()+"h à "+ChatClient.planning.get(i).getHour()+"h");
+						pl=ChatClient.planning.get(i);
+					}
+				}
+			}
+			EDIT_PLAN_STEP_2(pl);
+		}
+		
+	}
+	
+	public static class EditStepTwo implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			ArrayList<Integer> ar = new ArrayList<Integer>();
+			String s = (String) edit_hour_start.getSelectedItem();
+			String s2 = (String) edit_hour_end.getSelectedItem();
+			Boolean v = false;
+			Long l = 0L;
+			Planning pl = null;
+			Integer h1 = 0;
+			Integer h2 = 0;
+			if (!s.contains("Choix")){
+				for (String m : s.split(" ")){
+					if (v){
+						l=Long.valueOf(m);
+						v=false;
+					}
+					if(m.equals("<hidden")){v=true;}
+				}
+				for (int i = 0;i<ChatClient.planning.size()-1;i++){
+					if(ChatClient.planning.get(i).getUUID().equals(l)){
+						pl=ChatClient.planning.get(i);
+					}
+				}
+				for (int a = 0;a<ChatClient.planning.size();a++){
+					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==pl.getDay() &&
+							ChatClient.planning.get(a).getMonth()==pl.getMonth() && ChatClient.planning.get(a).getYear()==pl.getYear()){
+						for (int x = ChatClient.planning.get(a).getHour_start();x<ChatClient.planning.get(a).getHour();x++){
+							ar.add(x);
+						}
+					}
+				}
+				String si = s.split(" ")[1].replace("h", "");
+				Integer hour = Integer.valueOf(si);
+				h1=hour;
+				if (ar.contains(hour)){
+					edit_hour_start.setBackground(Col("c"));
+				}else{
+					edit_hour_start.setBackground(Color.decode("#C4FECA"));
+				}
+			}
+			ar.clear();
+			if (!s.contains("Choix")){
+				for (String m : s.split(" ")){
+					if (v){
+						l=Long.valueOf(m);
+						v=false;
+					}
+					if(m.equals("<hidden")){v=true;}
+				}
+				for (int i = 0;i<ChatClient.planning.size()-1;i++){
+					if(ChatClient.planning.get(i).getUUID().equals(l)){
+						pl=ChatClient.planning.get(i);
+					}
+				}
+				for (int a = 0;a<ChatClient.planning.size();a++){
+					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==pl.getDay() &&
+							ChatClient.planning.get(a).getMonth()==pl.getMonth() && ChatClient.planning.get(a).getYear()==pl.getYear()){
+						for (int x = ChatClient.planning.get(a).getHour_start()+1;x<ChatClient.planning.get(a).getHour();x++){
+							ar.add(x);
+						}
+					}
+				}
+				String si = s2.split(" ")[1].replace("h", "");
+				Integer hour = Integer.valueOf(si);
+				h2=hour;
+				if (ar.contains(hour)){
+					edit_hour_end.setBackground(Col("c"));
+				}else{
+					edit_hour_end.setBackground(Color.decode("#C4FECA"));
+				}
+			}
+			if (h1>=h2){
+				edit_hour_end.setBackground(Col("c"));
+				edit_hour_start.setBackground(Col("c"));
+			}
+			for (int d = h1;d<=h2;d++){
+				if (ar.contains(d)){
+					edit_hour_end.setBackground(Col("c"));
+				}
+			}
+			/*
+			 * Vérification du côté client. Le serveur vérifira aussi. En cas d'erreur,
+			 * le joueur sera banni 1 an du mode online automatiquement.
+			 */
+			if (edit_hour_end.getBackground().equals(Color.decode("#C4FECA"))&&
+					edit_hour_start.getBackground().equals(Color.decode("#C4FECA"))){
+				for (int a = 0;a<ChatClient.planning.size();a++){
+					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a)==pl){
+						ChatClient.planning.get(a).setHour_start(h1);
+						ChatClient.planning.get(a).setHour(h2);
+						System.out.println("CHANGEMMENT: "+ChatClient.planning.get(a).getDay()+"/"+ChatClient.planning.get(a).getMonth()+"/"+
+								ChatClient.planning.get(a).getYear()+" de "+ChatClient.planning.get(a).getHour_start()+"->"+
+								ChatClient.planning.get(a).getHour());
+					}
+				}
+			}
+		}
+		
 	}
 	
 	public void setPlanning(){
@@ -1548,16 +1717,64 @@ public class Fenetre extends JFrame{
 				if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getId()!=1){
 					ar.add("<html>"+ActivityId(ChatClient.planning.get(a).getId(),ChatClient.planning.get(a).getData())+" le "+
 							Zero(ChatClient.planning.get(a).getDay())+"/"+Zero(ChatClient.planning.get(a).getMonth())+" de "+
-							ChatClient.planning.get(a).getHour_start()+"h à "+ChatClient.planning.get(a).getHour()+"h</html>");
+							ChatClient.planning.get(a).getHour_start()+"h à "+ChatClient.planning.get(a).getHour()+"h <hidden "+
+							ChatClient.planning.get(a).getUUID()+" /> </html>");
 				}
 			}
 			String[] choicesStrings = new String[ar.size()];
 			choicesStrings = ar.toArray(choicesStrings);
 
-			JComboBox choix = new JComboBox(choicesStrings);
-			choix.setSelectedIndex(0);
-			choix.setBounds(0, 0, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
-			cp_c_c_c_right.add(choix);
+			edit_first_choice = new JComboBox(choicesStrings);
+			edit_first_choice.setSelectedIndex(0);
+			edit_first_choice.setBounds(0, 0, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
+			cp_c_c_c_right.add(edit_first_choice);
+			
+			JButton but_accept = new JButton("Suivant");
+			but_accept.setBounds(0, 40+5, 75, 35);
+			cp_c_c_c_right.add(but_accept);
+			but_accept.addActionListener(new EditStepOne());
+			
 		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void EDIT_PLAN_STEP_2(Planning pl){
+		
+			ArrayList<String> ar = new ArrayList<String>();
+			for (int i = 8;i<=21;i++){
+				ar.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
+			}
+			ArrayList<String> arend = new ArrayList<String>();
+			for (int i = 9;i<=22;i++){
+				arend.add("<html> "+i+"h <hidden "+pl.getUUID()+" /> </html>");
+			}
+			
+			String[] choicesStrings = new String[ar.size()];
+			choicesStrings = ar.toArray(choicesStrings);
+			String[] choicesStringsEnd = new String[arend.size()];
+			choicesStringsEnd = arend.toArray(choicesStringsEnd);
+
+			edit_hour_start = new JComboBox(choicesStrings);
+			edit_hour_start.setSelectedIndex(0);
+			edit_hour_start.setBounds(0, 45+35+5, 45, 40);
+			cp_c_c_c_right.add(edit_hour_start);
+			edit_hour_end = new JComboBox(choicesStringsEnd);
+			edit_hour_end.setSelectedIndex(0);
+			edit_hour_end.setBounds(45+10, 45+35+5, 45, 40);
+			cp_c_c_c_right.add(edit_hour_end);
+			
+			JButton but_accept = new JButton("Valider");
+			but_accept.setBounds(0, 45+40+40+5, 75, 35);
+			cp_c_c_c_right.add(but_accept);
+			but_accept.addActionListener(new EditStepTwo());
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			cp_c_c_c_right.updateUI();
+
 	}
 }

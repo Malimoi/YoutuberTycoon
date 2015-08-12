@@ -9,8 +9,9 @@ public class Planning{
 	private Integer year;
 	private Integer id;
 	private Long data;
+	private Long UUID;
 	
-	public Planning(Integer hour_start, Integer hour, Integer day, Integer month, Integer year, Integer id, Long data){
+	public Planning(Integer hour_start, Integer hour, Integer day, Integer month, Integer year, Integer id, Long data, Long UUID){
 		
 		this.hour=hour;
 		this.hour_start=hour_start;
@@ -19,7 +20,32 @@ public class Planning{
 		this.year=year;
 		this.id=id;
 		this.data=data;
+		this.UUID=UUID;
 		
+	}
+
+	public void setHour(Integer hour) {
+		this.hour = hour;
+	}
+
+	public void setHour_start(Integer hour_start) {
+		this.hour_start = hour_start;
+	}
+
+	public void setDay(Integer day) {
+		this.day = day;
+	}
+
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public Long getUUID() {
+		return UUID;
 	}
 
 	public Integer getHour() {
