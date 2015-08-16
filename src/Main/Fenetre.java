@@ -39,6 +39,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
 import utilities.Planning;
@@ -76,7 +78,7 @@ public class Fenetre extends JFrame{
 	public JButton bouton3 = new Bouton("Mes notifications",4);
 	
 	//-CONTENT
-	public JPanel content = new JPanel();
+	public static JPanel content = new JPanel();
 	
 	
 	//--CENTER
@@ -150,12 +152,12 @@ public class Fenetre extends JFrame{
 				public JPanel cp_c_c_west = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_east = new COLOR(Color.decode("#ffffff"));
 				public static JPanel cp_c_c_center = new COLOR(Color.decode("#ffffff"));
-					public JLabel DATE_OF_DAY = new JLabel();
-					public JLabel Agenda = new JLabel();
-					public JPanel cp_c_c_c_1 = new NOR();
-						public JPanel cp_c_c_c_1_center = new NOR();
-					public JPanel cp_c_c_c_2 = new NOR();
-						public JPanel cp_c_c_c_2_center = new NOR();
+					public static JLabel DATE_OF_DAY = new JLabel();
+					public static JLabel Agenda = new JLabel();
+					public static JPanel cp_c_c_c_1 = new NOR();
+						public static JPanel cp_c_c_c_1_center = new NOR();
+					public static JPanel cp_c_c_c_2 = new NOR();
+						public static JPanel cp_c_c_c_2_center = new NOR();
 					public static JPanel cp_c_c_c_right = new NOR();
 						public static JComboBox edit_first_choice = new JComboBox();
 						public static JButton edit_but_accept;
@@ -165,9 +167,19 @@ public class Fenetre extends JFrame{
 						public static JComboBox edit_date = new JComboBox();
 					public JButton plan_add = new Bouton_PlanningAddRemove(1);
 					public JButton plan_edit = new Bouton_PlanningAddRemove(2);
-					
+	
+	//Variable Creator Step 1
+	public JComboBox categoriescombo;
+	public JTextArea enter_titre;
+	
+	//Variable Creator Step 2
+	public JSlider ecrituretimeslid;
+	public JSlider tournagetimeslid;
+	public JSlider montagetimeslid;
+	public JSlider postprodtimeslid;
+	
 	public Thread t;
-	public int test = 0;
+	public static int test = 0;
 	public static int videopage = 1;
 	
 	public Fenetre() {
@@ -619,7 +631,7 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
-	public void resetPlanningPage(){
+	public static void resetPlanningPage(){
 		cp_c_c_c_1.removeAll();
 		cp_c_c_c_2.removeAll();
 		cp_c_c_c_1_center.removeAll();
@@ -653,7 +665,7 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
-	public String ColId (Integer i){
+	public static String ColId (Integer i){
 		String s = "f";
 		if (i==1){
 			s="1";
@@ -665,6 +677,10 @@ public class Fenetre extends JFrame{
 			s="b";
 		}if (i==5){
 			s="d";
+		}if (i==6){
+			s="e";
+		}if (i==7){
+			s="9";
 		}
 		return s;
 	}
@@ -696,6 +712,20 @@ public class Fenetre extends JFrame{
 			s="Montage \""+name+"\"";
 		}if (i==5){
 			s="Jour de paye";
+		}if (i==6){
+			for (int a = 0;a<ChatClient.videos.size();a++){
+				if (ChatClient.videos.get(a).getID()==l){
+					name = ChatClient.videos.get(a).getName();
+				}
+			}
+			s="Écriture \""+name+"\"";
+		}if (i==7){
+			for (int a = 0;a<ChatClient.videos.size();a++){
+				if (ChatClient.videos.get(a).getID()==l){
+					name = ChatClient.videos.get(a).getName();
+				}
+			}
+			s="Post-Prod \""+name+"\"";
 		}
 		return s;
 	}
@@ -791,6 +821,22 @@ public class Fenetre extends JFrame{
 					ex.printStackTrace();
 				}
 				setVideosGestionnaire();
+				cv_center.add(cv_c_south,BorderLayout.CENTER);
+				try{
+					content.updateUI();
+				}catch(Exception ex){
+					System.out.println("Erreur : "+test);
+				}
+			}
+			if (name.contains("Faire une vidéo")){
+				cv_c_south.removeAll();
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+				setVideosCreator(1);
 				cv_center.add(cv_c_south,BorderLayout.CENTER);
 				try{
 					content.updateUI();
@@ -959,6 +1005,8 @@ public class Fenetre extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			cv_c_south.removeAll();
+			setVideosGestionnaire();
 			content.add(center_videos,BorderLayout.CENTER);
 			try{
 				content.updateUI();
@@ -974,8 +1022,6 @@ public class Fenetre extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			edit_first_choice.setEnabled(false);
-			edit_but_accept.setEnabled(false);
 			String s = (String) edit_first_choice.getSelectedItem();
 			Boolean v = false;
 			Long l = 0L;
@@ -996,8 +1042,10 @@ public class Fenetre extends JFrame{
 						pl=ChatClient.planning.get(i);
 					}
 				}
-			}
-			EDIT_PLAN_STEP_2(pl);
+				edit_first_choice.setEnabled(false);
+				edit_but_accept.setEnabled(false);
+				EDIT_PLAN_STEP_2(pl);
+			}		
 		}
 		
 	}
@@ -1038,7 +1086,8 @@ public class Fenetre extends JFrame{
 				}
 				for (int a = 0;a<ChatClient.planning.size();a++){
 					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==day &&
-							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year){
+							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year && 
+							ChatClient.planning.get(a)!=pl){
 						for (int x = ChatClient.planning.get(a).getHour_start();x<ChatClient.planning.get(a).getHour();x++){
 							ar.add(x);
 						}
@@ -1069,7 +1118,8 @@ public class Fenetre extends JFrame{
 				}
 				for (int a = 0;a<ChatClient.planning.size();a++){
 					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==day &&
-							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year){
+							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year &&
+							ChatClient.planning.get(a)!=pl){
 						for (int x = ChatClient.planning.get(a).getHour_start()+1;x<ChatClient.planning.get(a).getHour();x++){
 							ar.add(x);
 						}
@@ -1093,6 +1143,16 @@ public class Fenetre extends JFrame{
 					edit_hour_end.setBackground(Col("c"));
 				}
 			}
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+			Date date = cal.getTime();
+			SimpleDateFormat formater = new SimpleDateFormat("HH/dd");
+			String st = formater.format(date);
+			String[] sf = st.split("/");
+			if (Integer.valueOf(sf[0])>=pl.getHour_start()-2&&day==Integer.valueOf(sf[1])){
+				edit_hour_end.setBackground(Col("c"));
+				edit_hour_start.setBackground(Col("c"));
+			}
 			/*
 			 * Vérification du côté client. Le serveur vérifira aussi. En cas d'erreur,
 			 * le joueur sera banni 1 an du mode online automatiquement.
@@ -1109,9 +1169,45 @@ public class Fenetre extends JFrame{
 						/*
 						 * A faire : new tri des taches comme au lancement.
 						 */
+						resetPlanningPage();
 					}
 				}
 			}
+		}	
+	}
+	
+	public class VideoCreatorSlidEvent implements ActionListener{
+		
+		private Integer step;
+		
+		public VideoCreatorSlidEvent(Integer step){
+			this.step=step;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if(step.equals(1)){
+				char[] titre_chars = enter_titre.getText().toCharArray();
+				System.out.println(titre_chars.length);
+				if (titre_chars.length>30){
+					JLabel error = new JLabel();
+					error.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					error.setText("30 caractères max !");
+					error.setForeground(Col("c"));
+					error.setHorizontalAlignment(JLabel.LEFT);
+					error.setBounds(25+300+8, 55+25+8, 300, 20);
+					cv_c_south.add(error);
+					cv_c_south.updateUI();
+				}
+				String categorie = categoriescombo.getSelectedItem().toString();
+				ChatClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie,
+						0, 0, 0, 0, 0, 0, 0, 0, (long)ChatClient.videos.size()-1));
+				/*
+				 * On tri.
+				 */
+				ChatClient.TriVideos();
+			}
+			//System.out.println(ecrituretimeslid.getValue());	
 		}
 		
 	}
@@ -1128,6 +1224,7 @@ public class Fenetre extends JFrame{
 		TotalNotifY = TotalNotifY+40+3;
 		Boolean encours = true;
 		int d = 1;
+		Integer day = 0;
 		while (d!=5){
 			
 			Boolean plan = true;
@@ -1143,6 +1240,7 @@ public class Fenetre extends JFrame{
 			String[] sf = s.split("/");
 			
 			if (d==1){
+				day=Integer.valueOf(sf[2]);
 				lab_c_c_nt_c_jour.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lab_c_c_nt_c_jour.setText(""+sf[4].toUpperCase()+"");
 				lab_c_c_nt_c_jour.setForeground(Color.RED);
@@ -1231,7 +1329,11 @@ public class Fenetre extends JFrame{
 						if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
 							Color c = Color.decode("#DCDCDC");
 							if (encours==true){
-								c = Color.decode("#C4FECA");
+								if (ChatClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&ChatClient.planning.get(i).getDay()==day){
+									c = Color.decode("#C4FECA");
+								}else{
+									c = Color.decode("#FBE369");
+								}
 							}
 							encours=false;
 							JPanel panel = new COLOR(c);
@@ -1416,6 +1518,9 @@ public class Fenetre extends JFrame{
 		String[] sf = s.split("/");
 		
 		Boolean vid = true;
+		/*
+		 * A faire : calculer la hauteur pour savoir cb de vidéos peut-on afficher par page.
+		 */
 		int i = (videopage-1)*5;
 		int p = (videopage-1)*5;
 		while(vid){
@@ -1424,6 +1529,7 @@ public class Fenetre extends JFrame{
 			}else{
 
 					JPanel miniature = new MINIA("image/CLASSES/"+ChatClient.videos.get(i).getVideogenre()+".png");
+					System.out.println("'"+ChatClient.videos.get(i).getVideogenre()+"'");
 					miniature.setBounds(50, TotalNotifY, 165, 95);
 					JLabel titre = new JLabel();
 					titre.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -1510,13 +1616,126 @@ public class Fenetre extends JFrame{
 			TotalX=TotalX+50;
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void setVideosCreator(Integer number_of_step){
+		JLabel step = new JLabel();
+		step.setFont(new Font("Tahoma", Font.PLAIN, 35));
+		step.setText("Étape "+number_of_step+":");
+		step.setForeground(Color.DARK_GRAY);
+		step.setHorizontalAlignment(JLabel.LEFT);
+		step.setBounds(25, 10, 150, 39);
+		cv_c_south.add(step);
+		
+		if (number_of_step.equals(1)){
+			
+			JLabel titre = new JLabel();
+			titre.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			titre.setText("Choisissez le titre: (30 caractères max)");
+			titre.setForeground(Color.DARK_GRAY);
+			titre.setHorizontalAlignment(JLabel.LEFT);
+			titre.setBounds(25, 55, 300, 20);
+			cv_c_south.add(titre);
+			JPanel border = new JPanel();
+			border.setBackground(Color.DARK_GRAY);
+			border.setBounds(25, 55+20+5, 300, 35);
+			border.setLayout(null);
+			JPanel int_border = new JPanel();
+			int_border.setBackground(Color.white);
+			int_border.setBounds(1, 1, 300-2, 35-2);
+			int_border.setLayout(null);
+			enter_titre = new JTextArea();
+			enter_titre.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			enter_titre.setBounds(0, 7, 300-2, 20);
+			int_border.add(enter_titre);
+			border.add(int_border);
+			cv_c_south.add(border);
+			JLabel lab_1 = new JLabel();
+			lab_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lab_1.setText("Choisissez une catégorie:");
+			lab_1.setForeground(Color.DARK_GRAY);
+			lab_1.setHorizontalAlignment(JLabel.LEFT);
+			lab_1.setBounds(25, 55+40+25, 175, 20);
+			cv_c_south.add(lab_1);
+			String[] Name_Of_Styles = { "ANIMATIONS/FILMS","ANIMAUX","DIVERTISSEMENT","GAMING","HUMOUR",
+					"MAKEUP/MODE","MUSIQUE","SCIENCES","SPORT","VLOG","CUISINE" };
+			categoriescombo = new JComboBox(Name_Of_Styles);
+			categoriescombo.setBounds(25, 75+40+25, 175, 50);
+			cv_c_south.add(categoriescombo);
+			
+			JButton valid = new JButton("Valider");
+			valid.setBounds(25, 80+75*4, 80, 40);
+			valid.addActionListener(new VideoCreatorSlidEvent(1));
+			cv_c_south.add(valid);
+			
+		}
+		else if (number_of_step.equals(2)){
+			
+			int[] colorr = { 6, 3, 4, 7 };
+			String[] name = { "Écriture","Tournage","Montage","Post-prod." } ;
+			for (int a = 0;a<4;a++){
+				JPanel color = new JPanel();
+				color.setBackground(Col(ColId(colorr[a])));
+				color.setBounds(25, 80+75*(a), 50, 50);
+				cv_c_south.add(color);
+				JLabel label = new JLabel();
+				label.setFont(new Font("Tahoma", Font.PLAIN, 25));
+				label.setText(name[a]);
+				label.setForeground(Color.DARK_GRAY);
+				label.setHorizontalAlignment(JLabel.LEFT);
+				label.setBounds(80, 80+75*(a), 120, 29);
+				cv_c_south.add(label);
+				JLabel H = new JLabel();
+				H.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				H.setText("(en h)");
+				H.setForeground(Color.DARK_GRAY);
+				H.setHorizontalAlignment(JLabel.LEFT);
+				H.setBounds(80, 110+75*(a), 120, 19);
+				cv_c_south.add(H);
+			}
+			
+			ecrituretimeslid = new JSlider(JSlider.HORIZONTAL,0,15,0);
+			ecrituretimeslid.setMajorTickSpacing(1);
+			ecrituretimeslid.setMinorTickSpacing(1);
+			ecrituretimeslid.setPaintTicks(true);
+			ecrituretimeslid.setPaintLabels(true); //
+			ecrituretimeslid.setBounds(80+115+10,80,600,50);
+			tournagetimeslid = new JSlider(JSlider.HORIZONTAL,0,15,0);
+			tournagetimeslid.setMajorTickSpacing(1);
+			tournagetimeslid.setMinorTickSpacing(1);
+			tournagetimeslid.setPaintTicks(true);
+			tournagetimeslid.setPaintLabels(true); //
+			tournagetimeslid.setBounds(80+115+10,80+75,600,50);
+			montagetimeslid = new JSlider(JSlider.HORIZONTAL,0,15,0);
+			montagetimeslid.setMajorTickSpacing(1);
+			montagetimeslid.setMinorTickSpacing(1);
+			montagetimeslid.setPaintTicks(true);
+			montagetimeslid.setPaintLabels(true); //
+			montagetimeslid.setBounds(80+115+10,80+75*2,600,50);
+			postprodtimeslid = new JSlider(JSlider.HORIZONTAL,0,6,0);
+			postprodtimeslid.setMajorTickSpacing(1);
+			postprodtimeslid.setMinorTickSpacing(1);
+			postprodtimeslid.setPaintTicks(true);
+			postprodtimeslid.setPaintLabels(true); //
+			postprodtimeslid.setBounds(80+115+10,80+75*3,600,50);
+			cv_c_south.add(ecrituretimeslid);
+			cv_c_south.add(tournagetimeslid);
+			cv_c_south.add(montagetimeslid);
+			cv_c_south.add(postprodtimeslid);
+			JButton valid = new JButton("Valider");
+			valid.setBounds(25, 80+75*4, 80, 40);
+			valid.addActionListener(new VideoCreatorSlidEvent(3));
+			cv_c_south.add(valid);
+			
+		}
+	}
+	
 	public static String Zero(Integer z){
 		String i = z<10?"0"+z:""+z;
-		
 		return i;
 	}
 	
-	public void setPlanningPage(){
+	public static void setPlanningPage(){
 		for (int a = 0;a<2;a++){
 			JPanel n = new BORDER_PL(1);
 			JPanel s = new BORDER_PL(2);
@@ -1544,6 +1763,7 @@ public class Fenetre extends JFrame{
 		int TotalNotifY = 0;
 		Boolean encours = true;
 		int d = 1;
+		Integer day = 0;
 		while (d!=3){
 			TotalNotifY = 5;
 			Boolean plan = true;
@@ -1576,6 +1796,7 @@ public class Fenetre extends JFrame{
 			dem.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 23);
 			TotalNotifY = TotalNotifY+20+5+15;
 			if (d==1){
+				day=Integer.valueOf(sf[2]);
 				String jour_sem = "";
 				String mois = "";
 				char[] stringArray = sf[4].toCharArray();
@@ -1595,6 +1816,17 @@ public class Fenetre extends JFrame{
 				Agenda.setHorizontalAlignment(JLabel.LEFT);
 				Agenda.setBounds(0, 60, 400, 30);
 				cp_c_c_c_1_center.add(jour);
+				while(plan){
+					if (ChatClient.planning.size()-1==i){
+						plan=false;
+					}
+					else if (ChatClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && Integer.parseInt(sf[2])==ChatClient.planning.get(i).getDay()){
+							ChatClient.planning.remove(i);
+					}
+					i++;
+				}
+				i=0;
+				plan=true;
 			}else{
 				cp_c_c_c_2_center.add(dem);
 			}
@@ -1656,7 +1888,11 @@ public class Fenetre extends JFrame{
 						if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
 							Color c = Color.decode("#DCDCDC");
 							if (encours==true){
-								c = Color.decode("#C4FECA");
+								if (ChatClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&ChatClient.planning.get(i).getDay()==day){
+									c = Color.decode("#C4FECA");
+								}else{
+									c = Color.decode("#FBE369");
+								}
 							}
 							encours=false;
 							JPanel panel = new COLOR(c);
@@ -1729,15 +1965,23 @@ public class Fenetre extends JFrame{
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void EDIT_PLAN(Integer i, Integer ID){
+		Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
+		cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+		Date date = cal.getTime();
+		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy");
+		String s = formater.format(date);
+		String[] sf = s.split("/");
 		if(i==1){
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("<html><font color=gray>Choix</font></html>");
 			for (int a = 0;a<ChatClient.planning.size();a++){
 				if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getId()!=1){
-					ar.add(("<html>"+ActivityId(ChatClient.planning.get(a).getId(),ChatClient.planning.get(a).getData())+" le "+
-							Zero(ChatClient.planning.get(a).getDay())+"/"+Zero(ChatClient.planning.get(a).getMonth())+" de "+
-							ChatClient.planning.get(a).getHour_start()+"h a "+ChatClient.planning.get(a).getHour()+"h <hidden "+
-							ChatClient.planning.get(a).getUUID()+" /> </html>").toLowerCase());
+					if (ChatClient.planning.get(a).getDay()>=Integer.valueOf(sf[0])&&!(ChatClient.planning.get(a).getMonth()<Integer.valueOf(sf[1]))){			
+						ar.add(("<html>"+ActivityId(ChatClient.planning.get(a).getId(),ChatClient.planning.get(a).getData())+" le "+
+								Zero(ChatClient.planning.get(a).getDay())+"/"+Zero(ChatClient.planning.get(a).getMonth())+" de "+
+								ChatClient.planning.get(a).getHour_start()+"h a "+ChatClient.planning.get(a).getHour()+"h <hidden "+
+								ChatClient.planning.get(a).getUUID()+" /> </html>").toLowerCase());
+					}
 				}
 			}
 			String[] choicesStrings = new String[ar.size()];

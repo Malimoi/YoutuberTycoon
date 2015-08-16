@@ -96,20 +96,23 @@ public class ChatClient {
  		
  		/*
  		 * On récupère les vidéos
- 		 * format : new Videos(name[0],day[1],month[2],year[3],views[4],likes[5],dislikes[6],share[7],ID[8])
+ 		 * format : new Videos(name[0],day[1],month[2],year[3],views[4],likes[5],dislikes[6],share[7],...)
  		 */
- 		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 1L));
- 		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 2L));
- 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 3L));
- 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 4L));
- 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 5L));
- 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 6L));
- 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 7L));
- 		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 8L));
+ 		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 0, 0, 0, 0, 0, 0, 0, 0, 1L));
+ 		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 2L));
+ 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 3L));
+ 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES",0, 0, 0, 0, 0, 0, 0, 0, 4L));
+ 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 0, 0, 0, 0, 0, 0, 0, 0, 5L));
+ 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 6L));
+ 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 7L));
+ 		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 0, 0, 0, 0, 0, 0, 0, 0, 8L));
  		for (int a = 0; a < videos.size(); a++) {
  			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
              		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
-             		videos.get(a).getShare() + "§" + videos.get(a).getVideogenre() + "§" + videos.get(a).getID());
+             		videos.get(a).getShare() + "§" + videos.get(a).getVideogenre() + "§" + videos.get(a).getEcritureTime() + "§" 
+             		+ videos.get(a).getTournageTime() + "§" + videos.get(a).getMontageTime() + "§" + videos.get(a).getPostprodTime() 
+             		+ "§" + videos.get(a).getMontageQualite() + "§" + videos.get(a).getImageQualite() + "§" + videos.get(a).getEcritureQualite() 
+             		+ "§" + videos.get(a).getJeuQualite() + "§" + videos.get(a).getID());
          }
  		Collections.sort(datavi, new VideosComparator());
          Collections.reverse(datavi);
@@ -126,14 +129,26 @@ public class ChatClient {
              String dislikes = line2.split("§")[6];
              String share = line2.split("§")[7];
              String videosgenre = line2.split("§")[8];
-             String ID = line2.split("§")[9];
+             String ecrituretime = line2.split("§")[9];
+             String tournagetime = line2.split("§")[10];
+             String montagetime = line2.split("§")[11];
+             String postprodtime = line2.split("§")[12];
+             String montagequalite = line2.split("§")[13];
+             String imagequalite = line2.split("§")[14];
+             String ecriturequalite = line2.split("§")[15];
+             String jeuqualite = line2.split("§")[16];
+             String ID = line2.split("§")[17];
 
              videos.add(new Video(name, Integer.valueOf(day), Integer.valueOf(month),
-                     Integer.valueOf(year), Long.valueOf(views), Long.valueOf(likes), Long.valueOf(dislikes), Long.valueOf(share),
-                     videosgenre,Long.valueOf(ID)));
-             System.out.println("Video du "+day+"/"+month+"/"+year+" set !");
+                     Integer.valueOf(year), Long.valueOf(views), Long.valueOf(likes), Long.valueOf(dislikes), Long.valueOf(share), videosgenre,
+                     Integer.valueOf(ecrituretime),
+                     Integer.valueOf(tournagetime), 
+                     Integer.valueOf(montagetime), 
+                     Integer.valueOf(postprodtime), 
+                     Integer.valueOf(montagequalite), 
+                     Integer.valueOf(imagequalite), Integer.valueOf(ecriturequalite), Integer.valueOf(jeuqualite),Long.valueOf(ID)));
          }
-         videos.add(new Video(null, 0, 0, 0, 0L, 0L, 0L, 0L, null, null));
+         videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
          
  		/*
  		 * Evenements
@@ -174,7 +189,7 @@ public class ChatClient {
  		/*
  		 * Planning
  		 */
-         planning.add(new Planning(23, 24, 13, 8, 15, 4, 8L, 1L));
+         planning.add(new Planning(21, 22, 13, 8, 15, 4, 8L, 1L));
          planning.add(new Planning(16, 18, 14, 8, 15, 4, 5L, 2L));
          MAX_UUID_PLANNING=(long) planning.size()+1;
          int d = 1;
@@ -390,5 +405,50 @@ public class ChatClient {
         }
     }
     
+    public static void TriVideos(){
+    	datavi.clear();
+    	for (int a = 0; a < videos.size(); a++) {
+ 			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
+             		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
+             		videos.get(a).getShare() + "§" + videos.get(a).getVideogenre() + "§" + videos.get(a).getEcritureTime() + "§" 
+             		+ videos.get(a).getTournageTime() + "§" + videos.get(a).getMontageTime() + "§" + videos.get(a).getPostprodTime() 
+             		+ "§" + videos.get(a).getMontageQualite() + "§" + videos.get(a).getImageQualite() + "§" + videos.get(a).getEcritureQualite() 
+             		+ "§" + videos.get(a).getJeuQualite() + "§" + videos.get(a).getID());
+         }
+ 		Collections.sort(datavi, new VideosComparator());
+         Collections.reverse(datavi);
+         videos.clear();
+         for (int i = 0; i < datavi.size(); i++) {
+             String line2 = datavi.get(i);
+
+             String name = line2.split("§")[0];
+             String day = line2.split("§")[1];
+             String month = line2.split("§")[2];
+             String year = line2.split("§")[3];
+             String views = line2.split("§")[4];
+             String likes = line2.split("§")[5];
+             String dislikes = line2.split("§")[6];
+             String share = line2.split("§")[7];
+             String videosgenre = line2.split("§")[8];
+             String ecrituretime = line2.split("§")[9];
+             String tournagetime = line2.split("§")[10];
+             String montagetime = line2.split("§")[11];
+             String postprodtime = line2.split("§")[12];
+             String montagequalite = line2.split("§")[13];
+             String imagequalite = line2.split("§")[14];
+             String ecriturequalite = line2.split("§")[15];
+             String jeuqualite = line2.split("§")[16];
+             String ID = line2.split("§")[17];
+
+             videos.add(new Video(name, Integer.valueOf(day), Integer.valueOf(month),
+                     Integer.valueOf(year), Long.valueOf(views), Long.valueOf(likes), Long.valueOf(dislikes), Long.valueOf(share), videosgenre,
+                     Integer.valueOf(ecrituretime),
+                     Integer.valueOf(tournagetime), 
+                     Integer.valueOf(montagetime), 
+                     Integer.valueOf(postprodtime), 
+                     Integer.valueOf(montagequalite), 
+                     Integer.valueOf(imagequalite), Integer.valueOf(ecriturequalite), Integer.valueOf(jeuqualite),Long.valueOf(ID)));
+         }
+    }
     
 }

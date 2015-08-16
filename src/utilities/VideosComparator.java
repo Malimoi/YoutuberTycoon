@@ -11,8 +11,9 @@ public class VideosComparator implements Comparator<String> {
         int aVal = 0, bVal = 0;
         
         if (Integer.parseInt(a.split("§")[3])!=Integer.parseInt(b.split("§")[3])){
-        	aVal=Integer.parseInt(a.split("§")[3]);
-        	bVal=Integer.parseInt(b.split("§")[3]);
+        	int BONUS = 1000;
+        	aVal=Integer.parseInt(a.split("§")[3])!=0?Integer.parseInt(a.split("§")[3]):Integer.parseInt(a.split("§")[3])+BONUS;
+        	bVal=Integer.parseInt(b.split("§")[3])!=0?Integer.parseInt(b.split("§")[3]):Integer.parseInt(b.split("§")[3])+BONUS;
         }else if (Integer.parseInt(a.split("§")[2])!=Integer.parseInt(b.split("§")[2])){
         	aVal=Integer.parseInt(a.split("§")[2]);
         	bVal=Integer.parseInt(b.split("§")[2]);

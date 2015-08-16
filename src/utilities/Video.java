@@ -10,12 +10,20 @@ public class Video {
 	private Long likes;
 	private Long dislikes;
 	private String videogenre;
+	private Integer EcritureTime;
+	private Integer TournageTime;
+	private Integer MontageTime;
+	private Integer PostprodTime;
+	private Integer MontageQualite;
+	private Integer ImageQualite;
+	private Integer EcritureQualite;
+	private Integer JeuQualite;
 	private Long share;
-	
 	private Long ID;
 	
 	public Video (String name, Integer day, Integer month, Integer year, Long views, Long likes, Long dislikes, Long share,
-			String videogenre, Long ID){
+			String videogenre, Integer EcritureTime, Integer TournageTime, Integer MontageTime, Integer PostprodTime, 
+			Integer MontageQualite, Integer ImageQualite, Integer EcritureQualite, Integer JeuQualite, Long ID){
 		
 		this.day=day;
 		this.month=month;
@@ -26,6 +34,14 @@ public class Video {
 		this.dislikes=dislikes;
 		this.share=share;
 		this.videogenre=videogenre;
+		this.EcritureTime=EcritureTime;
+		this.TournageTime=TournageTime;
+		this.MontageTime=MontageTime;
+		this.PostprodTime=PostprodTime;
+		this.MontageQualite=MontageQualite;
+		this.ImageQualite=ImageQualite;
+		this.EcritureQualite=EcritureQualite;
+		this.JeuQualite=JeuQualite;
 		this.ID=ID;
 		
 	}
@@ -102,6 +118,70 @@ public class Video {
 		this.share = share;
 	}
 	
+	public Integer getEcritureTime() {
+		return EcritureTime;
+	}
+
+	public void setEcritureTime(Integer ecritureTime) {
+		EcritureTime = ecritureTime;
+	}
+
+	public Integer getTournageTime() {
+		return TournageTime;
+	}
+
+	public void setTournageTime(Integer tournageTime) {
+		TournageTime = tournageTime;
+	}
+
+	public Integer getMontageTime() {
+		return MontageTime;
+	}
+
+	public void setMontageTime(Integer montageTime) {
+		MontageTime = montageTime;
+	}
+
+	public Integer getPostprodTime() {
+		return PostprodTime;
+	}
+
+	public void setPostprodTime(Integer postprodTime) {
+		PostprodTime = postprodTime;
+	}
+
+	public Integer getMontageQualite() {
+		return MontageQualite;
+	}
+
+	public void setMontageQualite(Integer montageQualite) {
+		MontageQualite = montageQualite;
+	}
+
+	public Integer getImageQualite() {
+		return ImageQualite;
+	}
+
+	public void setImageQualite(Integer imageQualite) {
+		ImageQualite = imageQualite;
+	}
+
+	public Integer getEcritureQualite() {
+		return EcritureQualite;
+	}
+
+	public void setEcritureQualite(Integer ecritureQualite) {
+		EcritureQualite = ecritureQualite;
+	}
+
+	public Integer getJeuQualite() {
+		return JeuQualite;
+	}
+
+	public void setJeuQualite(Integer jeuQualite) {
+		JeuQualite = jeuQualite;
+	}
+
 	public Long getID() {
 		return ID;
 	}
