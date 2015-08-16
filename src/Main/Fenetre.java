@@ -171,6 +171,8 @@ public class Fenetre extends JFrame{
 	//Variable Creator Step 1
 	public JComboBox categoriescombo;
 	public JTextArea enter_titre;
+	public JComboBox camerascombo;
+	public JComboBox microscombo;
 	
 	//Variable Creator Step 2
 	public JSlider ecrituretimeslid;
@@ -1188,7 +1190,6 @@ public class Fenetre extends JFrame{
 		public void actionPerformed(ActionEvent arg0) {
 			if(step.equals(1)){
 				char[] titre_chars = enter_titre.getText().toCharArray();
-				System.out.println(titre_chars.length);
 				if (titre_chars.length>30){
 					JLabel error = new JLabel();
 					error.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1198,6 +1199,7 @@ public class Fenetre extends JFrame{
 					error.setBounds(25+300+8, 55+25+8, 300, 20);
 					cv_c_south.add(error);
 					cv_c_south.updateUI();
+					return;
 				}
 				String categorie = categoriescombo.getSelectedItem().toString();
 				ChatClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie,
@@ -1206,8 +1208,11 @@ public class Fenetre extends JFrame{
 				 * On tri.
 				 */
 				ChatClient.TriVideos();
+				cv_c_south.removeAll();
+				setVideosCreator(2);
+			}else if(step.equals(2)){
+				
 			}
-			//System.out.println(ecrituretimeslid.getValue());	
 		}
 		
 	}
@@ -1617,7 +1622,7 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setVideosCreator(Integer number_of_step){
 		JLabel step = new JLabel();
 		step.setFont(new Font("Tahoma", Font.PLAIN, 35));
@@ -1655,13 +1660,35 @@ public class Fenetre extends JFrame{
 			lab_1.setText("Choisissez une catégorie:");
 			lab_1.setForeground(Color.DARK_GRAY);
 			lab_1.setHorizontalAlignment(JLabel.LEFT);
-			lab_1.setBounds(25, 55+40+25, 175, 20);
+			lab_1.setBounds(25, 55+40+25+10, 175, 20);
 			cv_c_south.add(lab_1);
 			String[] Name_Of_Styles = { "ANIMATIONS/FILMS","ANIMAUX","DIVERTISSEMENT","GAMING","HUMOUR",
 					"MAKEUP/MODE","MUSIQUE","SCIENCES","SPORT","VLOG","CUISINE" };
 			categoriescombo = new JComboBox(Name_Of_Styles);
-			categoriescombo.setBounds(25, 75+40+25, 175, 50);
+			categoriescombo.setBounds(25, 75+40+25+10, 175, 50);
 			cv_c_south.add(categoriescombo);
+			JLabel lab_2 = new JLabel();
+			lab_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lab_2.setText("Choisissez votre caméra:");
+			lab_2.setForeground(Color.DARK_GRAY);
+			lab_2.setHorizontalAlignment(JLabel.LEFT);
+			lab_2.setBounds(25, 75+40+25+50+25, 175, 20);
+			cv_c_south.add(lab_2);
+			String[] CamerasList = { "<html><font color=red>Pas de caméra</font></html>" };
+			camerascombo = new JComboBox(CamerasList);
+			camerascombo.setBounds(25, 75+40+25+50+25+25, 200, 50);
+			cv_c_south.add(camerascombo);
+			JLabel lab_3 = new JLabel();
+			lab_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lab_3.setText("Choisissez votre micro:");
+			lab_3.setForeground(Color.DARK_GRAY);
+			lab_3.setHorizontalAlignment(JLabel.LEFT);
+			lab_3.setBounds(25+200+50, 75+40+25+50+25, 175, 20);
+			cv_c_south.add(lab_3);
+			String[] MicrosList = { "<html><font color=red>Pas de micro</font></html>","Micro intégré" };
+			microscombo = new JComboBox(MicrosList);
+			microscombo.setBounds(25+200+50, 75+40+25+50+25+25, 200, 50);
+			cv_c_south.add(microscombo);
 			
 			JButton valid = new JButton("Valider");
 			valid.setBounds(25, 80+75*4, 80, 40);
@@ -1728,6 +1755,7 @@ public class Fenetre extends JFrame{
 			cv_c_south.add(valid);
 			
 		}
+		cv_c_south.updateUI();
 	}
 	
 	public static String Zero(Integer z){

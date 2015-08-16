@@ -5,24 +5,25 @@ import java.lang.Integer;
 import java.lang.String;
 import java.util.Comparator;
 
-public class VideosComparator implements Comparator<String> {
+public class VideosComparator implements Comparator<Video> {
 
-    public int compare(String a, String b) {
-        int aVal = 0, bVal = 0;
+	@Override
+	public int compare(Video v1, Video v2) {
+		int aVal = 0, bVal = 0;
         
-        if (Integer.parseInt(a.split("§")[3])!=Integer.parseInt(b.split("§")[3])){
+        if (v1.getYear()!=v2.getYear()){
         	int BONUS = 1000;
-        	aVal=Integer.parseInt(a.split("§")[3])!=0?Integer.parseInt(a.split("§")[3]):Integer.parseInt(a.split("§")[3])+BONUS;
-        	bVal=Integer.parseInt(b.split("§")[3])!=0?Integer.parseInt(b.split("§")[3]):Integer.parseInt(b.split("§")[3])+BONUS;
-        }else if (Integer.parseInt(a.split("§")[2])!=Integer.parseInt(b.split("§")[2])){
-        	aVal=Integer.parseInt(a.split("§")[2]);
-        	bVal=Integer.parseInt(b.split("§")[2]);
-        }else if (Integer.parseInt(a.split("§")[1])!=Integer.parseInt(b.split("§")[1])){
-        	aVal=Integer.parseInt(a.split("§")[1]);
-        	bVal=Integer.parseInt(b.split("§")[1]);
+        	aVal=v1.getYear()!=0?v1.getYear():v1.getYear()+BONUS;
+        	bVal=v2.getYear()!=0?v2.getYear():v2.getYear()+BONUS;
+        }else if (v1.getMonth()!=v2.getMonth()){
+        	aVal=v1.getMonth();
+        	bVal=v2.getMonth();
+        }else if (v1.getDay()!=v2.getDay()){
+        	aVal=v1.getDay();
+        	bVal=v2.getDay();
         }
 
         return Integer.compare(aVal, bVal);
-    }
+	}
 
 }

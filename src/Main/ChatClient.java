@@ -17,7 +17,9 @@ import javax.swing.*;
 
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import utilities.Evenement;
+import utilities.EventComparator;
 import utilities.Planning;
+import utilities.PlanningComparator;
 import utilities.StringComparator;
 import utilities.Video;
 import utilities.VideosComparator;
@@ -106,86 +108,19 @@ public class ChatClient {
  		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 6L));
  		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 7L));
  		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 0, 0, 0, 0, 0, 0, 0, 0, 8L));
- 		for (int a = 0; a < videos.size(); a++) {
- 			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
-             		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
-             		videos.get(a).getShare() + "§" + videos.get(a).getVideogenre() + "§" + videos.get(a).getEcritureTime() + "§" 
-             		+ videos.get(a).getTournageTime() + "§" + videos.get(a).getMontageTime() + "§" + videos.get(a).getPostprodTime() 
-             		+ "§" + videos.get(a).getMontageQualite() + "§" + videos.get(a).getImageQualite() + "§" + videos.get(a).getEcritureQualite() 
-             		+ "§" + videos.get(a).getJeuQualite() + "§" + videos.get(a).getID());
-         }
- 		Collections.sort(datavi, new VideosComparator());
-         Collections.reverse(datavi);
-         videos.clear();
-         for (int i = 0; i < datavi.size(); i++) {
-             String line2 = datavi.get(i);
-
-             String name = line2.split("§")[0];
-             String day = line2.split("§")[1];
-             String month = line2.split("§")[2];
-             String year = line2.split("§")[3];
-             String views = line2.split("§")[4];
-             String likes = line2.split("§")[5];
-             String dislikes = line2.split("§")[6];
-             String share = line2.split("§")[7];
-             String videosgenre = line2.split("§")[8];
-             String ecrituretime = line2.split("§")[9];
-             String tournagetime = line2.split("§")[10];
-             String montagetime = line2.split("§")[11];
-             String postprodtime = line2.split("§")[12];
-             String montagequalite = line2.split("§")[13];
-             String imagequalite = line2.split("§")[14];
-             String ecriturequalite = line2.split("§")[15];
-             String jeuqualite = line2.split("§")[16];
-             String ID = line2.split("§")[17];
-
-             videos.add(new Video(name, Integer.valueOf(day), Integer.valueOf(month),
-                     Integer.valueOf(year), Long.valueOf(views), Long.valueOf(likes), Long.valueOf(dislikes), Long.valueOf(share), videosgenre,
-                     Integer.valueOf(ecrituretime),
-                     Integer.valueOf(tournagetime), 
-                     Integer.valueOf(montagetime), 
-                     Integer.valueOf(postprodtime), 
-                     Integer.valueOf(montagequalite), 
-                     Integer.valueOf(imagequalite), Integer.valueOf(ecriturequalite), Integer.valueOf(jeuqualite),Long.valueOf(ID)));
-         }
+ 		Collections.sort(videos, new VideosComparator());
+         Collections.reverse(videos);
          videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
          
  		/*
  		 * Evenements
  		 */
          evenements.add(new Evenement(31, 7, 15, 5, 0L));
-         for (int i = 0; i < datavi.size(); i++){
-         	String line2 = datavi.get(i);
-         	String day = line2.split("§")[1];
-             String month = line2.split("§")[2];
-             String year = line2.split("§")[3];
-             String ID = line2.split("§")[9];
-         	evenements.add(new Evenement(Integer.valueOf(day), Integer.valueOf(month), Integer.valueOf(year), 2, Long.valueOf(ID)));
-         }
-         for (int a = 0; a < evenements.size(); a++) {
-             dataev.add(evenements.get(a).getDay() + " " + evenements.get(a).getMonth() + " " + evenements.get(a).getYear() + " " + evenements.get(a).getId()
-             		+ " " + evenements.get(a).getData());
-         }
          evenements.add(new Evenement(0, 0, 0, null, 0L));
 
-         Collections.sort(dataev, new StringComparator());
-         Collections.reverse(dataev);
+         Collections.sort(evenements, new EventComparator());
+         Collections.reverse(evenements);
 
-         evenements.clear();
-         for (int i = 0; i < dataev.size(); i++) {
-             String line2 = dataev.get(i);
-
-             String day = line2.split(" ")[0];
-             String month = line2.split(" ")[1];
-             String year = line2.split(" ")[2];
-             String id = line2.split(" ")[3];
-             String data = line2.split(" ")[4];
-
-             evenements.add(new Evenement(Integer.valueOf(day), Integer.valueOf(month),
-                     Integer.valueOf(year), Integer.valueOf(id), Long.valueOf(data)));
-
-         }
-         evenements.add(new Evenement(0, 0, 0, null, 0L));
  		/*
  		 * Planning
  		 */
@@ -230,33 +165,10 @@ public class ChatClient {
  			d++;
          }
 
-         for (int a = 0; a < planning.size(); a++) {
-             datapl.add(planning.get(a).getHour_start() + " " + planning.get(a).getHour() + " " + planning.get(a).getDay() + " "
-                     + planning.get(a).getMonth() + " " + planning.get(a).getYear() + " " + planning.get(a).getId() + " " + planning.get(a).getData()
-                     + " " + planning.get(a).getUUID());
-         }
          planning.add(new Planning(0, 0, 0, 0, 0, 0, 0L, 0L));
 
-         Collections.sort(datapl, new StringComparator());
-         Collections.reverse(datapl);
-
-         planning.clear();
-         for (int i = 0; i < datapl.size(); i++) {
-             String line2 = datapl.get(datapl.size()-(i+1));
-
-             String hour_start = line2.split(" ")[0];
-             String hour = line2.split(" ")[1];
-             String day = line2.split(" ")[2];
-             String month = line2.split(" ")[3];
-             String year = line2.split(" ")[4];
-             String id = line2.split(" ")[5];
-             String data = line2.split(" ")[6];
-             String uuid = line2.split(" ")[7];
-
-             planning.add(new Planning(Integer.valueOf(hour_start), Integer.valueOf(hour), Integer.valueOf(day), Integer.valueOf(month),
-                     Integer.valueOf(year), Integer.valueOf(id), Long.valueOf(data), Long.valueOf(uuid)));
-         }
-         planning.add(new Planning(0, 0, 0, 0, 0, 0, 0L, 0L));
+         Collections.sort(planning, new PlanningComparator());
+         Collections.reverse(planning);
 
          new Fenetre();
          /*
@@ -406,49 +318,8 @@ public class ChatClient {
     }
     
     public static void TriVideos(){
-    	datavi.clear();
-    	for (int a = 0; a < videos.size(); a++) {
- 			datavi.add(videos.get(a).getName() + "§" + videos.get(a).getDay() + "§" + videos.get(a).getMonth() + "§" + videos.get(a).getYear()
-             		+ "§" + videos.get(a).getViews() + "§" + videos.get(a).getLikes() + "§" + videos.get(a).getDislikes() + "§" +
-             		videos.get(a).getShare() + "§" + videos.get(a).getVideogenre() + "§" + videos.get(a).getEcritureTime() + "§" 
-             		+ videos.get(a).getTournageTime() + "§" + videos.get(a).getMontageTime() + "§" + videos.get(a).getPostprodTime() 
-             		+ "§" + videos.get(a).getMontageQualite() + "§" + videos.get(a).getImageQualite() + "§" + videos.get(a).getEcritureQualite() 
-             		+ "§" + videos.get(a).getJeuQualite() + "§" + videos.get(a).getID());
-         }
- 		Collections.sort(datavi, new VideosComparator());
-         Collections.reverse(datavi);
-         videos.clear();
-         for (int i = 0; i < datavi.size(); i++) {
-             String line2 = datavi.get(i);
-
-             String name = line2.split("§")[0];
-             String day = line2.split("§")[1];
-             String month = line2.split("§")[2];
-             String year = line2.split("§")[3];
-             String views = line2.split("§")[4];
-             String likes = line2.split("§")[5];
-             String dislikes = line2.split("§")[6];
-             String share = line2.split("§")[7];
-             String videosgenre = line2.split("§")[8];
-             String ecrituretime = line2.split("§")[9];
-             String tournagetime = line2.split("§")[10];
-             String montagetime = line2.split("§")[11];
-             String postprodtime = line2.split("§")[12];
-             String montagequalite = line2.split("§")[13];
-             String imagequalite = line2.split("§")[14];
-             String ecriturequalite = line2.split("§")[15];
-             String jeuqualite = line2.split("§")[16];
-             String ID = line2.split("§")[17];
-
-             videos.add(new Video(name, Integer.valueOf(day), Integer.valueOf(month),
-                     Integer.valueOf(year), Long.valueOf(views), Long.valueOf(likes), Long.valueOf(dislikes), Long.valueOf(share), videosgenre,
-                     Integer.valueOf(ecrituretime),
-                     Integer.valueOf(tournagetime), 
-                     Integer.valueOf(montagetime), 
-                     Integer.valueOf(postprodtime), 
-                     Integer.valueOf(montagequalite), 
-                     Integer.valueOf(imagequalite), Integer.valueOf(ecriturequalite), Integer.valueOf(jeuqualite),Long.valueOf(ID)));
-         }
+ 		Collections.sort(videos, new VideosComparator());
+         Collections.reverse(videos);
     }
     
 }
