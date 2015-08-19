@@ -15,6 +15,9 @@ package Main;
 
 import javax.swing.*;
 
+import accessoires.Accessoire;
+import accessoires.Camera;
+import accessoires.CameraPerformance;
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import utilities.Evenement;
 import utilities.EventComparator;
@@ -56,6 +59,7 @@ public class ChatClient {
 	
 	public static List<String> TEST = new ArrayList<String>();
 	public static List<Video> videos = new ArrayList<Video>();
+	public static List<Accessoire> access = new ArrayList<Accessoire>();
 	public static List<Planning> planning = new ArrayList<Planning>();
 	public static List<Evenement> evenements = new ArrayList<Evenement>();
 	public static List<String> datavi = new ArrayList<String>();
@@ -95,6 +99,11 @@ public class ChatClient {
      	 /*
           * Ceci sont des valeurs fictives. Il faudra seulement get toutes les horraires sur le server.
  		 */
+    	
+    	/*
+    	 * Accessoires
+    	 */
+    	access.add(new Camera("Canan 600D", 400, new CameraPerformance(50), "ACCESSOIRES/1", 1));
  		
  		/*
  		 * On récupère les vidéos

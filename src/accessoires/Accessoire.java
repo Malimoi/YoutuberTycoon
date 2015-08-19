@@ -4,6 +4,7 @@ public abstract class Accessoire {
 	
 	protected String name;
 	protected int price;
-	protected long ID; // ?
+	protected String path;
+	protected long ID;
 
 }
