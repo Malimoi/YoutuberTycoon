@@ -15,6 +15,8 @@ package Main;
 
 import javax.swing.*;
 
+import player.Player;
+import player.PlayerC;
 import accessoires.Accessoire;
 import accessoires.Camera;
 import accessoires.CameraPerformance;
@@ -42,12 +44,9 @@ public class MainClient {
 	/*
 	 * Client propieties
 	 */
-	public static String Pseudo = "";
-	/*
-	 *	0=null;1=lundi/mardi/jeudi/vendredi;2=lundi/mardi/mercredi/jeudi/vendredi;3=lundi/mardi/mercredi/jeudi/vendredi/samedi;
-	 *	4=lundi/mardi/mercredi/jeudi/vendredi/samedi/dimanche;
-	 */
-	public static Integer work = 1; 
+	public static Player player = /* Ceci est UNIQUEMENT des valeurs de test. Toutes les valeurs seront envoyés par le serveur. */ 
+			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
+	
 	public static Long MAX_UUID_PLANNING;
 	
 	/*
@@ -55,7 +54,6 @@ public class MainClient {
 	 */
 	public static Boolean IsTest = true;
 	
-	public static List<String> TEST = new ArrayList<String>();
 	public static List<Video> videos = new ArrayList<Video>();
 	public static List<Accessoire> access = new ArrayList<Accessoire>();
 	public static List<Planning> planning = new ArrayList<Planning>();
@@ -146,23 +144,23 @@ public class MainClient {
  			formater = new SimpleDateFormat("yy/MM/dd/HH/EEEE/MMMM/MMM");
  			String s = formater.format(date);
  			String[] sf = s.split("/");
- 			if (work==1){
+ 			if (MainClient.player.getWork()==1){
  				if (sf[4].contains("lundi")||sf[4].contains("mardi")||sf[4].contains("jeudi")||sf[4].contains("vendredi")){
  					planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
  							1, 0L,MAX_UUID_PLANNING));
  				}
- 			}if (work==2){
+ 			}if (MainClient.player.getWork()==2){
  				if (sf[4].contains("lundi")||sf[4].contains("mardi")||sf[4].contains("mercredi")||sf[4].contains("jeudi")||sf[4].contains("vendredi")){
  					planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
  							1, 0L,MAX_UUID_PLANNING));
  				}
- 			}if (work==3){
+ 			}if (MainClient.player.getWork()==3){
  				if (sf[4].contains("lundi")||sf[4].contains("mardi")||sf[4].contains("mercredi")||sf[4].contains("jeudi")
  						||sf[4].contains("vendredi")||sf[4].contains("samedi")){
  					planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
  							1, 0L,MAX_UUID_PLANNING));
  				}
- 			}if (work==4){
+ 			}if (MainClient.player.getWork()==4){
  				planning.add(new Planning(8, 16, Integer.valueOf(sf[2]), Integer.valueOf(sf[1]), Integer.valueOf(sf[0]),
  						1, 0L,MAX_UUID_PLANNING));
  				
@@ -195,7 +193,7 @@ public class MainClient {
         private static final String CRLF = "\r\n"; // newline
         private Socket socket;
         private OutputStream outputStream;
-        private PrintWriter out = null;
+		//private PrintWriter out = null;
 
         /**
          * Create socket, and receiving thread
@@ -260,7 +258,8 @@ public class MainClient {
     /**
      * Chat client UI
      */
-    static class ChatFrame extends JFrame implements Observer {
+    @SuppressWarnings("serial")
+	static class ChatFrame extends JFrame implements Observer {
 
         private JTextArea textArea;
         private JTextField inputTextField;

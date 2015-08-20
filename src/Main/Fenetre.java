@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -230,7 +231,7 @@ public class Fenetre extends JFrame{
 	lab_c_n_subs.setHorizontalAlignment(JLabel.CENTER);
 	lab_c_n_subs.setPreferredSize(new Dimension(225, 30));
 	lab_c_n_nbsubs.setFont(new Font("Tahoma", Font.PLAIN, 19));
-	lab_c_n_nbsubs.setText("11 156");
+	lab_c_n_nbsubs.setText(MainClient.player.getSubscribers()+"");
 	lab_c_n_nbsubs.setForeground(Color.decode("#424242"));
 	lab_c_n_nbsubs.setHorizontalAlignment(JLabel.CENTER);
 	lab_c_n_nbsubs.setPreferredSize(new Dimension(225, 30));
@@ -241,7 +242,7 @@ public class Fenetre extends JFrame{
 	lab_c_n_views.setHorizontalAlignment(JLabel.CENTER);
 	lab_c_n_views.setPreferredSize(new Dimension(225, 30));
 	lab_c_n_nbviews.setFont(new Font("Tahoma", Font.PLAIN, 19));
-	lab_c_n_nbviews.setText("658 254");
+	lab_c_n_nbviews.setText(MainClient.player.getViews()+"");
 	lab_c_n_nbviews.setForeground(Color.decode("#424242"));
 	lab_c_n_nbviews.setHorizontalAlignment(JLabel.CENTER);
 	lab_c_n_nbviews.setPreferredSize(new Dimension(225, 30));
@@ -252,7 +253,7 @@ public class Fenetre extends JFrame{
 	lab_c_n_gold.setHorizontalAlignment(JLabel.CENTER);
 	lab_c_n_gold.setPreferredSize(new Dimension(225, 30));
 	lab_c_n_nbgold.setFont(new Font("Tahoma", Font.PLAIN, 19));
-	lab_c_n_nbgold.setText("560");
+	lab_c_n_nbgold.setText(MainClient.player.getDollars()+"");
 	lab_c_n_nbgold.setForeground(Color.decode("#424242"));
 	lab_c_n_nbgold.setHorizontalAlignment(JLabel.CENTER);
 	lab_c_n_nbgold.setPreferredSize(new Dimension(225, 30));
@@ -359,7 +360,7 @@ public class Fenetre extends JFrame{
 				lab_lettre.setPreferredSize(new Dimension(50, 50));
 				//Pseudo
 				lab_c_c_n1_name.setFont(new Font("Tahoma", Font.PLAIN, 22));
-				lab_c_c_n1_name.setText("Malimoi");
+				lab_c_c_n1_name.setText(MainClient.player.getPseudo());
 				lab_c_c_n1_name.setForeground(Color.BLACK);
 				lab_c_c_n1_name.setHorizontalAlignment(JLabel.LEFT);
 				lab_c_c_n1_name.setPreferredSize(new Dimension(300, 25));
@@ -387,7 +388,7 @@ public class Fenetre extends JFrame{
 			lab_c_c_north_subs.setHorizontalAlignment(JLabel.CENTER);
 			lab_c_c_north_subs.setPreferredSize(new Dimension(((largeur-255)/8), 40));
 			lab_c_c_north_nbsubs.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lab_c_c_north_nbsubs.setText("11 156");
+			lab_c_c_north_nbsubs.setText(MainClient.player.getSubscribers()+"");
 			lab_c_c_north_nbsubs.setForeground(Color.decode("#424242"));
 			lab_c_c_north_nbsubs.setHorizontalAlignment(JLabel.CENTER);
 			lab_c_c_north_nbsubs.setPreferredSize(new Dimension(((largeur-255)/8), 40));
@@ -398,7 +399,7 @@ public class Fenetre extends JFrame{
 			lab_c_c_north_views.setHorizontalAlignment(JLabel.CENTER);
 			lab_c_c_north_views.setPreferredSize(new Dimension(((largeur-255)/8), 40));
 			lab_c_c_north_nbviews.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lab_c_c_north_nbviews.setText("658 254");
+			lab_c_c_north_nbviews.setText(MainClient.player.getViews()+"");
 			lab_c_c_north_nbviews.setForeground(Color.decode("#424242"));
 			lab_c_c_north_nbviews.setHorizontalAlignment(JLabel.CENTER);
 			lab_c_c_north_nbviews.setPreferredSize(new Dimension(((largeur-255)/8), 40));
@@ -771,6 +772,34 @@ public class Fenetre extends JFrame{
 		return c;	
 	}
 	
+	public String[] list_categ_videos(){
+		List<String> list_categ = new ArrayList<String>();
+		if (MainClient.player.getLvl_animations_films()>0){
+			list_categ.add("ANIMATIONS/FILMS");
+		}if (MainClient.player.getLvl_animaux()>0){
+			list_categ.add("ANIMAUX");
+		}if (MainClient.player.getLvl_divertissement()>0){
+			list_categ.add("DIVERTISSEMENT");
+		}if (MainClient.player.getLvl_gaming()>0){
+			list_categ.add("GAMING");
+		}if (MainClient.player.getLvl_humour()>0){
+			list_categ.add("HUMOUR");
+		}if (MainClient.player.getLvl_makeup_mode()>0){
+			list_categ.add("MAKEUP/MODE");
+		}if (MainClient.player.getLvl_musique()>0){
+			list_categ.add("MUSIQUE");
+		}if (MainClient.player.getLvl_sciences()>0){
+			list_categ.add("SCIENCES");
+		}if (MainClient.player.getLvl_sport()>0){
+			list_categ.add("SPORT");
+		}if (MainClient.player.getLvl_cuisine()>0){
+			list_categ.add("CUISINE");
+		}
+		String[] s = new String[list_categ.size()];
+		s = list_categ.toArray(s);
+		return s;
+	}
+	
 	public class ClassicButton extends JButton implements MouseListener{
 		private String name;
 		private Color FOND;
@@ -1036,9 +1065,6 @@ public class Fenetre extends JFrame{
 				}
 				for (int i = 0;i<MainClient.planning.size()-1;i++){
 					if(MainClient.planning.get(i).getUUID().equals(l)){
-						System.out.println(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData())+" le "+
-							Zero(MainClient.planning.get(i).getDay())+"/"+Zero(MainClient.planning.get(i).getMonth())+" de "+
-							MainClient.planning.get(i).getHour_start()+"h à "+MainClient.planning.get(i).getHour()+"h");
 						pl=MainClient.planning.get(i);
 					}
 				}
@@ -1532,7 +1558,6 @@ public class Fenetre extends JFrame{
 			}else{
 
 					JPanel miniature = new MINIA("image/CLASSES/"+MainClient.videos.get(i).getVideogenre()+".png");
-					System.out.println("'"+MainClient.videos.get(i).getVideogenre()+"'");
 					miniature.setBounds(50, TotalNotifY, 165, 95);
 					JLabel titre = new JLabel();
 					titre.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -1660,8 +1685,7 @@ public class Fenetre extends JFrame{
 			lab_1.setHorizontalAlignment(JLabel.LEFT);
 			lab_1.setBounds(25, 55+40+25+10, 175, 20);
 			cv_c_south.add(lab_1);
-			String[] Name_Of_Styles = { "ANIMATIONS/FILMS","ANIMAUX","DIVERTISSEMENT","GAMING","HUMOUR",
-					"MAKEUP/MODE","MUSIQUE","SCIENCES","SPORT","VLOG","CUISINE" };
+			String[] Name_Of_Styles = list_categ_videos();
 			categoriescombo = new JComboBox(Name_Of_Styles);
 			categoriescombo.setBounds(25, 75+40+25+10, 175, 50);
 			cv_c_south.add(categoriescombo);
