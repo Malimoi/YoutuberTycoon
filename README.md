@@ -9,18 +9,21 @@ Informations:
 -------------
 
 **Le jeu ?** Simulation de *Youtuber*.
-Pour le moment, il y a seulement la communication client-server qui a été effectué correctement, et la mise en page a commencé à  àªtre élaboré.
+Pour le moment, il y a seulement la communication client-server qui a été effectué correctement, et la mise en page a commencé à  être élaboré.
 
 > **A venir:**
 
-> - Fin de la mise en forme des pages principales.
-> - Mise en place de <i>l'emploi du temps</i> (du jeu)
+> - "Faire une vidéo"
 
 
 > **Fait:**
 
+> - Mise en place du <i>planning</i> (la page)
 > - Mise en place du <i>gestionnaire de vidéos</i>
 > - **Planning** sur la <i>page principale</i> !
+
+<u>Mise à  jour du 20/08/2015 à  19:02 :</u></br>
+Des nouvelles infos arrivent très bientôt !
 
 <u>Mise à  jour du 02/08/2015 à  23:36 :</u></br>
 Dans le planning se place automatiquement la tâche **Travail** selon le statut du joueur. (Si il travail 4j/7, 5j/7, etc...)
@@ -74,5 +77,5 @@ Voici le premier "**screen**" de la mise en page :
 
 De nouvelles informations sortiront dans les jours qui arrivent !
 
-(dèrnière modification le 02/08/2015 à  23:36)
+(dèrnière modification le 20/08/2015 à  19:03)
 
