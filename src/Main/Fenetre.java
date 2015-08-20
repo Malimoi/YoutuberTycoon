@@ -118,7 +118,7 @@ public class Fenetre extends JFrame{
 					public JPanel c_c_nt_c_jourj = new JPanel();
 					public JLabel lab_c_c_nt_c_jour = new JLabel();
 					public JLabel lab_c_c_nt_c_date = new JLabel();
-					public JLabel lab_c_c_nt_c_deChatClient = new JLabel();
+					public JLabel lab_c_c_nt_c_deMainClient = new JLabel();
 			public JPanel c_c_videospannel = new NOR();
 				public JPanel c_c_vp_west = new NOR();
 				public JPanel c_c_vp_east = new NOR();
@@ -427,7 +427,7 @@ public class Fenetre extends JFrame{
 			c_c_vp_center.setLayout(null);		
 			
 			/*
-			 * Set the planning (ChatClient page)
+			 * Set the planning (MainClient page)
 		       ---------------------------
 			 * Méthode qui renvoi à la construction du planning avec évenements.
 		     */
@@ -483,7 +483,7 @@ public class Fenetre extends JFrame{
 			nbvideopan.setBounds(120, 20, 45, 29);
 			nbvideopan.setLayout(new BorderLayout());
 			nbvideo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			nbvideo.setText((ChatClient.videos.size()-1)+"");
+			nbvideo.setText((MainClient.videos.size()-1)+"");
 			nbvideo.setForeground(Color.decode("#ffffff"));
 			nbvideo.setHorizontalAlignment(JLabel.CENTER);
 			nbvideopan.add(nbvideo,BorderLayout.CENTER);
@@ -692,39 +692,39 @@ public class Fenetre extends JFrame{
 		if (i==1){
 			s="Travail";
 		}if (i==2){
-			for (int a = 0;a<ChatClient.videos.size();a++){
-				if (ChatClient.videos.get(a).getID()==l){
-					name = ChatClient.videos.get(a).getName();
+			for (int a = 0;a<MainClient.videos.size();a++){
+				if (MainClient.videos.get(a).getID()==l){
+					name = MainClient.videos.get(a).getName();
 				}
 			}
 			s="Nouvelle vidéo \""+name+"\"";
 		}if (i==3){
-			for (int a = 0;a<ChatClient.videos.size();a++){
-				if (ChatClient.videos.get(a).getID()==l){
-					name = ChatClient.videos.get(a).getName();
+			for (int a = 0;a<MainClient.videos.size();a++){
+				if (MainClient.videos.get(a).getID()==l){
+					name = MainClient.videos.get(a).getName();
 				}
 			}
 			s="Tournage \""+name+"\"";
 		}if (i==4){
-			for (int a = 0;a<ChatClient.videos.size();a++){
-				if (ChatClient.videos.get(a).getID()==l){
-					name = ChatClient.videos.get(a).getName();
+			for (int a = 0;a<MainClient.videos.size();a++){
+				if (MainClient.videos.get(a).getID()==l){
+					name = MainClient.videos.get(a).getName();
 				}
 			}
 			s="Montage \""+name+"\"";
 		}if (i==5){
 			s="Jour de paye";
 		}if (i==6){
-			for (int a = 0;a<ChatClient.videos.size();a++){
-				if (ChatClient.videos.get(a).getID()==l){
-					name = ChatClient.videos.get(a).getName();
+			for (int a = 0;a<MainClient.videos.size();a++){
+				if (MainClient.videos.get(a).getID()==l){
+					name = MainClient.videos.get(a).getName();
 				}
 			}
 			s="Écriture \""+name+"\"";
 		}if (i==7){
-			for (int a = 0;a<ChatClient.videos.size();a++){
-				if (ChatClient.videos.get(a).getID()==l){
-					name = ChatClient.videos.get(a).getName();
+			for (int a = 0;a<MainClient.videos.size();a++){
+				if (MainClient.videos.get(a).getID()==l){
+					name = MainClient.videos.get(a).getName();
 				}
 			}
 			s="Post-Prod \""+name+"\"";
@@ -1036,12 +1036,12 @@ public class Fenetre extends JFrame{
 					}
 					if(m.equals("<hidden")){v=true;}
 				}
-				for (int i = 0;i<ChatClient.planning.size()-1;i++){
-					if(ChatClient.planning.get(i).getUUID().equals(l)){
-						System.out.println(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData())+" le "+
-							Zero(ChatClient.planning.get(i).getDay())+"/"+Zero(ChatClient.planning.get(i).getMonth())+" de "+
-							ChatClient.planning.get(i).getHour_start()+"h à "+ChatClient.planning.get(i).getHour()+"h");
-						pl=ChatClient.planning.get(i);
+				for (int i = 0;i<MainClient.planning.size()-1;i++){
+					if(MainClient.planning.get(i).getUUID().equals(l)){
+						System.out.println(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData())+" le "+
+							Zero(MainClient.planning.get(i).getDay())+"/"+Zero(MainClient.planning.get(i).getMonth())+" de "+
+							MainClient.planning.get(i).getHour_start()+"h à "+MainClient.planning.get(i).getHour()+"h");
+						pl=MainClient.planning.get(i);
 					}
 				}
 				edit_first_choice.setEnabled(false);
@@ -1081,16 +1081,16 @@ public class Fenetre extends JFrame{
 					}
 					if(m.equals("<hidden")){v=true;}
 				}
-				for (int i = 0;i<ChatClient.planning.size()-1;i++){
-					if(ChatClient.planning.get(i).getUUID().equals(l)){
-						pl=ChatClient.planning.get(i);
+				for (int i = 0;i<MainClient.planning.size()-1;i++){
+					if(MainClient.planning.get(i).getUUID().equals(l)){
+						pl=MainClient.planning.get(i);
 					}
 				}
-				for (int a = 0;a<ChatClient.planning.size();a++){
-					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==day &&
-							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year && 
-							ChatClient.planning.get(a)!=pl){
-						for (int x = ChatClient.planning.get(a).getHour_start();x<ChatClient.planning.get(a).getHour();x++){
+				for (int a = 0;a<MainClient.planning.size();a++){
+					if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
+							MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year && 
+							MainClient.planning.get(a)!=pl){
+						for (int x = MainClient.planning.get(a).getHour_start();x<MainClient.planning.get(a).getHour();x++){
 							ar.add(x);
 						}
 					}
@@ -1113,16 +1113,16 @@ public class Fenetre extends JFrame{
 					}
 					if(m.equals("<hidden")){v=true;}
 				}
-				for (int i = 0;i<ChatClient.planning.size()-1;i++){
-					if(ChatClient.planning.get(i).getUUID().equals(l)){
-						pl=ChatClient.planning.get(i);
+				for (int i = 0;i<MainClient.planning.size()-1;i++){
+					if(MainClient.planning.get(i).getUUID().equals(l)){
+						pl=MainClient.planning.get(i);
 					}
 				}
-				for (int a = 0;a<ChatClient.planning.size();a++){
-					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getDay()==day &&
-							ChatClient.planning.get(a).getMonth()==month && ChatClient.planning.get(a).getYear()==year &&
-							ChatClient.planning.get(a)!=pl){
-						for (int x = ChatClient.planning.get(a).getHour_start()+1;x<ChatClient.planning.get(a).getHour();x++){
+				for (int a = 0;a<MainClient.planning.size();a++){
+					if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
+							MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year &&
+							MainClient.planning.get(a)!=pl){
+						for (int x = MainClient.planning.get(a).getHour_start()+1;x<MainClient.planning.get(a).getHour();x++){
 							ar.add(x);
 						}
 					}
@@ -1161,13 +1161,13 @@ public class Fenetre extends JFrame{
 			 */
 			if (edit_hour_end.getBackground().equals(Color.decode("#C4FECA"))&&
 					edit_hour_start.getBackground().equals(Color.decode("#C4FECA"))){
-				for (int a = 0;a<ChatClient.planning.size();a++){
-					if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a)==pl){
-						ChatClient.planning.get(a).setHour_start(h1);
-						ChatClient.planning.get(a).setHour(h2);
-						ChatClient.planning.get(a).setDay(day);
-						ChatClient.planning.get(a).setMonth(month);
-						ChatClient.planning.get(a).setYear(year);
+				for (int a = 0;a<MainClient.planning.size();a++){
+					if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a)==pl){
+						MainClient.planning.get(a).setHour_start(h1);
+						MainClient.planning.get(a).setHour(h2);
+						MainClient.planning.get(a).setDay(day);
+						MainClient.planning.get(a).setMonth(month);
+						MainClient.planning.get(a).setYear(year);
 						/*
 						 * A faire : new tri des taches comme au lancement.
 						 */
@@ -1202,12 +1202,12 @@ public class Fenetre extends JFrame{
 					return;
 				}
 				String categorie = categoriescombo.getSelectedItem().toString();
-				ChatClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie,
-						0, 0, 0, 0, 0, 0, 0, 0, (long)ChatClient.videos.size()-1));
+				MainClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie,
+						0, 0, 0, 0, 0, 0, 0, 0, (long)MainClient.videos.size()-1));
 				/*
 				 * On tri.
 				 */
-				ChatClient.TriVideos();
+				MainClient.TriVideos();
 				cv_c_south.removeAll();
 				setVideosCreator(2);
 			}else if(step.equals(2)){
@@ -1259,11 +1259,11 @@ public class Fenetre extends JFrame{
 				lab_c_c_nt_c_date.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 20);
 				TotalNotifY = TotalNotifY+20+5;
 				while(plan){
-					if (ChatClient.planning.size()-1==i){
+					if (MainClient.planning.size()-1==i){
 						plan=false;
 					}
-					else if (ChatClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && Integer.parseInt(sf[2])==ChatClient.planning.get(i).getDay()){
-							ChatClient.planning.remove(i);
+					else if (MainClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && Integer.parseInt(sf[2])==MainClient.planning.get(i).getDay()){
+							MainClient.planning.remove(i);
 					}
 					i++;
 				}
@@ -1284,22 +1284,22 @@ public class Fenetre extends JFrame{
 			 * Boucle 1 - évenement
 			 */
 			while(plan){
-				if (ChatClient.evenements.size()-1==i){
+				if (MainClient.evenements.size()-1==i){
 					plan=false;
 				}
 				else{
-						if (ChatClient.evenements.get(i).getDay()==Integer.parseInt(sf[2])){
-							JPanel panel = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+						if (MainClient.evenements.get(i).getDay()==Integer.parseInt(sf[2])){
+							JPanel panel = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 17);
 							TotalNotifY=TotalNotifY+15+5;
 							panel.setLayout(new BorderLayout());
-							JPanel nordd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel nordd = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							nordd.setPreferredSize(new Dimension(largeur,1));
-							JPanel sudd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel sudd = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							sudd.setPreferredSize(new Dimension(largeur,1));
-							JPanel westt = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel westt = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							westt.setPreferredSize(new Dimension(5,hauteur));
-							JPanel centerr = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel centerr = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							//centerr.setPreferredSize(new Dimension(largeur,hauteur));
 							panel.add(nordd,BorderLayout.NORTH);
 							panel.add(sudd,BorderLayout.SOUTH);
@@ -1308,14 +1308,14 @@ public class Fenetre extends JFrame{
 							
 							JLabel label = new JLabel();
 							label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-							label.setText(ActivityId(ChatClient.evenements.get(i).getId(),ChatClient.evenements.get(i).getData()));
+							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData()));
 							label.setForeground(Color.WHITE);
 							label.setHorizontalAlignment(JLabel.LEFT);
 							
 							centerr.add(label, BorderLayout.CENTER);
 							panel.add(centerr,BorderLayout.CENTER);
 							c_c_nt_center.add(panel);
-							System.out.println("(1-e) Jour égal à l'index : day "+ChatClient.evenements.get(i).getDay());
+							System.out.println("(1-e) Jour égal à l'index : day "+MainClient.evenements.get(i).getDay());
 						}
 						i++;
 					}
@@ -1327,14 +1327,14 @@ public class Fenetre extends JFrame{
 			 * Boucle 1 - horraire (jour j)
 			 */
 			while(plan){
-				if (ChatClient.planning.size()-1==i){
+				if (MainClient.planning.size()-1==i){
 					plan=false;
 				}
 				else{
-						if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
+						if (MainClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
 							Color c = Color.decode("#DCDCDC");
 							if (encours==true){
-								if (ChatClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&ChatClient.planning.get(i).getDay()==day){
+								if (MainClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&MainClient.planning.get(i).getDay()==day){
 									c = Color.decode("#C4FECA");
 								}else{
 									c = Color.decode("#FBE369");
@@ -1365,21 +1365,21 @@ public class Fenetre extends JFrame{
 							suddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
 							suddd.setLayout(null);
 							
-							JPanel color = new COLOR(Col(ColId(ChatClient.planning.get(i).getId())));
+							JPanel color = new COLOR(Col(ColId(MainClient.planning.get(i).getId())));
 							color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
 							
 							JLabel label_name = new JLabel();
 							label_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
-							label_name.setText(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData()));
+							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData()));
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
 							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
 							
 							JLabel label_hours = new JLabel();
 							label_hours.setFont(new Font("Tahoma", Font.PLAIN, 12));
-							String HourEnd = ChatClient.planning.get(i).getHour() < 22 ? ""+ChatClient.planning.get(i).getHour()+":00" : "<font color=red>"+
-									ChatClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
-							label_hours.setText("<html>"+ChatClient.planning.get(i).getHour_start()+":00 à "+HourEnd+"</html>");
+							String HourEnd = MainClient.planning.get(i).getHour() < 22 ? ""+MainClient.planning.get(i).getHour()+":00" : "<font color=red>"+
+									MainClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
+							label_hours.setText("<html>"+MainClient.planning.get(i).getHour_start()+":00 à "+HourEnd+"</html>");
 							//label_hours.setForeground(Color.GRAY);
 							label_hours.setHorizontalAlignment(JLabel.LEFT);
 							label_hours.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -1391,8 +1391,8 @@ public class Fenetre extends JFrame{
 							centerr.add(suddd,BorderLayout.SOUTH);
 							panel.add(centerr,BorderLayout.CENTER);
 							c_c_nt_center.add(panel);
-							System.out.println("(1) Jour égal à l'index : "+ChatClient.planning.get(i).getHour_start()+" -> "+ChatClient.planning.get(i).getHour()
-									+" : day "+ChatClient.planning.get(i).getDay());
+							System.out.println("(1) Jour égal à l'index : "+MainClient.planning.get(i).getHour_start()+" -> "+MainClient.planning.get(i).getHour()
+									+" : day "+MainClient.planning.get(i).getDay());
 						}
 						i++;
 					}
@@ -1426,23 +1426,23 @@ public class Fenetre extends JFrame{
 		int p =0;
 		
 		while(vid){
-			if (ChatClient.videos.size()-1==i || p == 5){
+			if (MainClient.videos.size()-1==i || p == 5){
 				vid=false;
 			}else{
-				if (ChatClient.videos.get(i).getYear()>Integer.parseInt(sf[0])){
+				if (MainClient.videos.get(i).getYear()>Integer.parseInt(sf[0])){
 
 				}
-				else if (ChatClient.videos.get(i).getMonth()>Integer.parseInt(sf[1])){
+				else if (MainClient.videos.get(i).getMonth()>Integer.parseInt(sf[1])){
 					
 				}
-				else if (ChatClient.videos.get(i).getDay()>Integer.parseInt(sf[2])){
+				else if (MainClient.videos.get(i).getDay()>Integer.parseInt(sf[2])){
 					
 				}else{
-					JPanel miniature = new MINIA("image/CLASSES/"+ChatClient.videos.get(i).getVideogenre()+".png");
+					JPanel miniature = new MINIA("image/CLASSES/"+MainClient.videos.get(i).getVideogenre()+".png");
 					miniature.setBounds(0, TotalNotifY, 165, 95);
 					JLabel titre = new JLabel();
 					titre.setFont(new Font("Tahoma", Font.PLAIN, 18));
-					titre.setText(ChatClient.videos.get(i).getName());
+					titre.setText(MainClient.videos.get(i).getName());
 					titre.setForeground(Color.GRAY);
 					titre.setHorizontalAlignment(JLabel.LEFT);
 					titre.setBounds(182, TotalNotifY+5, (((largeur-255)-15-(largeur-255)/4))/2, 18);
@@ -1450,7 +1450,7 @@ public class Fenetre extends JFrame{
 					views.setBounds(180,TotalNotifY+(95-(30+35)),25,25);
 					JLabel nbviews = new JLabel();
 					nbviews.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nbviews.setText(ChatClient.videos.get(i).getViews()+"");
+					nbviews.setText(MainClient.videos.get(i).getViews()+"");
 					nbviews.setForeground(Color.GRAY);
 					nbviews.setHorizontalAlignment(JLabel.LEFT);
 					nbviews.setBounds(180+30, TotalNotifY+(95-(30+35))+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1458,7 +1458,7 @@ public class Fenetre extends JFrame{
 					shares.setBounds(275,TotalNotifY+(95-(30+35)),25,25);
 					JLabel nbshares = new JLabel();
 					nbshares.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nbshares.setText(ChatClient.videos.get(i).getShare()+"");
+					nbshares.setText(MainClient.videos.get(i).getShare()+"");
 					nbshares.setForeground(Color.GRAY);
 					nbshares.setHorizontalAlignment(JLabel.LEFT);
 					nbshares.setBounds(275+30, TotalNotifY+(95-(30+35))+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1466,7 +1466,7 @@ public class Fenetre extends JFrame{
 					likes.setBounds(180,TotalNotifY+(95-30),25,25);
 					JLabel nblikes = new JLabel();
 					nblikes.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nblikes.setText(ChatClient.videos.get(i).getLikes()+"");
+					nblikes.setText(MainClient.videos.get(i).getLikes()+"");
 					nblikes.setForeground(Color.GRAY);
 					nblikes.setHorizontalAlignment(JLabel.LEFT);
 					nblikes.setBounds(180+30, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1474,7 +1474,7 @@ public class Fenetre extends JFrame{
 					dislikes.setBounds(275,TotalNotifY+(95-30),25,25);
 					JLabel nbdis = new JLabel();
 					nbdis.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nbdis.setText(ChatClient.videos.get(i).getDislikes()+"");
+					nbdis.setText(MainClient.videos.get(i).getDislikes()+"");
 					nbdis.setForeground(Color.GRAY);
 					nbdis.setHorizontalAlignment(JLabel.LEFT);
 					nbdis.setBounds(275+30, TotalNotifY+(95-30)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1497,12 +1497,12 @@ public class Fenetre extends JFrame{
 		}
 		int b = 1;
 		
-		for (int g = 0;g<ChatClient.videos.size()-1;g++){
+		for (int g = 0;g<MainClient.videos.size()-1;g++){
 			if (g%5==0&&g!=0){
 				b++;
 			}
 		}
-		System.out.println("B: "+b+" ("+(ChatClient.videos.size()-1)+") + I:"+i);
+		System.out.println("B: "+b+" ("+(MainClient.videos.size()-1)+") + I:"+i);
 		
 		c_c_vp_south.setLayout(null);
 		vid_affich.setBounds(0, 0, 500, 50);
@@ -1529,27 +1529,27 @@ public class Fenetre extends JFrame{
 		int i = (videopage-1)*5;
 		int p = (videopage-1)*5;
 		while(vid){
-			if (ChatClient.videos.size()-1==i || p==videopage*5){
+			if (MainClient.videos.size()-1==i || p==videopage*5){
 				vid=false;
 			}else{
 
-					JPanel miniature = new MINIA("image/CLASSES/"+ChatClient.videos.get(i).getVideogenre()+".png");
-					System.out.println("'"+ChatClient.videos.get(i).getVideogenre()+"'");
+					JPanel miniature = new MINIA("image/CLASSES/"+MainClient.videos.get(i).getVideogenre()+".png");
+					System.out.println("'"+MainClient.videos.get(i).getVideogenre()+"'");
 					miniature.setBounds(50, TotalNotifY, 165, 95);
 					JLabel titre = new JLabel();
 					titre.setFont(new Font("Tahoma", Font.PLAIN, 18));
-					titre.setText(ChatClient.videos.get(i).getName());
+					titre.setText(MainClient.videos.get(i).getName());
 					titre.setForeground(Color.DARK_GRAY);
 					titre.setHorizontalAlignment(JLabel.LEFT);
 					titre.setBounds(182+50, TotalNotifY+5, (((largeur-255)-15-(largeur-255)/4))/2, 18);
 					JLabel publie = new JLabel();
 					publie.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					if (!(ChatClient.videos.get(i).getYear()<Integer.parseInt(sf[0])) && !(ChatClient.videos.get(i).getMonth()<Integer.parseInt(sf[1]))
-							&& (ChatClient.videos.get(i).getDay()>Integer.parseInt(sf[2]))){
-						publie.setText("<html><font color=red>PLANIFIÉE POUR LE "+Zero(ChatClient.videos.get(i).getDay())+"/"+Zero(ChatClient.videos.get(i).getMonth())+"/"+Zero(ChatClient.videos.get(i).getYear())+"</font></html>");
+					if (!(MainClient.videos.get(i).getYear()<Integer.parseInt(sf[0])) && !(MainClient.videos.get(i).getMonth()<Integer.parseInt(sf[1]))
+							&& (MainClient.videos.get(i).getDay()>Integer.parseInt(sf[2]))){
+						publie.setText("<html><font color=red>PLANIFIÉE POUR LE "+Zero(MainClient.videos.get(i).getDay())+"/"+Zero(MainClient.videos.get(i).getMonth())+"/"+Zero(MainClient.videos.get(i).getYear())+"</font></html>");
 					}
 					else{
-						publie.setText("PUBLIÉE LE "+Zero(ChatClient.videos.get(i).getDay())+"/"+Zero(ChatClient.videos.get(i).getMonth())+"/"+Zero(ChatClient.videos.get(i).getYear()));
+						publie.setText("PUBLIÉE LE "+Zero(MainClient.videos.get(i).getDay())+"/"+Zero(MainClient.videos.get(i).getMonth())+"/"+Zero(MainClient.videos.get(i).getYear()));
 					}
 					
 					publie.setForeground(Color.GRAY);
@@ -1559,7 +1559,7 @@ public class Fenetre extends JFrame{
 					views.setBounds((largeur-225-20)-200,TotalNotifY+(95-(30+35+35)+4),25,25);
 					JLabel nbviews = new JLabel();
 					nbviews.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nbviews.setText(ChatClient.videos.get(i).getViews()+"");
+					nbviews.setText(MainClient.videos.get(i).getViews()+"");
 					nbviews.setForeground(Color.GRAY);
 					nbviews.setHorizontalAlignment(JLabel.LEFT);
 					nbviews.setBounds((largeur-225-20)-170, TotalNotifY+(95-(30+35+35)+4)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1567,7 +1567,7 @@ public class Fenetre extends JFrame{
 					likes.setBounds((largeur-225-20)-200,TotalNotifY+(95-30-35),25,25);
 					JLabel nblikes = new JLabel();
 					nblikes.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nblikes.setText(ChatClient.videos.get(i).getLikes()+"");
+					nblikes.setText(MainClient.videos.get(i).getLikes()+"");
 					nblikes.setForeground(Color.GRAY);
 					nblikes.setHorizontalAlignment(JLabel.LEFT);
 					nblikes.setBounds((largeur-225-20)-170, TotalNotifY+(95-30-35)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1575,7 +1575,7 @@ public class Fenetre extends JFrame{
 					dislikes.setBounds((largeur-225-20)-115,TotalNotifY+(95-30-35),25,25);
 					JLabel nbdis = new JLabel();
 					nbdis.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nbdis.setText(ChatClient.videos.get(i).getDislikes()+"");
+					nbdis.setText(MainClient.videos.get(i).getDislikes()+"");
 					nbdis.setForeground(Color.GRAY);
 					nbdis.setHorizontalAlignment(JLabel.LEFT);
 					nbdis.setBounds((largeur-225-20)-85, TotalNotifY+(95-30-35)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1583,7 +1583,7 @@ public class Fenetre extends JFrame{
 					shares.setBounds((largeur-225-20)-200,TotalNotifY+(95-34),25,25);
 					JLabel nbshares = new JLabel();
 					nbshares.setFont(new Font("Tahoma", Font.PLAIN, 16));
-					nbshares.setText(ChatClient.videos.get(i).getShare()+"");
+					nbshares.setText(MainClient.videos.get(i).getShare()+"");
 					nbshares.setForeground(Color.GRAY);
 					nbshares.setHorizontalAlignment(JLabel.LEFT);
 					nbshares.setBounds((largeur-225-20)-170, TotalNotifY+(95-34)+5, (((largeur-255)-15-(largeur-255)/4))/2, 16);
@@ -1608,7 +1608,7 @@ public class Fenetre extends JFrame{
 				
 		}
 		int b = 1;
-		for (int g =0;g<ChatClient.videos.size()-1;g++){
+		for (int g =0;g<MainClient.videos.size()-1;g++){
 			if (g%5==0&&g!=0){
 				b++;
 			}
@@ -1845,11 +1845,11 @@ public class Fenetre extends JFrame{
 				Agenda.setBounds(0, 60, 400, 30);
 				cp_c_c_c_1_center.add(jour);
 				while(plan){
-					if (ChatClient.planning.size()-1==i){
+					if (MainClient.planning.size()-1==i){
 						plan=false;
 					}
-					else if (ChatClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && Integer.parseInt(sf[2])==ChatClient.planning.get(i).getDay()){
-							ChatClient.planning.remove(i);
+					else if (MainClient.planning.get(i).getHour()<=Integer.parseInt(sf[3]) && Integer.parseInt(sf[2])==MainClient.planning.get(i).getDay()){
+							MainClient.planning.remove(i);
 					}
 					i++;
 				}
@@ -1863,22 +1863,22 @@ public class Fenetre extends JFrame{
 			 * Boucle 1 - évenement
 			 */
 			while(plan){
-				if (ChatClient.evenements.size()-1==i){
+				if (MainClient.evenements.size()-1==i){
 					plan=false;
 				}
 				else{
-						if (ChatClient.evenements.get(i).getDay()==Integer.parseInt(sf[2])){
-							JPanel panel = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+						if (MainClient.evenements.get(i).getDay()==Integer.parseInt(sf[2])){
+							JPanel panel = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 17);
 							TotalNotifY=TotalNotifY+15+5;
 							panel.setLayout(new BorderLayout());
-							JPanel nordd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel nordd = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							nordd.setPreferredSize(new Dimension(largeur,1));
-							JPanel sudd = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel sudd = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							sudd.setPreferredSize(new Dimension(largeur,1));
-							JPanel westt = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel westt = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							westt.setPreferredSize(new Dimension(5,hauteur));
-							JPanel centerr = new COLOR(Col(ColId(ChatClient.evenements.get(i).getId())));
+							JPanel centerr = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
 							//centerr.setPreferredSize(new Dimension(largeur,hauteur));
 							panel.add(nordd,BorderLayout.NORTH);
 							panel.add(sudd,BorderLayout.SOUTH);
@@ -1887,7 +1887,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label = new JLabel();
 							label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-							label.setText(ActivityId(ChatClient.evenements.get(i).getId(),ChatClient.evenements.get(i).getData()));
+							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData()));
 							label.setForeground(Color.WHITE);
 							label.setHorizontalAlignment(JLabel.LEFT);
 							
@@ -1909,14 +1909,14 @@ public class Fenetre extends JFrame{
 			 * Boucle 1 - horraire (jour j)
 			 */
 			while(plan){
-				if (ChatClient.planning.size()-1==i){
+				if (MainClient.planning.size()-1==i){
 					plan=false;
 				}
 				else{
-						if (ChatClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
+						if (MainClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
 							Color c = Color.decode("#DCDCDC");
 							if (encours==true){
-								if (ChatClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&ChatClient.planning.get(i).getDay()==day){
+								if (MainClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&MainClient.planning.get(i).getDay()==day){
 									c = Color.decode("#C4FECA");
 								}else{
 									c = Color.decode("#FBE369");
@@ -1947,21 +1947,21 @@ public class Fenetre extends JFrame{
 							suddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
 							suddd.setLayout(null);
 							
-							JPanel color = new COLOR(Col(ColId(ChatClient.planning.get(i).getId())));
+							JPanel color = new COLOR(Col(ColId(MainClient.planning.get(i).getId())));
 							color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
 							
 							JLabel label_name = new JLabel();
 							label_name.setFont(new Font("Dominique", Font.PLAIN, 20));
-							label_name.setText(ActivityId(ChatClient.planning.get(i).getId(),ChatClient.planning.get(i).getData()).toLowerCase());
+							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData()).toLowerCase());
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
 							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
 							
 							JLabel label_hours = new JLabel();
 							label_hours.setFont(new Font("Dominique", Font.PLAIN, 16));
-							String HourEnd = ChatClient.planning.get(i).getHour() < 22 ? ""+ChatClient.planning.get(i).getHour()+":00" : "<font color=red>"+
-									ChatClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
-							label_hours.setText("<html>"+ChatClient.planning.get(i).getHour_start()+":00 a "+HourEnd+"</html>");
+							String HourEnd = MainClient.planning.get(i).getHour() < 22 ? ""+MainClient.planning.get(i).getHour()+":00" : "<font color=red>"+
+									MainClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
+							label_hours.setText("<html>"+MainClient.planning.get(i).getHour_start()+":00 a "+HourEnd+"</html>");
 							//label_hours.setForeground(Color.GRAY);
 							label_hours.setHorizontalAlignment(JLabel.LEFT);
 							label_hours.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -2002,13 +2002,13 @@ public class Fenetre extends JFrame{
 		if(i==1){
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("<html><font color=gray>Choix</font></html>");
-			for (int a = 0;a<ChatClient.planning.size();a++){
-				if (a!=ChatClient.planning.size()-1 && ChatClient.planning.get(a).getId()!=1){
-					if (ChatClient.planning.get(a).getDay()>=Integer.valueOf(sf[0])&&!(ChatClient.planning.get(a).getMonth()<Integer.valueOf(sf[1]))){			
-						ar.add(("<html>"+ActivityId(ChatClient.planning.get(a).getId(),ChatClient.planning.get(a).getData())+" le "+
-								Zero(ChatClient.planning.get(a).getDay())+"/"+Zero(ChatClient.planning.get(a).getMonth())+" de "+
-								ChatClient.planning.get(a).getHour_start()+"h a "+ChatClient.planning.get(a).getHour()+"h <hidden "+
-								ChatClient.planning.get(a).getUUID()+" /> </html>").toLowerCase());
+			for (int a = 0;a<MainClient.planning.size();a++){
+				if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getId()!=1){
+					if (MainClient.planning.get(a).getDay()>=Integer.valueOf(sf[0])&&!(MainClient.planning.get(a).getMonth()<Integer.valueOf(sf[1]))){			
+						ar.add(("<html>"+ActivityId(MainClient.planning.get(a).getId(),MainClient.planning.get(a).getData())+" le "+
+								Zero(MainClient.planning.get(a).getDay())+"/"+Zero(MainClient.planning.get(a).getMonth())+" de "+
+								MainClient.planning.get(a).getHour_start()+"h a "+MainClient.planning.get(a).getHour()+"h <hidden "+
+								MainClient.planning.get(a).getUUID()+" /> </html>").toLowerCase());
 					}
 				}
 			}

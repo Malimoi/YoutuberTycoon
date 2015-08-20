@@ -38,8 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
-// Class to manage Client chat Box.
-public class ChatClient {
+public class MainClient {
 
 	/*
 	 * Client propieties
