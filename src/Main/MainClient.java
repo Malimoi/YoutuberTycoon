@@ -23,7 +23,6 @@ import utilities.Evenement;
 import utilities.EventComparator;
 import utilities.Planning;
 import utilities.PlanningComparator;
-import utilities.StringComparator;
 import utilities.Video;
 import utilities.VideosComparator;
 

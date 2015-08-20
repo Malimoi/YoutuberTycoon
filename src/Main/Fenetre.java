@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -41,7 +39,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 
 import utilities.Planning;
 import utilities.Video;
@@ -59,7 +56,7 @@ import frames.buttons.Bouton;
 import frames.buttons.Bouton_PlanningAddRemove;
 import frames.buttons.ToutAfficher;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial","rawtypes"})
 public class Fenetre extends JFrame{
 	/*
 	 * Je n'est aucune expérience en mise en page, je pense qu'il peut y avoir quelques améliorations à faire.
@@ -184,6 +181,7 @@ public class Fenetre extends JFrame{
 	public static int test = 0;
 	public static int videopage = 1;
 	
+	@SuppressWarnings("static-access")
 	public Fenetre() {
 	
 	test();
@@ -1622,7 +1620,7 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked"})
 	public void setVideosCreator(Integer number_of_step){
 		JLabel step = new JLabel();
 		step.setFont(new Font("Tahoma", Font.PLAIN, 35));
@@ -1991,7 +1989,7 @@ public class Fenetre extends JFrame{
 		}			
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"unchecked" })
 	public static void EDIT_PLAN(Integer i, Integer ID){
 		Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
 		cal.add(Calendar.DAY_OF_YEAR, 0); // <--
@@ -2032,7 +2030,7 @@ public class Fenetre extends JFrame{
 		edit_but_accept.setEnabled(true);
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"unchecked" })
 	public static void EDIT_PLAN_STEP_2(Planning pl){
 
 		ArrayList<String> ardate = new ArrayList<String>();
