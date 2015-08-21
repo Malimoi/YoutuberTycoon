@@ -1,5 +1,7 @@
 package utilities;
 
+import accessoires.Accessoire;
+
 public class Video {
 	
 	private String name;
@@ -10,6 +12,10 @@ public class Video {
 	private Long likes;
 	private Long dislikes;
 	private String videogenre;
+	private Integer longueur; /* 1->mini : 2->très-courte : 3->courte : 4->moyenne : 5->longue : 6->très-longue : 7->Enorme */
+	private Accessoire camera;
+	private Accessoire micro;
+	private Accessoire ordinateur;
 	private Integer EcritureTime;
 	private Integer TournageTime;
 	private Integer MontageTime;
@@ -22,8 +28,9 @@ public class Video {
 	private Long ID;
 	
 	public Video (String name, Integer day, Integer month, Integer year, Long views, Long likes, Long dislikes, Long share,
-			String videogenre, Integer EcritureTime, Integer TournageTime, Integer MontageTime, Integer PostprodTime, 
-			Integer MontageQualite, Integer ImageQualite, Integer EcritureQualite, Integer JeuQualite, Long ID){
+			String videogenre, Integer longueur, Accessoire camera, Accessoire micro, Accessoire ordi, Integer EcritureTime,
+			Integer TournageTime, Integer MontageTime, Integer PostprodTime, Integer MontageQualite, Integer ImageQualite, 
+			Integer EcritureQualite, Integer JeuQualite, Long ID){
 		
 		this.day=day;
 		this.month=month;
@@ -34,6 +41,10 @@ public class Video {
 		this.dislikes=dislikes;
 		this.share=share;
 		this.videogenre=videogenre;
+		this.longueur=longueur;
+		this.camera=camera;
+		this.micro=micro;
+		this.ordinateur=ordi;
 		this.EcritureTime=EcritureTime;
 		this.TournageTime=TournageTime;
 		this.MontageTime=MontageTime;
@@ -44,6 +55,38 @@ public class Video {
 		this.JeuQualite=JeuQualite;
 		this.ID=ID;
 		
+	}
+
+	public Accessoire getCamera() {
+		return camera;
+	}
+
+	public void setCamera(Accessoire camera) {
+		this.camera = camera;
+	}
+
+	public Accessoire getMicro() {
+		return micro;
+	}
+
+	public void setMicro(Accessoire micro) {
+		this.micro = micro;
+	}
+
+	public Accessoire getOrdinateur() {
+		return ordinateur;
+	}
+
+	public void setOrdinateur(Accessoire ordinateur) {
+		this.ordinateur = ordinateur;
+	}
+
+	public Integer getLongueur() {
+		return longueur;
+	}
+
+	public void setLongueur(Integer longueur) {
+		this.longueur = longueur;
 	}
 
 	public String getVideogenre() {

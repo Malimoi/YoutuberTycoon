@@ -45,7 +45,7 @@ public class MainClient {
 	 * Client propieties
 	 */
 	public static Player player = /* Ceci est UNIQUEMENT des valeurs de test. Toutes les valeurs seront envoyés par le serveur. */ 
-			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
+			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0);
 	
 	public static Long MAX_UUID_PLANNING;
 	
@@ -55,7 +55,7 @@ public class MainClient {
 	public static Boolean IsTest = true;
 	
 	public static List<Video> videos = new ArrayList<Video>();
-	public static List<Accessoire> access = new ArrayList<Accessoire>();
+	public static List<Accessoire> cameras = new ArrayList<Accessoire>();
 	public static List<Planning> planning = new ArrayList<Planning>();
 	public static List<Evenement> evenements = new ArrayList<Evenement>();
 	public static List<String> datavi = new ArrayList<String>();
@@ -99,23 +99,24 @@ public class MainClient {
     	/*
     	 * Accessoires
     	 */
-    	access.add(new Camera("Canan 600D", 400, new CameraPerformance(50), "ACCESSOIRES/1", 1));
+    	cameras.add(new Camera("Yaton 600T", 400, new CameraPerformance(30), "ACCESSOIRES/CAMERAS/1", 1, true));
+    	//System.out.println(access.get(0).getClass().getName());
  		
  		/*
  		 * On récupère les vidéos
  		 * format : new Videos(name[0],day[1],month[2],year[3],views[4],likes[5],dislikes[6],share[7],...)
  		 */
- 		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 0, 0, 0, 0, 0, 0, 0, 0, 1L));
- 		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 2L));
- 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 3L));
- 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES",0, 0, 0, 0, 0, 0, 0, 0, 4L));
- 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 0, 0, 0, 0, 0, 0, 0, 0, 5L));
- 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 6L));
- 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 0, 0, 0, 0, 0, 0, 0, 0, 7L));
- 		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 0, 0, 0, 0, 0, 0, 0, 0, 8L));
+ 		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 1L));
+ 		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 2L));
+ 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 3L));
+ 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 4L));
+ 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 5L));
+ 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 6L));
+ 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 7L));
+ 		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 8L));
  		Collections.sort(videos, new VideosComparator());
          Collections.reverse(videos);
-         videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
+         videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
          
  		/*
  		 * Evenements
@@ -326,6 +327,43 @@ public class MainClient {
     public static void TriVideos(){
  		Collections.sort(videos, new VideosComparator());
          Collections.reverse(videos);
+    }
+    
+    public static Integer Convert_Categ_int(String categ){
+    	int i = 0;
+    	if (categ.contains("HUMOUR")){
+    		i = player.getLvl_humour();
+    	}if (categ.contains("ANIMATIONS/FILMS")){
+    		i = player.getLvl_animations_films();
+    	}if (categ.contains("DIVERTISSEMENT")){
+    		i = player.getLvl_divertissement();
+    	}if (categ.contains("MAKEUP/MODE")){
+    		i = player.getLvl_makeup_mode();
+    	}if (categ.contains("CUISINE")){
+    		i = player.getLvl_cuisine();
+    	}if (categ.contains("GAMING")){
+    		i = player.getLvl_gaming();
+    	}if (categ.contains("ANIMAUX")){
+    		i = player.getLvl_animaux();
+    	}if (categ.contains("MUSIQUE")){
+    		i = player.getLvl_musique();
+    	}if (categ.contains("SCIENCES")){
+    		i = player.getLvl_sciences();
+    	}if (categ.contains("SPORT")){
+    		i = player.getLvl_sport();
+    	}
+    	
+		return i;
+    }
+    
+    public static Camera getCamera(long ID){
+    	Camera cam = null;
+    	for (int i = 0;i<cameras.size();i++){
+    		if (ID==cameras.get(i).getID()){
+    			cam=(Camera) cameras.get(i);
+    		}
+    	}
+		return cam;
     }
     
 }

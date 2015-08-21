@@ -168,6 +168,7 @@ public class Fenetre extends JFrame{
 	
 	//Variable Creator Step 1
 	public JComboBox categoriescombo;
+	public JComboBox formatscombo;
 	public JTextArea enter_titre;
 	public JComboBox camerascombo;
 	public JComboBox microscombo;
@@ -587,6 +588,10 @@ public class Fenetre extends JFrame{
 
 	this.setContentPane(content);
 	this.setVisible(true);	
+	
+	boutonAcc.setEnabled(false);
+	content.add(center,BorderLayout.CENTER);
+	test=1;
 
 	}
 	/*
@@ -1224,10 +1229,20 @@ public class Fenetre extends JFrame{
 					cv_c_south.add(error);
 					cv_c_south.updateUI();
 					return;
+				}if (titre_chars.length<3){
+					JLabel error = new JLabel();
+					error.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					error.setText("3 caractères min !");
+					error.setForeground(Col("c"));
+					error.setHorizontalAlignment(JLabel.LEFT);
+					error.setBounds(25+300+8, 55+25+8, 300, 20);
+					cv_c_south.add(error);
+					cv_c_south.updateUI();
+					return;
 				}
 				String categorie = categoriescombo.getSelectedItem().toString();
-				MainClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie,
-						0, 0, 0, 0, 0, 0, 0, 0, (long)MainClient.videos.size()-1));
+				MainClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie, 0,
+						null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, (long)MainClient.videos.size()));
 				/*
 				 * On tri.
 				 */
@@ -1647,6 +1662,7 @@ public class Fenetre extends JFrame{
 	
 	@SuppressWarnings({ "unchecked"})
 	public void setVideosCreator(Integer number_of_step){
+		
 		JLabel step = new JLabel();
 		step.setFont(new Font("Tahoma", Font.PLAIN, 35));
 		step.setText("Étape "+number_of_step+":");
@@ -1689,27 +1705,46 @@ public class Fenetre extends JFrame{
 			categoriescombo = new JComboBox(Name_Of_Styles);
 			categoriescombo.setBounds(25, 75+40+25+10, 175, 50);
 			cv_c_south.add(categoriescombo);
+			JLabel lab_f = new JLabel();
+			lab_f.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lab_f.setText("Définissez la longueur:");
+			lab_f.setForeground(Color.DARK_GRAY);
+			lab_f.setHorizontalAlignment(JLabel.LEFT);
+			lab_f.setBounds(25, 75+40+25+50+20, 175, 20);
+			cv_c_south.add(lab_f);
+			String[] Format = {"<html><b>Mini</b> (Moins de 0:30)</html>","<html><b>Très courte</b> (de 0:31 à 2:00)</html>","<html><b>Courte</b> (de 2:01 à 5:00)</html>",
+					"<html><b>Moyenne</b> (de 5:01 à 10:00)</html>","<html><b>Longue</b> (de 10:01 à 30:00)</html>","<html><b>Très longue</b> (de 30:01 à 1:00:00)</html>",
+					"<html><b>Enorme</b> (Plus de 1:00:01)</html>"};
+			formatscombo = new JComboBox(Format);
+			formatscombo.setBounds(25, 75+40+25+50+25+20, 200, 50);
+			cv_c_south.add(formatscombo);
 			JLabel lab_2 = new JLabel();
 			lab_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			lab_2.setText("Choisissez votre caméra:");
 			lab_2.setForeground(Color.DARK_GRAY);
 			lab_2.setHorizontalAlignment(JLabel.LEFT);
-			lab_2.setBounds(25, 75+40+25+50+25, 175, 20);
+			lab_2.setBounds(25, 75+40+25+50+25+50+30, 175, 20);
 			cv_c_south.add(lab_2);
-			String[] CamerasList = { "<html><font color=red>Pas de caméra</font></html>" };
+			ArrayList<String> ar = new ArrayList<String>();
+			ar.add("<html><font color=red>Pas de caméra</font></html>");
+			for (int a = 0;a<MainClient.cameras.size();a++){		
+					ar.add(MainClient.cameras.get(a).getName());
+			}
+			String[] CamerasList = new String[ar.size()];
+			CamerasList = ar.toArray(CamerasList);
 			camerascombo = new JComboBox(CamerasList);
-			camerascombo.setBounds(25, 75+40+25+50+25+25, 200, 50);
+			camerascombo.setBounds(25, 75+40+25+50+25+25+50+30, 200, 50);
 			cv_c_south.add(camerascombo);
 			JLabel lab_3 = new JLabel();
 			lab_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			lab_3.setText("Choisissez votre micro:");
 			lab_3.setForeground(Color.DARK_GRAY);
 			lab_3.setHorizontalAlignment(JLabel.LEFT);
-			lab_3.setBounds(25+200+50, 75+40+25+50+25, 175, 20);
+			lab_3.setBounds(25+200+50, 75+40+25+50+25+50+30, 175, 20);
 			cv_c_south.add(lab_3);
 			String[] MicrosList = { "<html><font color=red>Pas de micro</font></html>","Micro intégré" };
 			microscombo = new JComboBox(MicrosList);
-			microscombo.setBounds(25+200+50, 75+40+25+50+25+25, 200, 50);
+			microscombo.setBounds(25+200+50, 75+40+25+50+25+25+50+30, 200, 50);
 			cv_c_south.add(microscombo);
 			
 			JButton valid = new JButton("Valider");
@@ -1722,6 +1757,12 @@ public class Fenetre extends JFrame{
 			
 			int[] colorr = { 6, 3, 4, 7 };
 			String[] name = { "Écriture","Tournage","Montage","Post-prod." } ;
+			String categ="";
+			for (int a = 0;a<MainClient.videos.size()-1;a++){
+				if (MainClient.videos.get(a).getID()==MainClient.videos.size()-1){
+					categ=MainClient.videos.get(a).getVideogenre();
+				}
+			}
 			for (int a = 0;a<4;a++){
 				JPanel color = new JPanel();
 				color.setBackground(Col(ColId(colorr[a])));
@@ -1741,36 +1782,73 @@ public class Fenetre extends JFrame{
 				H.setHorizontalAlignment(JLabel.LEFT);
 				H.setBounds(80, 110+75*(a), 120, 19);
 				cv_c_south.add(H);
+				int lvl = 0;
+				if (a==0){
+					lvl=MainClient.player.getLvl_ecriture();
+				}if (a==1){
+					lvl=MainClient.Convert_Categ_int(categ);
+				}if (a==2){
+					lvl=MainClient.player.getLvl_montage();
+				}if (a==3){
+					lvl=MainClient.player.getLvl_post_prod();
+				}
+				JLabel lvll = new JLabel();
+				lvll.setFont(new Font("Tahoma", Font.PLAIN, 35));
+				lvll.setText(lvl+"");
+				lvll.setForeground(Color.WHITE);
+				lvll.setHorizontalAlignment(JLabel.CENTER);
+				color.setLayout(new BorderLayout());
+				color.add(lvll,BorderLayout.CENTER);
 			}
 			
-			ecrituretimeslid = new JSlider(JSlider.HORIZONTAL,0,15,0);
+			ecrituretimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.player.getLvl_ecriture(),0);
 			ecrituretimeslid.setMajorTickSpacing(1);
 			ecrituretimeslid.setMinorTickSpacing(1);
 			ecrituretimeslid.setPaintTicks(true);
 			ecrituretimeslid.setPaintLabels(true); //
-			ecrituretimeslid.setBounds(80+115+10,80,600,50);
-			tournagetimeslid = new JSlider(JSlider.HORIZONTAL,0,15,0);
+			ecrituretimeslid.setBounds(80+115+10,80,MainClient.player.getLvl_ecriture()==1?60:50*MainClient.player.getLvl_ecriture(),50);
+			if (MainClient.player.getLvl_ecriture()==0){
+				JLabel label = new JLabel();
+				label.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				label.setText("Vous devez être au moins level 1");
+				label.setForeground(Color.GRAY);
+				label.setHorizontalAlignment(JLabel.LEFT);
+				label.setBounds(80+115+10, 80, 500, 45);
+				cv_c_south.add(label);
+			}
+			tournagetimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.Convert_Categ_int(categ),0);
 			tournagetimeslid.setMajorTickSpacing(1);
 			tournagetimeslid.setMinorTickSpacing(1);
 			tournagetimeslid.setPaintTicks(true);
 			tournagetimeslid.setPaintLabels(true); //
-			tournagetimeslid.setBounds(80+115+10,80+75,600,50);
-			montagetimeslid = new JSlider(JSlider.HORIZONTAL,0,15,0);
+			tournagetimeslid.setBounds(80+115+10,80+75,MainClient.Convert_Categ_int(categ)==1?60:50*MainClient.Convert_Categ_int(categ),50);
+			montagetimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.player.getLvl_montage(),0);
 			montagetimeslid.setMajorTickSpacing(1);
 			montagetimeslid.setMinorTickSpacing(1);
 			montagetimeslid.setPaintTicks(true);
 			montagetimeslid.setPaintLabels(true); //
-			montagetimeslid.setBounds(80+115+10,80+75*2,600,50);
-			postprodtimeslid = new JSlider(JSlider.HORIZONTAL,0,6,0);
+			montagetimeslid.setBounds(80+115+10,80+75*2,(MainClient.player.getLvl_montage())==1?60:50*(MainClient.player.getLvl_montage()),50);
+			postprodtimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.player.getLvl_post_prod(),0);
 			postprodtimeslid.setMajorTickSpacing(1);
 			postprodtimeslid.setMinorTickSpacing(1);
 			postprodtimeslid.setPaintTicks(true);
 			postprodtimeslid.setPaintLabels(true); //
-			postprodtimeslid.setBounds(80+115+10,80+75*3,600,50);
+			postprodtimeslid.setBounds(80+115+10,80+75*3,MainClient.player.getLvl_post_prod()==1?60:50*MainClient.player.getLvl_post_prod(),50);
+			if (MainClient.player.getLvl_post_prod()==0){	
+				JLabel label = new JLabel();
+				label.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				label.setText("Vous devez être au moins level 1");
+				label.setForeground(Color.GRAY);
+				label.setHorizontalAlignment(JLabel.LEFT);
+				label.setBounds(80+115+10, 80+75*3, 500, 45);
+				cv_c_south.add(label);
+			}
+			
 			cv_c_south.add(ecrituretimeslid);
 			cv_c_south.add(tournagetimeslid);
 			cv_c_south.add(montagetimeslid);
 			cv_c_south.add(postprodtimeslid);
+			
 			JButton valid = new JButton("Valider");
 			valid.setBounds(25, 80+75*4, 80, 40);
 			valid.addActionListener(new VideoCreatorSlidEvent(3));
