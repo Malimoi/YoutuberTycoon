@@ -40,7 +40,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
+import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import utilities.Planning;
 import utilities.Video;
 import frames.ACC;
@@ -187,7 +189,7 @@ public class Fenetre extends JFrame{
 	public Fenetre() {
 	
 	test();
-		
+	
 	this.setTitle("Youtuber Tycoon by Malimoi");
 	this.setSize(1200,720);
 	this.setLocationRelativeTo(null);
@@ -197,7 +199,9 @@ public class Fenetre extends JFrame{
 	this.setExtendedState(this.MAXIMIZED_BOTH);
 	this.setUndecorated(true);
 	this.setResizable(true);
-				
+	
+		
+	
 	content.setLayout(new BorderLayout());
 	int TotalInt = 0;
 				

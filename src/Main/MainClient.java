@@ -14,6 +14,7 @@ package Main;
 
 
 import javax.swing.*;
+import javax.xml.stream.FactoryConfigurationError;
 
 import player.Player;
 import player.PlayerC;
@@ -64,11 +65,7 @@ public class MainClient {
     public static JFrame frame;
 
     public static void main(String[] args) {
-    	try {
-			UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+    	
     	if (!IsTest){
     		String server = "127.0.0.1";
             int port = 2009;
@@ -175,8 +172,13 @@ public class MainClient {
 
          Collections.sort(planning, new PlanningComparator());
          Collections.reverse(planning);
-
-         new Fenetre();
+         try {
+     		UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());
+     	} catch (Exception e) {
+     		e.printStackTrace();
+     	} 
+         new ThemeSelector();
+         
          /*
          JFrame frame = new JFrame();
          frame.setTitle("YoutuberTycoon V0.0.2");
