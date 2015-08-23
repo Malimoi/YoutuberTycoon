@@ -89,7 +89,7 @@ public class Arrow_Button extends JButton implements MouseListener{
 			ThemeSelector.theme.setText("SPORT");
 		}if (ThemeSelector.nb_theme==6){
 			ThemeSelector.panel_img=new IMAGE_("MAKEUP_MODE_THEMEbig");
-			ThemeSelector.theme.setText("MAKEUP / MODE");
+			ThemeSelector.theme.setText("MAKEUP/MODE");
 		}if (ThemeSelector.nb_theme==7){
 			ThemeSelector.panel_img=new IMAGE_("MONTAGE_THEMEbig");
 			ThemeSelector.theme.setText("MONTAGE");

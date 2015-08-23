@@ -1,9 +1,8 @@
 package frames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
@@ -11,6 +10,7 @@ import javax.swing.JProgressBar;
 import Main.Fenetre;
 
 
+@SuppressWarnings("serial")
 public class Progress extends JFrame{
 
   private Thread t;

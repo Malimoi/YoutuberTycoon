@@ -14,7 +14,6 @@ package Main;
 
 
 import javax.swing.*;
-import javax.xml.stream.FactoryConfigurationError;
 
 import player.Player;
 import player.PlayerC;
@@ -45,6 +44,7 @@ public class MainClient {
 	/*
 	 * Client propieties
 	 */
+	public static String first_choice = "";
 	public static Player player = /* Ceci est UNIQUEMENT des valeurs de test. Toutes les valeurs seront envoyés par le serveur. */ 
 			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
 	
@@ -111,6 +111,7 @@ public class MainClient {
  		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 6L));
  		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 7L));
  		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 8L));
+ 		videos.add(new Video("J'AIME LES ASTICOTS", 25, 8, 15, 0L, 0L, 0L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 9L));
  		Collections.sort(videos, new VideosComparator());
          Collections.reverse(videos);
          videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
@@ -127,8 +128,8 @@ public class MainClient {
  		/*
  		 * Planning
  		 */
-         planning.add(new Planning(21, 22, 13, 8, 15, 4, 8L, 1L));
-         planning.add(new Planning(16, 18, 14, 8, 15, 4, 5L, 2L));
+         planning.add(new Planning(18, 19, 23, 8, 15, 3, 9L, 1L));
+         planning.add(new Planning(16, 17, 24, 8, 15, 4, 9L, 2L));
          MAX_UUID_PLANNING=(long) planning.size()+1;
          int d = 1;
          
@@ -167,7 +168,7 @@ public class MainClient {
  			
  			d++;
          }
-
+         
          planning.add(new Planning(0, 0, 0, 0, 0, 0, 0L, 0L));
 
          Collections.sort(planning, new PlanningComparator());
@@ -179,6 +180,9 @@ public class MainClient {
      	} catch (Exception e) {
      		e.printStackTrace();
      	} 
+         /*
+          * If first_time
+          */
          new ThemeSelector();
          
          /*
@@ -355,6 +359,10 @@ public class MainClient {
     		i = player.getLvl_sciences();
     	}if (categ.contains("SPORT")){
     		i = player.getLvl_sport();
+    	}if (categ.contains("MONTAGE")){
+    		i = player.getLvl_montage();
+    	}if (categ.contains("ECRITURE")){
+    		i = player.getLvl_ecriture();
     	}
     	
 		return i;
@@ -368,6 +376,34 @@ public class MainClient {
     		}
     	}
 		return cam;
+    }
+    
+    public static void FirstStart(){
+    	if (first_choice=="HUMOUR"){
+    		player.setLvl_humour(1);
+    	}if (first_choice=="ANIMATIONS/FILMS"){
+    		player.setLvl_animations_films(1);
+    	}if (first_choice=="DIVERTISSEMENT"){
+    		player.setLvl_divertissement(1);
+    	}if (first_choice=="MAKEUP/MODE"){
+    		player.setLvl_makeup_mode(1);
+    	}if (first_choice=="CUISINE"){
+    		player.setLvl_cuisine(1);
+    	}if (first_choice=="GAMING"){
+    		player.setLvl_gaming(1);
+    	}if (first_choice=="ANIMAUX"){
+    		player.setLvl_animaux(1);
+    	}if (first_choice=="MUSIQUE"){
+    		player.setLvl_musique(1);
+    	}if (first_choice=="SCIENCES"){
+    		player.setLvl_sciences(1);
+    	}if (first_choice=="SPORT"){
+    		player.setLvl_sport(1);
+    	}if (first_choice=="MONTAGE"){
+    		player.setLvl_montage(2);
+    	}if (first_choice=="ECRITURE"){
+    		player.setLvl_ecriture(1);
+    	}
     }
     
 }

@@ -44,9 +44,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 
-import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import utilities.Planning;
 import utilities.Video;
 import frames.ACC;
@@ -1253,15 +1251,20 @@ public class Fenetre extends JFrame{
 					cv_c_south.updateUI();
 					return;
 				}
-				String categorie = categoriescombo.getSelectedItem().toString();
-				MainClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie, 0,
-						null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, (long)MainClient.videos.size()));
-				/*
-				 * On tri.
-				 */
-				MainClient.TriVideos();
-				cv_c_south.removeAll();
-				setVideosCreator(2);
+				try{
+					String categorie = categoriescombo.getSelectedItem().toString();
+					MainClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie, 0,
+							null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, (long)MainClient.videos.size()));
+					/*
+					 * On tri.
+					 */
+					MainClient.TriVideos();
+					cv_c_south.removeAll();
+					setVideosCreator(2);
+				}catch(Exception ex){
+					System.out.println("(error) no categories");
+				}			
+				
 			}else if(step.equals(2)){
 				
 			}
@@ -1822,11 +1825,11 @@ public class Fenetre extends JFrame{
 			ecrituretimeslid.setBounds(80+115+10,80,MainClient.player.getLvl_ecriture()==1?60:50*MainClient.player.getLvl_ecriture(),50);
 			if (MainClient.player.getLvl_ecriture()==0){
 				JLabel label = new JLabel();
-				label.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				label.setText("Vous devez être au moins level 1");
 				label.setForeground(Color.GRAY);
 				label.setHorizontalAlignment(JLabel.LEFT);
-				label.setBounds(80+115+10, 80, 500, 45);
+				label.setBounds(80+115+10, 85, 500, 45);
 				cv_c_south.add(label);
 			}
 			tournagetimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.Convert_Categ_int(categ),0);
@@ -1849,11 +1852,11 @@ public class Fenetre extends JFrame{
 			postprodtimeslid.setBounds(80+115+10,80+75*3,MainClient.player.getLvl_post_prod()==1?60:50*MainClient.player.getLvl_post_prod(),50);
 			if (MainClient.player.getLvl_post_prod()==0){	
 				JLabel label = new JLabel();
-				label.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				label.setText("Vous devez être au moins level 1");
 				label.setForeground(Color.GRAY);
 				label.setHorizontalAlignment(JLabel.LEFT);
-				label.setBounds(80+115+10, 80+75*3, 500, 45);
+				label.setBounds(80+115+10, 80+75*3+5, 500, 45);
 				cv_c_south.add(label);
 			}
 			
@@ -2242,7 +2245,7 @@ public class Fenetre extends JFrame{
 	}
 	class Music implements Runnable{   
 
-	    @SuppressWarnings("static-access")
+		@SuppressWarnings("deprecation")
 		public void run(){
 	    	
 	    	/*

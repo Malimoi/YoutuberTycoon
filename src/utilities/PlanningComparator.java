@@ -5,7 +5,7 @@ import java.util.Comparator;
 public class PlanningComparator implements Comparator<Planning>{
 
 	@Override
-	public int compare(Planning o1, Planning o2) {
+	public int compare(Planning o2, Planning o1) {
 		int aVal = 0, bVal = 0;
         
         if (o1.getYear()!=o2.getYear()){

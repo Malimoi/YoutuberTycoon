@@ -20,11 +20,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Main.Fenetre.Music;
 import frames.IMAGE_;
 import frames.Progress;
 import frames.buttons.Arrow_Button;
 
+@SuppressWarnings("serial")
 public class ThemeSelector extends JFrame{
 public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
     
@@ -42,6 +42,7 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public static JLabel theme = new JLabel();
 	public JLabel lab2 = new JLabel();
 	public int phase = 1;
+	@SuppressWarnings("static-access")
 	public ThemeSelector(){
 		
 		Thread th = new Thread(new Music());
@@ -80,7 +81,7 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 		lab2.setBounds(0, 45+120, largeur, 35);
 		pan.add(lab2);
 		this.setContentPane(pan);
-		Thread t = new Thread(new AffTheme());
+		//Thread t = new Thread(new AffTheme());
 			
 				
 			panel_img.setBounds(largeur/2-150, 250+75, 300, 300);
@@ -106,6 +107,8 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 			
 	}
 	public void Close(){
+		MainClient.first_choice=theme.getText();
+		MainClient.FirstStart();
 		clip.stop();
 		this.setVisible(false);
 		this.dispose();
@@ -135,13 +138,14 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Close();
-			new Progress();
+			new Fenetre();
 			
 		}
 		
 	}
 	class Music implements Runnable{   
 
+		@SuppressWarnings("deprecation")
 		public void run(){
 	    	
 	    	/*
