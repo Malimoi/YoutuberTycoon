@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Main.Fenetre.Music;
 import frames.IMAGE_;
 import frames.Progress;
 import frames.buttons.Arrow_Button;
@@ -33,6 +34,8 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public static int hauteur = (int) maximumWindowBounds.getHeight();
 	public static int largeur = (int) maximumWindowBounds.getWidth();
 	
+	public AudioClip clip = null;
+	
 	public static int nb_theme = 1;
 	public static JPanel panel_img = new IMAGE_("ANIMAUX_THEMEbig");
 	public static JPanel pan = new PaneauImg();
@@ -41,8 +44,10 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public int phase = 1;
 	public ThemeSelector(){
 		
-		clip.play();
-		
+		Thread th = new Thread(new Music());
+	    
+	    th.start();
+	    
 		this.setTitle("Youtuber Tycoon by Malimoi");
 		this.setSize(1200,720);
 		this.setLocationRelativeTo(null);
@@ -98,8 +103,10 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 			
 			pan.updateUI();
 			
+			
 	}
 	public void Close(){
+		clip.stop();
 		this.setVisible(false);
 		this.dispose();
 	}
@@ -133,7 +140,29 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 		}
 		
 	}
-	
+	class Music implements Runnable{   
+
+		public void run(){
+	    	
+	    	/*
+			 * Music
+			 */
+			File son = new File("musics/MUSIC_2.wav");
+			
+			try
+			{
+			clip = Applet.newAudioClip(son.toURL());
+			}
+			catch (MalformedURLException e)
+			{
+			System.out.println(e.getMessage());
+			}
+			clip.play();
+			
+
+	    }   
+
+	  }
 }
 
 

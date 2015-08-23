@@ -12,6 +12,8 @@ package Main;
  *  ******************************************************
  */
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,6 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -187,6 +191,11 @@ public class Fenetre extends JFrame{
 	
 	@SuppressWarnings("static-access")
 	public Fenetre() {
+		
+		Thread th = new Thread(new Music());
+	    
+	    th.start();
+		
 	
 	test();
 	
@@ -2231,4 +2240,27 @@ public class Fenetre extends JFrame{
 			cp_c_c_c_right.updateUI();
 
 	}
+	class Music implements Runnable{   
+
+	    @SuppressWarnings("static-access")
+		public void run(){
+	    	
+	    	/*
+			 * Music
+			 */
+			File son = new File("musics/MUSIC_1.wav");
+			AudioClip clip = null;
+			try
+			{
+			clip = Applet.newAudioClip(son.toURL());
+			}
+			catch (MalformedURLException e)
+			{
+			System.out.println(e.getMessage());
+			}
+			clip.play();
+
+	    }   
+
+	  }
 }
