@@ -10,13 +10,17 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 	public class IMAGE_ extends JPanel {
 		private String name;
-		public IMAGE_(String name){
+		private int x;
+		private int y;
+		public IMAGE_(String name,int x,int y){
 			this.name=name;
+			this.x=x;
+			this.y=y;
 		}
 		public void paintComponent(Graphics g){
 			try{
 				Image img = ImageIO.read(new File("image/THEMES/"+name+".png"));
-				g.drawImage(img, 0, 0, 300, 300, this);
+				g.drawImage(img, 0, 0, x, y, this);
 			}catch(IOException ex){
 				ex.printStackTrace();
 			}

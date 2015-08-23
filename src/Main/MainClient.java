@@ -62,6 +62,10 @@ public class MainClient {
 	public static List<String> datavi = new ArrayList<String>();
 	public static List<String> datapl = new ArrayList<String>();
 	public static List<String> dataev = new ArrayList<String>();
+	
+	public static String[] categ_list = {"HUMOUR","DIVERTISSEMENT","GAMING","ANIMAUX","MONTAGE","DEVELOPPEMENT","MUSIQUE",
+		"SCIENCES","EDUCATION","MAKEUP/MODE","CUISINE"};
+	
     public static JFrame frame;
 
     public static void main(String[] args) {
@@ -337,7 +341,7 @@ public class MainClient {
          Collections.reverse(videos);
     }
     
-    public static Integer Convert_Categ_int(String categ){
+    public static Integer Convert_Categ_Lvl(String categ){
     	int i = 0;
     	if (categ.contains("HUMOUR")){
     		i = player.getLvl_humour();
@@ -363,6 +367,37 @@ public class MainClient {
     		i = player.getLvl_montage();
     	}if (categ.contains("ECRITURE")){
     		i = player.getLvl_ecriture();
+    	}
+    	
+		return i;
+    }
+    
+    public static long Convert_Categ_Exp(String categ){
+    	long i = 0;
+    	if (categ.contains("HUMOUR")){
+    		i = player.getExp_humour();
+    	}if (categ.contains("ANIMATIONS/FILMS")){
+    		i = player.getExp_animations_films();
+    	}if (categ.contains("DIVERTISSEMENT")){
+    		i = player.getExp_divertissement();
+    	}if (categ.contains("MAKEUP/MODE")){
+    		i = player.getExp_makeup_mode();
+    	}if (categ.contains("CUISINE")){
+    		i = player.getExp_cuisine();
+    	}if (categ.contains("GAMING")){
+    		i = player.getExp_gaming();
+    	}if (categ.contains("ANIMAUX")){
+    		i = player.getExp_animaux();
+    	}if (categ.contains("MUSIQUE")){
+    		i = player.getExp_musique();
+    	}if (categ.contains("SCIENCES")){
+    		i = player.getExp_sciences();
+    	}if (categ.contains("SPORT")){
+    		i = player.getExp_sport();
+    	}if (categ.contains("MONTAGE")){
+    		i = player.getExp_montage();
+    	}if (categ.contains("ECRITURE")){
+    		i = player.getExp_ecriture();
     	}
     	
 		return i;
@@ -404,6 +439,12 @@ public class MainClient {
     	}if (first_choice=="ECRITURE"){
     		player.setLvl_ecriture(1);
     	}
+    }
+    
+    public static Integer getExpTotalCat(Integer lvl){
+    	int i = (int) (50*Math.pow(1.5, lvl));
+    	
+    	return i;
     }
     
 }

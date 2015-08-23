@@ -42,6 +42,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 
@@ -50,6 +51,7 @@ import utilities.Video;
 import frames.ACC;
 import frames.BORDER_PL;
 import frames.COLOR;
+import frames.IMAGE_;
 import frames.MINI;
 import frames.MINIA;
 import frames.NAME_ACC;
@@ -77,7 +79,7 @@ public class Fenetre extends JFrame{
 	public JButton boutonAcc = new Bouton("Page d'accueil",1);
 	public JButton boutonVideoGest = new Bouton("Gestionnaire de vidéos",2);
 	public JButton boutonPlanning = new Bouton("Mon planning",3);
-	public JButton bouton3 = new Bouton("Mes notifications",4);
+	public JButton bouton3 = new Bouton("Mes compétences",4);
 	
 	//-CONTENT
 	public static JPanel content = new JPanel();
@@ -135,18 +137,18 @@ public class Fenetre extends JFrame{
 		public JPanel cv_west = new COLOR(Color.decode("#F3F3F3"));
 		public JPanel cv_north = new COLOR(Color.decode("#F3F3F3"));
 		public JPanel cv_center = new NOR();
-			public JPanel cv_c_north = new VIDEOS_NORTH();
+			public JPanel cv_c_north = new VIDEOS_NORTH(1);
 				public JLabel video = new JLabel();
 				public JLabel nbvideo = new JLabel();
 				public JPanel nbvideopan = new COLOR(Color.GRAY);
 				public JButton mettreenligne = new ClassicButton("Faire une vidéo");
 			public JPanel cv_c_south = new NOR();
 	public JPanel center_planning = new JPanel();
-		public JPanel cp_east = new COLOR(Color.decode("#F3F3F3"));
-		public JPanel cp_west = new COLOR(Color.decode("#F3F3F3"));
-		public JPanel cp_north = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel cp_east = new COLOR(Color.gray);
+		public JPanel cp_west = new COLOR(Color.gray);
+		public JPanel cp_north = new COLOR(Color.gray);
 		public JPanel cp_center = new NOR();
-			public JPanel cp_c_north = new VIDEOS_NORTH();
+			public JPanel cp_c_north = new VIDEOS_NORTH(3);
 				public JLabel lab_planning = new JLabel();
 				public JLabel lab_planningInfo = new JLabel();
 			public JPanel cp_c_center = new COLOR(Color.decode("#F3F3F3"));
@@ -169,7 +171,15 @@ public class Fenetre extends JFrame{
 						public static JComboBox edit_date = new JComboBox();
 					public JButton plan_add = new Bouton_PlanningAddRemove(1);
 					public JButton plan_edit = new Bouton_PlanningAddRemove(2);
-	
+	public JPanel center_levels = new JPanel();
+		public JPanel cl_east = new COLOR(Col("6"));
+		public JPanel cl_west = new COLOR(Col("6"));
+		public JPanel cl_north = new COLOR(Col("6"));
+		public JPanel cl_center = new NOR();
+			public JPanel cl_c_north = new VIDEOS_NORTH(2);
+				public JLabel lab_levels = new JLabel();
+				public JLabel lab_levelsInfo = new JLabel();
+			public JPanel cl_c_center = new COLOR(Color.decode("#ffffff"));
 	//Variable Creator Step 1
 	public JComboBox categoriescombo;
 	public JComboBox formatscombo;
@@ -320,7 +330,7 @@ public class Fenetre extends JFrame{
 	
 	boutonAcc.addActionListener(new BoutonAccListener());
 	boutonPlanning.addActionListener(new BoutonPlanningListener());
-	bouton3.addActionListener(new BoutonNotifListener());
+	bouton3.addActionListener(new BoutonCompetListener());
 	boutonVideoGest.addActionListener(new BoutonVideosListener());
 	vid_affich.addActionListener(new BoutonToutaffichListener());
 	
@@ -589,7 +599,48 @@ public class Fenetre extends JFrame{
 			
 	/*
 	 * End Center_Planning
-	 * Start game
+	 * Start Center_Levels
+	 */
+	
+	center_levels.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10),hauteur));
+	center_levels.setLayout(new BorderLayout());
+		cl_west.setPreferredSize(new Dimension(10, hauteur));
+		cl_east.setPreferredSize(new Dimension(10, hauteur));
+		cl_north.setPreferredSize(new Dimension(largeur, 10));
+		cl_center.setLayout(new BorderLayout());
+			/*
+			 * North
+			 */
+			cl_c_north.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), Fenetre.hauteur/7));
+			cl_c_north.setLayout(null);
+			lab_levels.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			lab_levels.setText("Vos compétences");
+			lab_levels.setForeground(Color.decode("#424242"));
+			lab_levels.setHorizontalAlignment(JLabel.CENTER);
+			lab_levels.setBounds(8, 22, 200, 30);
+			lab_levelsInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			lab_levelsInfo.setText("C'est ici que vous pouvez voir votre expérience dans chaque domaine !");
+			lab_levelsInfo.setForeground(Color.decode("#424242"));
+			lab_levelsInfo.setHorizontalAlignment(JLabel.LEFT);
+			lab_levelsInfo.setBounds(10, 22+50, 600, 20);
+			/*
+			 * Center
+			 */
+			cl_c_center.setLayout(null);
+			setLevelsPage();
+						
+		cl_center.add(cl_c_north,BorderLayout.NORTH);
+		cl_center.add(cl_c_center,BorderLayout.CENTER);
+		cl_c_north.add(lab_levels);
+		cl_c_north.add(lab_levelsInfo);
+	center_levels.add(cl_west,BorderLayout.WEST);
+	center_levels.add(cl_east,BorderLayout.EAST);
+	center_levels.add(cl_north,BorderLayout.NORTH);
+	center_levels.add(cl_center,BorderLayout.CENTER);
+	
+	/*
+	 * End Center_Levels
+	 * Start Game
 	 */
 	
 	content.add(haut, BorderLayout.NORTH);
@@ -946,6 +997,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_planning);
 			}else if (test==2){
 				content.remove(center_videos);
+			}else if (test==4){
+				content.remove(center_levels);
 			}
 			test=1;
 			try {
@@ -978,6 +1031,8 @@ public class Fenetre extends JFrame{
 				content.remove(center);
 			}else if (test==2){
 				content.remove(center_videos);
+			}else if (test==4){
+				content.remove(center_levels);
 			}
 			test=3;
 			try {
@@ -996,7 +1051,7 @@ public class Fenetre extends JFrame{
 		}
 	}
 	
-	class BoutonNotifListener implements ActionListener{
+	class BoutonCompetListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -1020,6 +1075,9 @@ public class Fenetre extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			cl_c_center.removeAll();
+			setLevelsPage();
+			content.add(center_levels,BorderLayout.CENTER);
 			try{
 				content.updateUI();
 			}catch(Exception e){
@@ -1042,6 +1100,8 @@ public class Fenetre extends JFrame{
 			}
 			else if (test==3){
 				content.remove(center_planning);
+			}else if (test==4){
+				content.remove(center_levels);
 			}
 			test=2;
 			try {
@@ -1802,7 +1862,7 @@ public class Fenetre extends JFrame{
 				if (a==0){
 					lvl=MainClient.player.getLvl_ecriture();
 				}if (a==1){
-					lvl=MainClient.Convert_Categ_int(categ);
+					lvl=MainClient.Convert_Categ_Lvl(categ);
 				}if (a==2){
 					lvl=MainClient.player.getLvl_montage();
 				}if (a==3){
@@ -1832,12 +1892,12 @@ public class Fenetre extends JFrame{
 				label.setBounds(80+115+10, 85, 500, 45);
 				cv_c_south.add(label);
 			}
-			tournagetimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.Convert_Categ_int(categ),0);
+			tournagetimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.Convert_Categ_Lvl(categ),0);
 			tournagetimeslid.setMajorTickSpacing(1);
 			tournagetimeslid.setMinorTickSpacing(1);
 			tournagetimeslid.setPaintTicks(true);
 			tournagetimeslid.setPaintLabels(true); //
-			tournagetimeslid.setBounds(80+115+10,80+75,MainClient.Convert_Categ_int(categ)==1?60:50*MainClient.Convert_Categ_int(categ),50);
+			tournagetimeslid.setBounds(80+115+10,80+75,MainClient.Convert_Categ_Lvl(categ)==1?60:50*MainClient.Convert_Categ_Lvl(categ),50);
 			montagetimeslid = new JSlider(JSlider.HORIZONTAL,0,MainClient.player.getLvl_montage(),0);
 			montagetimeslid.setMajorTickSpacing(1);
 			montagetimeslid.setMinorTickSpacing(1);
@@ -2105,6 +2165,50 @@ public class Fenetre extends JFrame{
 			}
 			d++;
 		}			
+	}
+	
+	public void setLevelsPage(){
+		int x = 0;
+		int y = 0;
+		for (int w = 0;w<MainClient.categ_list.length;w++){
+			
+			if (w%5==0&&w!=0){
+				x=x+300;
+				y=0;
+			}
+			JPanel tset = new IMAGE_(MainClient.categ_list[w].contains("/")?MainClient.categ_list[w].replace("/", "_")+"_THEME":MainClient.categ_list[w]+"_THEME",70,70);
+			tset.setBounds(50+x, 50+y, 70, 70);
+			JProgressBar bar  = new JProgressBar();
+		    bar.setMaximum(MainClient.getExpTotalCat((int) MainClient.Convert_Categ_Lvl(MainClient.categ_list[w])));
+		    bar.setMinimum(0);
+		    bar.setValue((int) MainClient.Convert_Categ_Exp(MainClient.categ_list[w]));
+		    bar.setBounds(50+92+x, 50+40-8+y, 150, 25);
+		    JLabel cl_exp = new JLabel();
+		    cl_exp.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		    cl_exp.setText(MainClient.Convert_Categ_Exp(MainClient.categ_list[w])+
+		    		"/"+MainClient.getExpTotalCat((int) MainClient.Convert_Categ_Lvl(MainClient.categ_list[w]))+" Exp");
+		    cl_exp.setForeground(Color.darkGray);
+		    cl_exp.setHorizontalAlignment(JLabel.LEFT);
+		    cl_exp.setBounds(50+92+x, 50+40-3+y, 150, 17);
+		    JLabel cl_name = new JLabel();
+		    cl_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		    cl_name.setText(MainClient.categ_list[w]);
+		    cl_name.setForeground(Color.darkGray);
+		    cl_name.setHorizontalAlignment(JLabel.LEFT);
+		    cl_name.setBounds(50+92+x, 50+8+y, 200, 20);
+		    JLabel cl_lvl = new JLabel();
+		    cl_lvl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		    cl_lvl.setText("Lvl "+MainClient.Convert_Categ_Lvl(MainClient.categ_list[w])+"");
+		    cl_lvl.setForeground(Color.darkGray);
+		    cl_lvl.setHorizontalAlignment(JLabel.LEFT);
+		    cl_lvl.setBounds(50+92+x+150+3, 50+40-3+y, 200, 17);
+		    cl_c_center.add(bar);
+			cl_c_center.add(cl_name);
+			cl_c_center.add(cl_lvl);
+			cl_c_center.add(cl_exp);
+			cl_c_center.add(tset);
+			y=y+80;
+		}		
 	}
 	
 	@SuppressWarnings({"unchecked" })

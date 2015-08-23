@@ -73,43 +73,43 @@ public class Arrow_Button extends JButton implements MouseListener{
 			}
 		}
 		if (ThemeSelector.nb_theme==1){
-			ThemeSelector.panel_img=new IMAGE_("ANIMAUX_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("ANIMAUX_THEMEbig",300,300);
 			ThemeSelector.theme.setText("ANIMAUX");
 		}if (ThemeSelector.nb_theme==2){
-			ThemeSelector.panel_img=new IMAGE_("CUISINE_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("CUISINE_THEMEbig",300,300);
 			ThemeSelector.theme.setText("CUISINE");
 		}if (ThemeSelector.nb_theme==3){
-			ThemeSelector.panel_img=new IMAGE_("HUMOUR_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("HUMOUR_THEMEbig",300,300);
 			ThemeSelector.theme.setText("HUMOUR");
 		}if (ThemeSelector.nb_theme==4){
-			ThemeSelector.panel_img=new IMAGE_("DIVERTISSEMENT_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("DIVERTISSEMENT_THEMEbig",300,300);
 			ThemeSelector.theme.setText("DIVERTISSEMENT");
 		}if (ThemeSelector.nb_theme==5){
-			ThemeSelector.panel_img=new IMAGE_("SPORT_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("SPORT_THEMEbig",300,300);
 			ThemeSelector.theme.setText("SPORT");
 		}if (ThemeSelector.nb_theme==6){
-			ThemeSelector.panel_img=new IMAGE_("MAKEUP_MODE_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("MAKEUP_MODE_THEMEbig",300,300);
 			ThemeSelector.theme.setText("MAKEUP/MODE");
 		}if (ThemeSelector.nb_theme==7){
-			ThemeSelector.panel_img=new IMAGE_("MONTAGE_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("MONTAGE_THEMEbig",300,300);
 			ThemeSelector.theme.setText("MONTAGE");
 		}if (ThemeSelector.nb_theme==8){
-			ThemeSelector.panel_img=new IMAGE_("DEV_THEME");
+			ThemeSelector.panel_img=new IMAGE_("DEVELOPPEMENT_THEME",300,300);
 			ThemeSelector.theme.setText("DEVELOPPEMENT");
 		}if (ThemeSelector.nb_theme==9){
-			ThemeSelector.panel_img=new IMAGE_("EDUCATION_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("EDUCATION_THEMEbig",300,300);
 			ThemeSelector.theme.setText("EDUCATION");
 		}if (ThemeSelector.nb_theme==10){
-			ThemeSelector.panel_img=new IMAGE_("MUSIQUE_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("MUSIQUE_THEMEbig",300,300);
 			ThemeSelector.theme.setText("MUSIQUE");
 		}if (ThemeSelector.nb_theme==11){
-			ThemeSelector.panel_img=new IMAGE_("DESIGN_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("DESIGN_THEMEbig",300,300);
 			ThemeSelector.theme.setText("DESIGN / GRAPHISME");
 		}if (ThemeSelector.nb_theme==12){
-			ThemeSelector.panel_img=new IMAGE_("GAMING_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("GAMING_THEMEbig",300,300);
 			ThemeSelector.theme.setText("GAMING");
 		}if (ThemeSelector.nb_theme==13){
-			ThemeSelector.panel_img=new IMAGE_("ECRITURE_THEMEbig");
+			ThemeSelector.panel_img=new IMAGE_("ECRITURE_THEMEbig",300,300);
 			ThemeSelector.theme.setText("ECRITURE");
 		}
 		ThemeSelector.panel_img.setBounds(ThemeSelector.largeur/2-150, 250+75, 300, 300);

@@ -37,7 +37,7 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public AudioClip clip = null;
 	
 	public static int nb_theme = 1;
-	public static JPanel panel_img = new IMAGE_("ANIMAUX_THEMEbig");
+	public static JPanel panel_img = new IMAGE_("ANIMAUX_THEMEbig",300,300);
 	public static JPanel pan = new PaneauImg();
 	public static JLabel theme = new JLabel();
 	public JLabel lab2 = new JLabel();
