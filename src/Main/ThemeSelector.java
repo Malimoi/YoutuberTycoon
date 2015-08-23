@@ -1,13 +1,18 @@
 package Main;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -16,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import frames.IMAGE_;
+import frames.Progress;
 import frames.buttons.Arrow_Button;
 
 public class ThemeSelector extends JFrame{
@@ -34,6 +40,8 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public JLabel lab2 = new JLabel();
 	public int phase = 1;
 	public ThemeSelector(){
+		
+		clip.play();
 		
 		this.setTitle("Youtuber Tycoon by Malimoi");
 		this.setSize(1200,720);
@@ -85,10 +93,15 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 		start.setForeground(Color.white);
 		start.setBackground(new Color(0,0,0,0));
 		start.setBounds(largeur/2-100, 250+75+300+20, 200, 50);
+		start.addActionListener(new StartEvent());
 		pan.add(start);
 			
 			pan.updateUI();
 			
+	}
+	public void Close(){
+		this.setVisible(false);
+		this.dispose();
 	}
 	class AffTheme implements Runnable{
 		public void run(){
@@ -110,6 +123,16 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 		
 	}
 	
+	public class StartEvent implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Close();
+			new Progress();
+			
+		}
+		
+	}
 	
 }
 

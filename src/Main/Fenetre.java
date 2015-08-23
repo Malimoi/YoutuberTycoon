@@ -197,7 +197,7 @@ public class Fenetre extends JFrame{
 	this.setExtendedState(JFrame.NORMAL);
 	//this.setDefaultLookAndFeelDecorated(false);    /*-> Plein écran.*/
 	this.setExtendedState(this.MAXIMIZED_BOTH);
-	this.setUndecorated(true);
+	this.setUndecorated(false);
 	this.setResizable(true);
 	
 		

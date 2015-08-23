@@ -46,7 +46,7 @@ public class MainClient {
 	 * Client propieties
 	 */
 	public static Player player = /* Ceci est UNIQUEMENT des valeurs de test. Toutes les valeurs seront envoyés par le serveur. */ 
-			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0);
+			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
 	
 	public static Long MAX_UUID_PLANNING;
 	
@@ -172,6 +172,8 @@ public class MainClient {
 
          Collections.sort(planning, new PlanningComparator());
          Collections.reverse(planning);
+         
+         UIManager.put("Synthetica.window.decoration", Boolean.FALSE);
          try {
      		UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());
      	} catch (Exception e) {
