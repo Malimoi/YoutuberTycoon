@@ -46,6 +46,9 @@ import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 
+import accessoires.Accessoire;
+import accessoires.Camera;
+import accessoires.Micro;
 import utilities.Planning;
 import utilities.Video;
 import frames.ACC;
@@ -66,7 +69,7 @@ import frames.buttons.ToutAfficher;
 @SuppressWarnings({"serial","rawtypes"})
 public class Fenetre extends JFrame{
 	/*
-	 * Je n'est aucune expérience en mise en page, je pense qu'il peut y avoir quelques améliorations à faire.
+	 * Je n'est aucune expÃ©rience en mise en page, je pense qu'il peut y avoir quelques amÃ©liorations Ã  faire.
 	 */
 	public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
     
@@ -77,9 +80,9 @@ public class Fenetre extends JFrame{
 	public static int largeur = (int) maximumWindowBounds.getWidth();
 	
 	public JButton boutonAcc = new Bouton("Page d'accueil",1);
-	public JButton boutonVideoGest = new Bouton("Gestionnaire de vidéos",2);
+	public JButton boutonVideoGest = new Bouton("Gestionnaire de vidÃ©os",2);
 	public JButton boutonPlanning = new Bouton("Mon planning",3);
-	public JButton bouton3 = new Bouton("Mes compétences",4);
+	public JButton bouton3 = new Bouton("Mes compÃ©tences",4);
 	
 	//-CONTENT
 	public static JPanel content = new JPanel();
@@ -141,7 +144,7 @@ public class Fenetre extends JFrame{
 				public JLabel video = new JLabel();
 				public JLabel nbvideo = new JLabel();
 				public JPanel nbvideopan = new COLOR(Color.GRAY);
-				public JButton mettreenligne = new ClassicButton("Faire une vidéo");
+				public JButton mettreenligne = new ClassicButton("Faire une vidÃ©o");
 			public JPanel cv_c_south = new NOR();
 	public JPanel center_planning = new JPanel();
 		public JPanel cp_east = new COLOR(Color.gray);
@@ -169,6 +172,10 @@ public class Fenetre extends JFrame{
 						public static JComboBox edit_hour_end = new JComboBox();
 						public static JComboBox edit_date_box = new JComboBox();
 						public static JComboBox edit_date = new JComboBox();
+						public static JComboBox create_first_choice = new JComboBox();
+						public static JButton create_but_accept;
+						public static JComboBox create_2nd_choice = new JComboBox();
+						public static JButton create_2ndbut_accept;
 					public JButton plan_add = new Bouton_PlanningAddRemove(1);
 					public JButton plan_edit = new Bouton_PlanningAddRemove(2);
 	public JPanel center_levels = new JPanel();
@@ -212,7 +219,7 @@ public class Fenetre extends JFrame{
 	this.setLocationRelativeTo(null);
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setExtendedState(JFrame.NORMAL);
-	//this.setDefaultLookAndFeelDecorated(false);    /*-> Plein écran.*/
+	//this.setDefaultLookAndFeelDecorated(false);    /*-> Plein Ã©cran.*/
 	this.setExtendedState(this.MAXIMIZED_BOTH);
 	this.setUndecorated(false);
 	this.setResizable(true);
@@ -248,7 +255,7 @@ public class Fenetre extends JFrame{
 				
 	//Subs
 	lab_c_n_subs.setFont(new Font("Tahoma", Font.PLAIN, 13));
-	lab_c_n_subs.setText("Abonnés");
+	lab_c_n_subs.setText("AbonnÃ©s");
 	lab_c_n_subs.setForeground(Color.GRAY);
 	lab_c_n_subs.setHorizontalAlignment(JLabel.CENTER);
 	lab_c_n_subs.setPreferredSize(new Dimension(225, 30));
@@ -405,7 +412,7 @@ public class Fenetre extends JFrame{
 		c_c_north3.setLayout(new GridLayout(4,1));
 			//Subs
 			lab_c_c_north_subs.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			lab_c_c_north_subs.setText("Abonnés");
+			lab_c_c_north_subs.setText("AbonnÃ©s");
 			lab_c_c_north_subs.setForeground(Color.GRAY);
 			lab_c_c_north_subs.setHorizontalAlignment(JLabel.CENTER);
 			lab_c_c_north_subs.setPreferredSize(new Dimension(((largeur-255)/8), 40));
@@ -439,7 +446,7 @@ public class Fenetre extends JFrame{
 			c_c_nt_south.setPreferredSize(new Dimension(largeur, 15));
 			c_c_nt_center.setLayout(null);		
 			/*
-			 * Vidéos
+			 * VidÃ©os
 			 */
 			c_c_vp_west.setPreferredSize(new Dimension(26, hauteur));
 			c_c_vp_east.setPreferredSize(new Dimension(26, hauteur));
@@ -450,7 +457,7 @@ public class Fenetre extends JFrame{
 			/*
 			 * Set the planning (MainClient page)
 		       ---------------------------
-			 * Méthode qui renvoi à la construction du planning avec évenements.
+			 * MÃ©thode qui renvoi Ã  la construction du planning avec Ã©venements.
 		     */
 		    setPlanning();
 		    setVideosPannel();
@@ -461,7 +468,7 @@ public class Fenetre extends JFrame{
 		c_c_notif.add(c_c_nt_south,BorderLayout.SOUTH);
 		c_c_notif.add(c_c_nt_north,BorderLayout.NORTH);
 		c_c_notif.add(c_c_nt_center,BorderLayout.CENTER);
-		//vidéos
+		//vidÃ©os
 		c_c_videospannel.add(c_c_vp_west,BorderLayout.WEST);
 		c_c_videospannel.add(c_c_vp_east,BorderLayout.EAST);
 		c_c_videospannel.add(c_c_vp_north,BorderLayout.NORTH);
@@ -486,7 +493,7 @@ public class Fenetre extends JFrame{
 	
 	/*
 	 * End Center
-	 * Start Center_Vidéos
+	 * Start Center_VidÃ©os
 	 */
 	center_videos.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10),hauteur));
 	center_videos.setLayout(new BorderLayout());
@@ -497,7 +504,7 @@ public class Fenetre extends JFrame{
 			cv_c_north.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), Fenetre.hauteur/7));
 			cv_c_north.setLayout(null);
 			video.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			video.setText("Vidéos");
+			video.setText("VidÃ©os");
 			video.setForeground(Color.decode("#424242"));
 			video.setHorizontalAlignment(JLabel.CENTER);
 			video.setBounds(0, 22, 120, 25);
@@ -546,7 +553,7 @@ public class Fenetre extends JFrame{
 			lab_planning.setHorizontalAlignment(JLabel.CENTER);
 			lab_planning.setBounds(8, 22, 120, 30);
 			lab_planningInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			lab_planningInfo.setText("C'est ici que vous gérez votre emploi du temps !");
+			lab_planningInfo.setText("C'est ici que vous gÃ©rez votre emploi du temps !");
 			lab_planningInfo.setForeground(Color.decode("#424242"));
 			lab_planningInfo.setHorizontalAlignment(JLabel.CENTER);
 			lab_planningInfo.setBounds(10, 22+50, 400, 20);
@@ -614,12 +621,12 @@ public class Fenetre extends JFrame{
 			cl_c_north.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), Fenetre.hauteur/7));
 			cl_c_north.setLayout(null);
 			lab_levels.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			lab_levels.setText("Vos compétences");
+			lab_levels.setText("Vos compÃ©tences");
 			lab_levels.setForeground(Color.decode("#424242"));
 			lab_levels.setHorizontalAlignment(JLabel.CENTER);
 			lab_levels.setBounds(8, 22, 200, 30);
 			lab_levelsInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			lab_levelsInfo.setText("C'est ici que vous pouvez voir votre expérience dans chaque domaine !");
+			lab_levelsInfo.setText("C'est ici que vous pouvez voir votre expÃ©rience dans chaque domaine !");
 			lab_levelsInfo.setForeground(Color.decode("#424242"));
 			lab_levelsInfo.setHorizontalAlignment(JLabel.LEFT);
 			lab_levelsInfo.setBounds(10, 22+50, 600, 20);
@@ -763,7 +770,7 @@ public class Fenetre extends JFrame{
 					name = MainClient.videos.get(a).getName();
 				}
 			}
-			s="Nouvelle vidéo \""+name+"\"";
+			s="Nouvelle vidÃ©o \""+name+"\"";
 		}if (i==3){
 			for (int a = 0;a<MainClient.videos.size();a++){
 				if (MainClient.videos.get(a).getID()==l){
@@ -786,7 +793,7 @@ public class Fenetre extends JFrame{
 					name = MainClient.videos.get(a).getName();
 				}
 			}
-			s="Écriture \""+name+"\"";
+			s="Ã‰criture \""+name+"\"";
 		}if (i==7){
 			for (int a = 0;a<MainClient.videos.size();a++){
 				if (MainClient.videos.get(a).getID()==l){
@@ -906,7 +913,7 @@ public class Fenetre extends JFrame{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			this.FOND=Color.decode("#D3D3D3");	
-			if (!name.contains("Faire une vidéo")){
+			if (!name.contains("Faire une vidÃ©o")){
 				int page = Integer.parseInt(name);
 				Fenetre.videopage=page;
 				cv_c_south.removeAll();
@@ -924,7 +931,7 @@ public class Fenetre extends JFrame{
 					System.out.println("Erreur : "+test);
 				}
 			}
-			if (name.contains("Faire une vidéo")){
+			if (name.contains("Faire une vidÃ©o")){
 				cv_c_south.removeAll();
 				try {
 					Thread.sleep(10);
@@ -975,11 +982,11 @@ public class Fenetre extends JFrame{
 			}
 			test=2;
 			content.add(center_videos,BorderLayout.CENTER);
-			/* Existe-t-il une meilleur méthode ? */
+			/* Existe-t-il une meilleur mÃ©thode ? */
 			try{
 				content.updateUI();
 			}catch(Exception e){
-				/* Petit test personnel pour vérifier le bon fonctionnement */
+				/* Petit test personnel pour vÃ©rifier le bon fonctionnement */
 				System.out.println("Erreur : "+test);
 			}	
 		}
@@ -1008,11 +1015,11 @@ public class Fenetre extends JFrame{
 				e.printStackTrace();
 			}
 			content.add(center,BorderLayout.CENTER);
-			/* Existe-t-il une meilleur méthode ? */
+			/* Existe-t-il une meilleur mÃ©thode ? */
 			try{
 				content.updateUI();
 			}catch(Exception e){
-				/* Petit test personnel pour vérifier le bon fonctionnement */
+				/* Petit test personnel pour vÃ©rifier le bon fonctionnement */
 				System.out.println("Erreur : "+test);
 			}	
 			resetPlanning();
@@ -1256,7 +1263,7 @@ public class Fenetre extends JFrame{
 				edit_hour_start.setBackground(Col("c"));
 			}
 			/*
-			 * Vérification du côté client. Le serveur vérifira aussi. En cas d'erreur,
+			 * VÃ©rification du cÃ´tÃ© client. Le serveur vÃ©rifira aussi. En cas d'erreur,
 			 * le joueur sera banni 1 an du mode online automatiquement.
 			 */
 			if (edit_hour_end.getBackground().equals(Color.decode("#C4FECA"))&&
@@ -1268,9 +1275,7 @@ public class Fenetre extends JFrame{
 						MainClient.planning.get(a).setDay(day);
 						MainClient.planning.get(a).setMonth(month);
 						MainClient.planning.get(a).setYear(year);
-						/*
-						 * A faire : new tri des taches comme au lancement.
-						 */
+						MainClient.TriPlanning();
 						resetPlanningPage();
 					}
 				}
@@ -1293,7 +1298,7 @@ public class Fenetre extends JFrame{
 				if (titre_chars.length>30){
 					JLabel error = new JLabel();
 					error.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					error.setText("30 caractères max !");
+					error.setText("30 caractÃ¨res max !");
 					error.setForeground(Col("c"));
 					error.setHorizontalAlignment(JLabel.LEFT);
 					error.setBounds(25+300+8, 55+25+8, 300, 20);
@@ -1303,7 +1308,7 @@ public class Fenetre extends JFrame{
 				}if (titre_chars.length<3){
 					JLabel error = new JLabel();
 					error.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					error.setText("3 caractères min !");
+					error.setText("3 caractÃ¨res min !");
 					error.setForeground(Col("c"));
 					error.setHorizontalAlignment(JLabel.LEFT);
 					error.setBounds(25+300+8, 55+25+8, 300, 20);
@@ -1311,10 +1316,43 @@ public class Fenetre extends JFrame{
 					cv_c_south.updateUI();
 					return;
 				}
+				boolean v = false;
+				long l = 0;
+				Accessoire cam = null;
+				String s = (String) camerascombo.getSelectedItem();
+				for (String m : s.split(" ")){
+					if (v){
+						l=Long.valueOf(m);
+						v=false;
+					}
+					if(m.equals("<hidden")){v=true;}
+				}
+				for (int i = 0;i<MainClient.cameras.size();i++){
+					if(MainClient.cameras.get(i).getID()==l){
+						cam=(Camera) MainClient.cameras.get(i);
+					}
+				}
+				v = false;
+				l = 0;
+				Accessoire micro = null;
+				String s1 = (String) microscombo.getSelectedItem();
+				for (String m : s1.split(" ")){
+					if (v){
+						l=Long.valueOf(m);
+						v=false;
+					}
+					if(m.equals("<hidden")){v=true;}
+				}
+				for (int i = 0;i<MainClient.cameras.size();i++){
+					if(MainClient.cameras.get(i).getID()==l){
+						micro=(Micro) MainClient.cameras.get(i);
+					}
+				}
 				try{
 					String categorie = categoriescombo.getSelectedItem().toString();
 					MainClient.videos.add(new Video(enter_titre.getText(), 0, 0, 0, 0L, 0L, 0L, 0L, categorie.contains("/")?categorie.replace("/", "_"):categorie, 0,
-							null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, (long)MainClient.videos.size()));
+							cam, micro, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, (long)MainClient.videos.size()));
+					
 					/*
 					 * On tri.
 					 */
@@ -1396,7 +1434,7 @@ public class Fenetre extends JFrame{
 			}
 			
 			/*
-			 * Boucle 1 - évenement
+			 * Boucle 1 - Ã©venement
 			 */
 			while(plan){
 				if (MainClient.evenements.size()-1==i){
@@ -1430,12 +1468,12 @@ public class Fenetre extends JFrame{
 							centerr.add(label, BorderLayout.CENTER);
 							panel.add(centerr,BorderLayout.CENTER);
 							c_c_nt_center.add(panel);
-							System.out.println("(1-e) Jour égal à l'index : day "+MainClient.evenements.get(i).getDay());
+							System.out.println("(1-e) Jour Ã©gal Ã  l'index : day "+MainClient.evenements.get(i).getDay());
 						}
 						i++;
 					}
 			}
-			//On réinitialise
+			//On rÃ©initialise
 			plan=true;
 			i=0;
 			/*
@@ -1494,7 +1532,7 @@ public class Fenetre extends JFrame{
 							label_hours.setFont(new Font("Tahoma", Font.PLAIN, 12));
 							String HourEnd = MainClient.planning.get(i).getHour() < 22 ? ""+MainClient.planning.get(i).getHour()+":00" : "<font color=red>"+
 									MainClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
-							label_hours.setText("<html>"+MainClient.planning.get(i).getHour_start()+":00 à "+HourEnd+"</html>");
+							label_hours.setText("<html>"+MainClient.planning.get(i).getHour_start()+":00 Ã  "+HourEnd+"</html>");
 							//label_hours.setForeground(Color.GRAY);
 							label_hours.setHorizontalAlignment(JLabel.LEFT);
 							label_hours.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -1506,7 +1544,7 @@ public class Fenetre extends JFrame{
 							centerr.add(suddd,BorderLayout.SOUTH);
 							panel.add(centerr,BorderLayout.CENTER);
 							c_c_nt_center.add(panel);
-							System.out.println("(1) Jour égal à l'index : "+MainClient.planning.get(i).getHour_start()+" -> "+MainClient.planning.get(i).getHour()
+							System.out.println("(1) Jour Ã©gal Ã  l'index : "+MainClient.planning.get(i).getHour_start()+" -> "+MainClient.planning.get(i).getHour()
 									+" : day "+MainClient.planning.get(i).getDay());
 						}
 						i++;
@@ -1524,7 +1562,7 @@ public class Fenetre extends JFrame{
 	public void setVideosPannel(){
 		int TotalNotifY = 0;
 		lab_c_c_vp_c_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lab_c_c_vp_c_name.setText("VIDÉOS");
+		lab_c_c_vp_c_name.setText("VIDÃ‰OS");
 		lab_c_c_vp_c_name.setForeground(Color.decode("#474848"));
 		lab_c_c_vp_c_name.setHorizontalAlignment(JLabel.LEFT);
 		lab_c_c_vp_c_name.setBounds(0, 0, (((largeur-255)-15-(largeur-255)/4))/2, 40);
@@ -1639,7 +1677,7 @@ public class Fenetre extends JFrame{
 		
 		Boolean vid = true;
 		/*
-		 * A faire : calculer la hauteur pour savoir cb de vidéos peut-on afficher par page.
+		 * A faire : calculer la hauteur pour savoir cb de vidÃ©os peut-on afficher par page.
 		 */
 		int i = (videopage-1)*5;
 		int p = (videopage-1)*5;
@@ -1660,10 +1698,10 @@ public class Fenetre extends JFrame{
 					publie.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					if (!(MainClient.videos.get(i).getYear()<Integer.parseInt(sf[0])) && !(MainClient.videos.get(i).getMonth()<Integer.parseInt(sf[1]))
 							&& (MainClient.videos.get(i).getDay()>Integer.parseInt(sf[2]))){
-						publie.setText("<html><font color=red>PLANIFIÉE POUR LE "+Zero(MainClient.videos.get(i).getDay())+"/"+Zero(MainClient.videos.get(i).getMonth())+"/"+Zero(MainClient.videos.get(i).getYear())+"</font></html>");
+						publie.setText("<html><font color=red>PLANIFIÃ‰E POUR LE "+Zero(MainClient.videos.get(i).getDay())+"/"+Zero(MainClient.videos.get(i).getMonth())+"/"+Zero(MainClient.videos.get(i).getYear())+"</font></html>");
 					}
 					else{
-						publie.setText("PUBLIÉE LE "+Zero(MainClient.videos.get(i).getDay())+"/"+Zero(MainClient.videos.get(i).getMonth())+"/"+Zero(MainClient.videos.get(i).getYear()));
+						publie.setText("PUBLIÃ‰E LE "+Zero(MainClient.videos.get(i).getDay())+"/"+Zero(MainClient.videos.get(i).getMonth())+"/"+Zero(MainClient.videos.get(i).getYear()));
 					}
 					
 					publie.setForeground(Color.GRAY);
@@ -1741,7 +1779,7 @@ public class Fenetre extends JFrame{
 		
 		JLabel step = new JLabel();
 		step.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		step.setText("Étape "+number_of_step+":");
+		step.setText("Ã‰tape "+number_of_step+":");
 		step.setForeground(Color.DARK_GRAY);
 		step.setHorizontalAlignment(JLabel.LEFT);
 		step.setBounds(25, 10, 150, 39);
@@ -1751,7 +1789,7 @@ public class Fenetre extends JFrame{
 			
 			JLabel titre = new JLabel();
 			titre.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			titre.setText("Choisissez le titre: (30 caractères max)");
+			titre.setText("Choisissez le titre: (30 caractÃ¨res max)");
 			titre.setForeground(Color.DARK_GRAY);
 			titre.setHorizontalAlignment(JLabel.LEFT);
 			titre.setBounds(25, 55, 300, 20);
@@ -1772,7 +1810,7 @@ public class Fenetre extends JFrame{
 			cv_c_south.add(border);
 			JLabel lab_1 = new JLabel();
 			lab_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lab_1.setText("Choisissez une catégorie:");
+			lab_1.setText("Choisissez une catÃ©gorie:");
 			lab_1.setForeground(Color.DARK_GRAY);
 			lab_1.setHorizontalAlignment(JLabel.LEFT);
 			lab_1.setBounds(25, 55+40+25+10, 175, 20);
@@ -1783,28 +1821,28 @@ public class Fenetre extends JFrame{
 			cv_c_south.add(categoriescombo);
 			JLabel lab_f = new JLabel();
 			lab_f.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lab_f.setText("Définissez la longueur:");
+			lab_f.setText("DÃ©finissez la longueur:");
 			lab_f.setForeground(Color.DARK_GRAY);
 			lab_f.setHorizontalAlignment(JLabel.LEFT);
 			lab_f.setBounds(25, 75+40+25+50+20, 175, 20);
 			cv_c_south.add(lab_f);
-			String[] Format = {"<html><b>Mini</b> (Moins de 0:30)</html>","<html><b>Très courte</b> (de 0:31 à 2:00)</html>","<html><b>Courte</b> (de 2:01 à 5:00)</html>",
-					"<html><b>Moyenne</b> (de 5:01 à 10:00)</html>","<html><b>Longue</b> (de 10:01 à 30:00)</html>","<html><b>Très longue</b> (de 30:01 à 1:00:00)</html>",
+			String[] Format = {"<html><b>Mini</b> (Moins de 0:30)</html>","<html><b>TrÃ¨s courte</b> (de 0:31 Ã  2:00)</html>","<html><b>Courte</b> (de 2:01 Ã  5:00)</html>",
+					"<html><b>Moyenne</b> (de 5:01 Ã  10:00)</html>","<html><b>Longue</b> (de 10:01 Ã  30:00)</html>","<html><b>TrÃ¨s longue</b> (de 30:01 Ã  1:00:00)</html>",
 					"<html><b>Enorme</b> (Plus de 1:00:01)</html>"};
 			formatscombo = new JComboBox(Format);
 			formatscombo.setBounds(25, 75+40+25+50+25+20, 200, 50);
 			cv_c_south.add(formatscombo);
 			JLabel lab_2 = new JLabel();
 			lab_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lab_2.setText("Choisissez votre caméra:");
+			lab_2.setText("Choisissez votre camÃ©ra:");
 			lab_2.setForeground(Color.DARK_GRAY);
 			lab_2.setHorizontalAlignment(JLabel.LEFT);
 			lab_2.setBounds(25, 75+40+25+50+25+50+30, 175, 20);
 			cv_c_south.add(lab_2);
 			ArrayList<String> ar = new ArrayList<String>();
-			ar.add("<html><font color=red>Pas de caméra</font></html>");
+			ar.add("<html><font color=red>Pas de camÃ©ra</font></html>");
 			for (int a = 0;a<MainClient.cameras.size();a++){		
-					ar.add(MainClient.cameras.get(a).getName());
+					ar.add("<html>"+MainClient.cameras.get(a).getName()+" <hidden "+MainClient.cameras.get(a).getID()+" /> </html>");
 			}
 			String[] CamerasList = new String[ar.size()];
 			CamerasList = ar.toArray(CamerasList);
@@ -1818,7 +1856,7 @@ public class Fenetre extends JFrame{
 			lab_3.setHorizontalAlignment(JLabel.LEFT);
 			lab_3.setBounds(25+200+50, 75+40+25+50+25+50+30, 175, 20);
 			cv_c_south.add(lab_3);
-			String[] MicrosList = { "<html><font color=red>Pas de micro</font></html>","Micro intégré" };
+			String[] MicrosList = { "<html><font color=red>Pas de micro</font></html>","Micro intÃ©grÃ©" };
 			microscombo = new JComboBox(MicrosList);
 			microscombo.setBounds(25+200+50, 75+40+25+50+25+25+50+30, 200, 50);
 			cv_c_south.add(microscombo);
@@ -1832,7 +1870,7 @@ public class Fenetre extends JFrame{
 		else if (number_of_step.equals(2)){
 			
 			int[] colorr = { 6, 3, 4, 7 };
-			String[] name = { "Écriture","Tournage","Montage","Post-prod." } ;
+			String[] name = { "Ã‰criture","Tournage","Montage","Post-prod." } ;
 			String categ="";
 			for (int a = 0;a<MainClient.videos.size()-1;a++){
 				if (MainClient.videos.get(a).getID()==MainClient.videos.size()-1){
@@ -1886,7 +1924,7 @@ public class Fenetre extends JFrame{
 			if (MainClient.player.getLvl_ecriture()==0){
 				JLabel label = new JLabel();
 				label.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				label.setText("Vous devez être au moins level 1");
+				label.setText("Vous devez Ãªtre au moins level 1");
 				label.setForeground(Color.GRAY);
 				label.setHorizontalAlignment(JLabel.LEFT);
 				label.setBounds(80+115+10, 85, 500, 45);
@@ -1913,7 +1951,7 @@ public class Fenetre extends JFrame{
 			if (MainClient.player.getLvl_post_prod()==0){	
 				JLabel label = new JLabel();
 				label.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				label.setText("Vous devez être au moins level 1");
+				label.setText("Vous devez Ãªtre au moins level 1");
 				label.setForeground(Color.GRAY);
 				label.setHorizontalAlignment(JLabel.LEFT);
 				label.setBounds(80+115+10, 80+75*3+5, 500, 45);
@@ -1974,7 +2012,7 @@ public class Fenetre extends JFrame{
 			int i = 0;
 			SimpleDateFormat formater = null;
 			Date now = new Date();
-			Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
+			Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure franÃ§aise.
 			cal.setTime(now);
 			if (d==1){
 				cal.add(Calendar.DAY_OF_YEAR, 0); // <--
@@ -2010,7 +2048,7 @@ public class Fenetre extends JFrame{
 				stringArray[0] = Character.toUpperCase(stringArray[0]);
 				mois = new String(stringArray);
 				DATE_OF_DAY.setFont(new Font("Dominique", Font.PLAIN, 45));
-				DATE_OF_DAY.setText(jour_sem+", "+sf[2]+" "+(mois.contains("û")?mois.replace("û", "u"):mois));
+				DATE_OF_DAY.setText(jour_sem+", "+sf[2]+" "+(mois.contains("Ã»")?mois.replace("Ã»", "u"):mois));
 				DATE_OF_DAY.setForeground(Color.DARK_GRAY);
 				DATE_OF_DAY.setHorizontalAlignment(JLabel.LEFT);
 				DATE_OF_DAY.setBounds(0, 0, 600, 45);
@@ -2036,7 +2074,7 @@ public class Fenetre extends JFrame{
 			}
 			
 			/*
-			 * Boucle 1 - évenement
+			 * Boucle 1 - Ã©venement
 			 */
 			while(plan){
 				if (MainClient.evenements.size()-1==i){
@@ -2078,7 +2116,7 @@ public class Fenetre extends JFrame{
 						i++;
 					}
 			}
-			//On réinitialise
+			//On rÃ©initialise
 			plan=true;
 			i=0;
 			/*
@@ -2213,7 +2251,7 @@ public class Fenetre extends JFrame{
 	
 	@SuppressWarnings({"unchecked" })
 	public static void EDIT_PLAN(Integer i, Integer ID){
-		Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
+		Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure franÃ§aise.
 		cal.add(Calendar.DAY_OF_YEAR, 0); // <--
 		Date date = cal.getTime();
 		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy");
@@ -2248,8 +2286,8 @@ public class Fenetre extends JFrame{
 			edit_but_accept.addActionListener(new EditStepOne());
 			
 		}
-		edit_first_choice.setEnabled(true);
-		edit_but_accept.setEnabled(true);
+		create_first_choice.setEnabled(true);
+		create_but_accept.setEnabled(true);
 	}
 	
 	@SuppressWarnings({"unchecked" })
@@ -2257,7 +2295,7 @@ public class Fenetre extends JFrame{
 
 		ArrayList<String> ardate = new ArrayList<String>();
 		for (int i = 0;i<=7;i++){
-			Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
+			Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure franÃ§aise.
 			cal.add(Calendar.DAY_OF_YEAR, i); // <--
 			Date date = cal.getTime();
 			SimpleDateFormat formater = new SimpleDateFormat("dd / MM / yy");
@@ -2347,6 +2385,77 @@ public class Fenetre extends JFrame{
 			cp_c_c_c_right.updateUI();
 
 	}
+	
+	@SuppressWarnings({"unchecked" })
+	public static void CREATE_PLAN(Integer i, Integer ID){
+		Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure franÃ§aise.
+		cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+		Date date = cal.getTime();
+		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy");
+		String s = formater.format(date);
+		String[] sf = s.split("/");
+		if(i==1){
+			String[] choicesStrings = {"<html><font color=green>â–ˆ</font> video (tournage/montage/etc...)</html>",
+					"<html><font color=gold>â–ˆ</font> apprentissage</html>","<html><font color=red>â–ˆ</font> famille, vie social</html>"};
+			
+			create_first_choice = new JComboBox(choicesStrings);
+			create_first_choice.setSelectedIndex(0);
+			create_first_choice.setFont(new Font("Dominique", Font.PLAIN, 18));
+			create_first_choice.setBounds(0, 0, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
+			cp_c_c_c_right.add(create_first_choice);
+			
+			create_but_accept = new JButton("Suivant");
+			create_but_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
+			create_but_accept.setBounds(0, 40+5, 110, 40);
+			cp_c_c_c_right.add(create_but_accept);
+			//create_but_accept.addActionListener(new CreateStepOne());
+			
+		}
+		create_first_choice.setEnabled(true);
+		create_but_accept.setEnabled(true);
+	}
+	
+	@SuppressWarnings({"unchecked" })
+	public static void CREATE_PLAN_STEP_2(Integer i){
+		Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure franÃ§aise.
+		cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+		Date date = cal.getTime();
+		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy");
+		String s = formater.format(date);
+		String[] sf = s.split("/");
+		String[] choicesVideos;
+		String[] choicesApprenti;
+		String[] choicesVie;
+		if(i==1){
+			ArrayList<String> ar = new ArrayList<String>();
+			ar.add("<html><font color=gray>Choix</font></html>");
+			for (int a = 0;a<MainClient.videos.size();a++){
+				if (a!=MainClient.videos.size()-1 && MainClient.videos.get(a).getDay()==0){
+					if (){
+						
+					}
+				}
+			}
+			choicesVideos = new String[ar.size()];
+			choicesVideos = ar.toArray(choicesVideos);
+			
+			create_first_choice = new JComboBox(choicesVideos);
+			create_first_choice.setSelectedIndex(0);
+			create_first_choice.setFont(new Font("Dominique", Font.PLAIN, 18));
+			create_first_choice.setBounds(0, 0, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
+			cp_c_c_c_right.add(create_first_choice);
+			
+			create_but_accept = new JButton("Suivant");
+			create_but_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
+			create_but_accept.setBounds(0, 40+5, 110, 40);
+			cp_c_c_c_right.add(create_but_accept);
+			//create_but_accept.addActionListener(new CreateStepOne());
+			
+		}
+		create_first_choice.setEnabled(true);
+		create_but_accept.setEnabled(true);
+	}
+	
 	class Music implements Runnable{   
 
 		@SuppressWarnings("deprecation")

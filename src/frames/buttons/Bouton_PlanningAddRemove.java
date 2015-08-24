@@ -61,6 +61,17 @@ public class Bouton_PlanningAddRemove extends JButton implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		if (i==1){
+			Fenetre.cp_c_c_c_right.removeAll();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
+			Fenetre.CREATE_PLAN(1, 0);
+			Fenetre.cp_c_c_c_right.updateUI();
+		}
 		if (i==2){
 			Fenetre.cp_c_c_c_right.removeAll();
 			try {
