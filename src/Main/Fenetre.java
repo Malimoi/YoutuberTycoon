@@ -49,6 +49,7 @@ import javax.swing.JTextArea;
 import accessoires.Accessoire;
 import accessoires.Camera;
 import accessoires.Micro;
+import utilities.Evenement;
 import utilities.Planning;
 import utilities.Video;
 import frames.ACC;
@@ -176,6 +177,8 @@ public class Fenetre extends JFrame{
 						public static JButton create_but_accept;
 						public static JComboBox create_2nd_choice = new JComboBox();
 						public static JButton create_2ndbut_accept;
+						public static JComboBox create_3rd_choice = new JComboBox();
+						public static JButton create_3rdbut_accept;
 						public static JComboBox create_hour_start = new JComboBox();
 						public static JComboBox create_hour_end = new JComboBox();
 						public static JComboBox create_date_box = new JComboBox();
@@ -760,11 +763,13 @@ public class Fenetre extends JFrame{
 		}if (i==7){
 			s="d";
 		}if (i==8){
-			s="9";
+			s="6";
+		}if (i==9){
+			s="6";
 		}
 		return s;
 	}
-	public static String ActivityId (Integer i, Long l, String s2){
+	public static String ActivityId (Integer i, Long l){
 		String s = "Glandouillette";
 		String name = "";
 		if (i==1){
@@ -807,11 +812,9 @@ public class Fenetre extends JFrame{
 		}if (i==7){
 			s="Jour de paye";
 		}if (i==8){
-			if (l.equals(1L)){
-				s="Apprentissage: "+s2.toUpperCase();
-			}else{
-				s="Cours: "+s2.toUpperCase();
-			}	
+			s="Apprentissage: "+MainClient.categ_list[l.intValue()];
+		}if (i==9){
+			s="Cours: "+MainClient.categ_list[l.intValue()];
 		}
 		return s;
 	}
@@ -1339,19 +1342,42 @@ public class Fenetre extends JFrame{
 					create_2nd_choice.setEnabled(false);
 					create_2ndbut_accept.setEnabled(false);
 					int time;
+					/*
+					 * A modifier pour plus de sécurité.
+					 */
 					if (s.contains("ecriture")){
 						time=vi.getEcritureRemain();
 					}else if (s.contains("tournage")){
 						time=vi.getTournageRemain();
 					}else if (s.contains("montage")){
 						time=vi.getMontageRemain();
-					}else{
+					}else if (s.contains("post-production")){
 						time=vi.getPostprodRemain();
+					}else{
+						time=0;
 					}
 					CREATE_PLAN_STEP_3(i,vi,time);
 				}
-			}		
+			}else if (i.equals(2)||i.equals(3)){
+				Integer index = (Integer) create_3rd_choice.getSelectedIndex();
+				create_3rd_choice.setEnabled(false);
+				create_3rdbut_accept.setEnabled(false);
+				CREATE_PLAN_STEP_3(i,null,index);		
+			}
 		}		
+	}
+	
+	public static class CreateStepTwoBis implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {	
+			Integer i = (Integer) create_2nd_choice.getSelectedIndex();
+			if (!i.equals(0)){
+				create_2nd_choice.setEnabled(false);
+				create_2ndbut_accept.setEnabled(false);
+				CREATE_PLAN_STEP_2bis(i+1);
+			}	
+		}	
 	}
 	
 	public static class CreateStepThree implements ActionListener{
@@ -1383,94 +1409,117 @@ public class Fenetre extends JFrame{
 			month=Integer.valueOf(sd.split(" ")[2]);
 			year=Integer.valueOf(sd.split(" ")[4]);
 			
-			if (!s.contains("Choix")){
-				for (int a = 0;a<MainClient.planning.size();a++){
-					if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
-							MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year){
-						for (int x = MainClient.planning.get(a).getHour_start();x<MainClient.planning.get(a).getHour();x++){
-							ar.add(x);
-						}
-					}
-				}
-				String si = s.split(" ")[1].replace("h", "");
-				Integer hour = Integer.valueOf(si);
-				h1=hour;
-				if (ar.contains(hour)){
-					create_hour_start.setBackground(Col("c"));
-				}else{
-					create_hour_start.setBackground(Color.decode("#C4FECA"));
-				}
-			}
-			ar.clear();
-			if (!s2.contains("Choix")){
-				for (int a = 0;a<MainClient.planning.size();a++){
-					if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
-							MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year){
-						for (int x = MainClient.planning.get(a).getHour_start()+1;x<MainClient.planning.get(a).getHour();x++){
-							ar.add(x);
-						}
-					}
-				}
-				String si = s2.split(" ")[1].replace("h", "");
-				Integer hour = Integer.valueOf(si);
-				h2=hour;
-				if (ar.contains(hour)){
-					create_hour_end.setBackground(Col("c"));
-				}else{
-					create_hour_end.setBackground(Color.decode("#C4FECA"));
-				}
-			}
-			if (h1>=h2){
-				create_hour_end.setBackground(Col("c"));
-				create_hour_start.setBackground(Col("c"));
-			}if ((h2-h1)>time){
-				create_hour_end.setBackground(Col("c"));
-				create_hour_start.setBackground(Col("c"));
-			}
-			for (int d = h1;d<=h2;d++){
-				if (ar.contains(d)){
-					create_hour_end.setBackground(Col("c"));
-				}
-			}
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_YEAR, 0); // <--//
-			Date date = cal.getTime();
-			//dddd
-			SimpleDateFormat formater = new SimpleDateFormat("HH/dd");
-			String st = formater.format(date);
-			String[] sf = st.split("/");
-			if (Integer.valueOf(sf[0])>=h1-2&&day==Integer.valueOf(sf[1])){
-				create_hour_end.setBackground(Col("c"));
-				create_hour_start.setBackground(Col("c"));
-			}
-			/*
-			 * Vérification du côté client. Le serveur vérifira aussi. En cas d'erreur,
-			 * le joueur sera banni 1 an du mode online automatiquement.
-			 */
-			if (create_hour_end.getBackground().equals(Color.decode("#C4FECA"))&&
-					create_hour_start.getBackground().equals(Color.decode("#C4FECA"))){
-				if (type.equals(1)){
-					Integer status = getStatus(vi);
-					MainClient.planning.add(new Planning(h1, h2, day, month, year, status+3, vi.getID(), (long)MainClient.planning.size()));
-					for (int v2 = 0;v2<MainClient.videos.size();v2++){
-						if (MainClient.videos.get(v2).getID()==vi.getID()){
-							if (status.equals(0)){
-								MainClient.videos.get(v2).setEcritureRemain(h2-h1-MainClient.videos.get(v2).getEcritureRemain());
-							}else if(status.equals(1)){
-								MainClient.videos.get(v2).setTournageRemain(h2-h1-MainClient.videos.get(v2).getTournageRemain());
-							}else if(status.equals(2)){
-								MainClient.videos.get(v2).setMontageRemain(h2-h1-MainClient.videos.get(v2).getMontageRemain());
-							}else{
-								MainClient.videos.get(v2).setPostprodRemain(h2-h1-MainClient.videos.get(v2).getPostprodRemain());
+			Integer status = 0;
+			if (type==1){
+				status = getStatus(vi);
+			}		
+			if (status!=5){
+				if (!s.contains("Choix")){
+					for (int a = 0;a<MainClient.planning.size();a++){
+						if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
+								MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year){
+							for (int x = MainClient.planning.get(a).getHour_start();x<MainClient.planning.get(a).getHour();x++){
+								ar.add(x);
 							}
 						}
-					}		
-				}else if (type.equals(2)){
-					
+					}
+					String si = s.split(" ")[1].replace("h", "");
+					Integer hour = Integer.valueOf(si);
+					h1=hour;
+					if (ar.contains(hour)){
+						create_hour_start.setBackground(Col("c"));
+						return;
+					}else{
+						create_hour_start.setBackground(Color.decode("#C4FECA"));
+					}
 				}
-				MainClient.TriPlanning();
-				resetPlanningPage();
+				ar.clear();
+				if (!s2.contains("Choix")){
+					for (int a = 0;a<MainClient.planning.size();a++){
+						if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
+								MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year){
+							for (int x = MainClient.planning.get(a).getHour_start()+1;x<MainClient.planning.get(a).getHour();x++){
+								ar.add(x);
+							}
+						}
+					}
+					String si = s2.split(" ")[1].replace("h", "");
+					Integer hour = Integer.valueOf(si);
+					h2=hour;
+					if (ar.contains(hour)){
+						create_hour_end.setBackground(Col("c"));
+						return;
+					}else{
+						create_hour_end.setBackground(Color.decode("#C4FECA"));
+					}
+				}
+				if (h1>=h2){
+					create_hour_end.setBackground(Col("c"));
+					create_hour_start.setBackground(Col("c"));
+					return;
+				}if ((h2-h1)>time && type.equals(1)){
+					create_hour_end.setBackground(Col("c"));
+					create_hour_start.setBackground(Col("c"));
+					return;
+				}
+				for (int d = h1;d<=h2;d++){
+					if (ar.contains(d)){
+						create_hour_end.setBackground(Col("c"));
+						return;
+					}
+				}
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.DAY_OF_YEAR, 0); // <--//
+				Date date = cal.getTime();
+				//dddd
+				SimpleDateFormat formater = new SimpleDateFormat("HH/dd");
+				String st = formater.format(date);
+				String[] sf = st.split("/");
+				if (Integer.valueOf(sf[0])>=h1-2&&day==Integer.valueOf(sf[1])){
+					create_hour_end.setBackground(Col("c"));
+					create_hour_start.setBackground(Col("c"));
+					return;
+				}
+				/*
+				 * Vérification du côté client. Le serveur vérifira aussi. En cas d'erreur,
+				 * le joueur sera banni 1 an du mode online automatiquement.
+				 */
+				//if (create_hour_end.getBackground().equals(Color.decode("#C4FECA"))&&
+						//create_hour_start.getBackground().equals(Color.decode("#C4FECA"))){
+					if (type.equals(1)){
+						
+							MainClient.planning.add(new Planning(h1, h2, day, month, year, status+3, vi.getID(), (long)MainClient.planning.size()));
+							for (int v2 = 0;v2<MainClient.videos.size();v2++){
+								if (MainClient.videos.get(v2).getID()==vi.getID()){
+									if (status.equals(0)){
+										MainClient.videos.get(v2).setEcritureRemain(h2-h1-MainClient.videos.get(v2).getEcritureRemain());
+									}else if(status.equals(1)){
+										MainClient.videos.get(v2).setTournageRemain(h2-h1-MainClient.videos.get(v2).getTournageRemain());
+									}else if(status.equals(2)){
+										MainClient.videos.get(v2).setMontageRemain(h2-h1-MainClient.videos.get(v2).getMontageRemain());
+									}else{
+										MainClient.videos.get(v2).setPostprodRemain(h2-h1-MainClient.videos.get(v2).getPostprodRemain());
+									}
+								}
+							}
+							
+						}				
+					else if (type.equals(2)||type.equals(3)){
+						MainClient.planning.add(new Planning(h1, h2, day, month, year, 6+type, (long)time, (long)MainClient.planning.size()));
+					}
+					MainClient.TriPlanning();
+					
+				//}
+			}else{
+				for (int v2 = 0;v2<MainClient.videos.size();v2++){
+					if (MainClient.videos.get(v2).getID()==vi.getID()){
+						MainClient.videos.get(v2).setTournageRemain(-1);
+					}
+				}
+				MainClient.evenements.add(new Evenement(day, month, year, 2, vi.getID()));
+				MainClient.TriEvents();
 			}
+			resetPlanningPage();
 		}		
 	}
 	
@@ -1659,7 +1708,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label = new JLabel();
 							label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData(),null));
+							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData()));
 							label.setForeground(Color.WHITE);
 							label.setHorizontalAlignment(JLabel.LEFT);
 							
@@ -1721,7 +1770,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label_name = new JLabel();
 							label_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
-							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData(),null));
+							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData()));
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
 							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -2298,7 +2347,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label = new JLabel();
 							label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData(),null));
+							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData()));
 							label.setForeground(Color.WHITE);
 							label.setHorizontalAlignment(JLabel.LEFT);
 							
@@ -2363,7 +2412,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label_name = new JLabel();
 							label_name.setFont(new Font("Dominique", Font.PLAIN, 20));
-							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData(),null).toLowerCase());
+							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData()).toLowerCase());
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
 							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -2460,7 +2509,7 @@ public class Fenetre extends JFrame{
 			for (int a = 0;a<MainClient.planning.size();a++){
 				if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getId()!=1){
 					if (MainClient.planning.get(a).getDay()>=Integer.valueOf(sf[0])&&!(MainClient.planning.get(a).getMonth()<Integer.valueOf(sf[1]))){			
-						ar.add(("<html>"+ActivityId(MainClient.planning.get(a).getId(),MainClient.planning.get(a).getData(),null)+" le "+
+						ar.add(("<html>"+ActivityId(MainClient.planning.get(a).getId(),MainClient.planning.get(a).getData())+" le "+
 								Zero(MainClient.planning.get(a).getDay())+"/"+Zero(MainClient.planning.get(a).getMonth())+" de "+
 								MainClient.planning.get(a).getHour_start()+"h a "+MainClient.planning.get(a).getHour()+"h <hidden "+
 								MainClient.planning.get(a).getUUID()+" /> </html>").toLowerCase());
@@ -2622,7 +2671,6 @@ public class Fenetre extends JFrame{
 		String s = formater.format(date);
 		String[] sf = s.split("/");
 		String[] choicesVideos;
-		String[] choicesApprenti;
 		String[] choicesVie;
 		if(i==1){
 			int status;
@@ -2631,14 +2679,13 @@ public class Fenetre extends JFrame{
 			for (int a = 0;a<MainClient.videos.size();a++){
 				if (a!=MainClient.videos.size()-1 && MainClient.videos.get(a).getDay()==0){
 					status = getStatus(MainClient.videos.get(a));
-					if (status!=5){
+					if (status!=6){
 						ar.add(status==0?"<html><font color=yellow>█</font> ecriture: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
 							status==1?"<html><font color=green>█</font> tournage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
 							status==2?"<html><font style=\"color:#5AEFEA\">█</font> montage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
-							"<html><font style=\"color:#5863C3\">█</font> post-production: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>");
-					}
-					
-					
+							status==3?"<html><font style=\"color:#5863C3\">█</font> post-production: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
+							"<html><font color=green>█</font> planifier: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>");				
+					}					
 				}
 			}
 			choicesVideos = new String[ar.size()];
@@ -2654,17 +2701,14 @@ public class Fenetre extends JFrame{
 			create_2ndbut_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
 			create_2ndbut_accept.setBounds(0, 95+40+5, 110, 40);
 			cp_c_c_c_right.add(create_2ndbut_accept);
-			
+			create_2ndbut_accept.addActionListener(new CreateStepTwo(i));
 		}if (i==2){
-			ArrayList<String> ar = new ArrayList<String>();
-			ar.add("<html><font color=gray>Choix</font></html>");
 			
-			choicesApprenti = new String[ar.size()];
-			choicesApprenti = ar.toArray(choicesApprenti);
+			String[] choicesApprenti = {"<html><font color=gray>Choix</font></html>","Tout seul","Avec cours"};
 			
 			create_2nd_choice = new JComboBox(choicesApprenti);
 			create_2nd_choice.setSelectedIndex(0);
-			create_2nd_choice.setFont(new Font("Dominique", Font.PLAIN, 15));
+			create_2nd_choice.setFont(new Font("Dominique", Font.PLAIN, 17));
 			create_2nd_choice.setBounds(0, 85+10, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
 			cp_c_c_c_right.add(create_2nd_choice);
 			
@@ -2672,11 +2716,40 @@ public class Fenetre extends JFrame{
 			create_2ndbut_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
 			create_2ndbut_accept.setBounds(0, 95+40+5, 110, 40);
 			cp_c_c_c_right.add(create_2ndbut_accept);
+			create_2ndbut_accept.addActionListener(new CreateStepTwoBis());
 		}
 		
-		create_2ndbut_accept.addActionListener(new CreateStepTwo(i));
+		
 		create_2nd_choice.setEnabled(true);
 		create_2ndbut_accept.setEnabled(true);
+		cp_c_c_c_right.updateUI();
+	}
+	
+	@SuppressWarnings({"unchecked" })
+	public static void CREATE_PLAN_STEP_2bis(Integer i){
+		Calendar cal = Calendar.getInstance(); // <-- Dans l'avenir : get seulement l'heure française.
+		cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+		Date date = cal.getTime();
+		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy");
+		String s = formater.format(date);
+		String[] sf = s.split("/");
+			
+			create_3rd_choice = new JComboBox(MainClient.categ_list);
+			create_3rd_choice.setSelectedIndex(0);
+			create_3rd_choice.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			create_3rd_choice.setBounds(0, 140+10+40, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
+			cp_c_c_c_right.add(create_3rd_choice);
+			
+			create_3rdbut_accept = new JButton("Suivant");
+			create_3rdbut_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
+			create_3rdbut_accept.setBounds(0, 140+10+45+40, 110, 40);
+			cp_c_c_c_right.add(create_3rdbut_accept);
+			
+		
+		
+		create_3rdbut_accept.addActionListener(new CreateStepTwo(i));
+		create_3rd_choice.setEnabled(true);
+		create_3rdbut_accept.setEnabled(true);
 		cp_c_c_c_right.updateUI();
 	}
 	
@@ -2695,7 +2768,7 @@ public class Fenetre extends JFrame{
 			ArrayList<String> ar = new ArrayList<String>();
 			for (int i = 8;i<=21;i++){
 				try{
-					ar.add("<html> "+i+"h <hidden "+v.getID()+" /> </html>");
+					ar.add("<html> "+i+"h </html>");
 				}catch(Exception ex){
 					
 				}		
@@ -2703,18 +2776,18 @@ public class Fenetre extends JFrame{
 			ArrayList<String> arend = new ArrayList<String>();
 			for (int i = 9;i<=22;i++){
 				try{
-					arend.add("<html> "+i+"h <hidden "+v.getID()+" /> </html>");
+					arend.add("<html> "+i+"h </html>");
 				}catch(Exception ex){
 					
 				}
 			}
-			
+			Integer y = type.equals(1)?140+10+40:140+10+45+40+50;
 			JLabel le = new JLabel("Le ");
 			le.setFont(new Font("Dominique", Font.PLAIN, 35));
 			le.setText("Le");
 			le.setForeground(Color.DARK_GRAY);
 			le.setHorizontalAlignment(JLabel.LEFT);
-			le.setBounds(0, 140+10+40, 40, 40);
+			le.setBounds(0, y, 40, 40);
 			cp_c_c_c_right.add(le);
 			
 			String[] choicesStringsDates = new String[ardate.size()];
@@ -2724,46 +2797,48 @@ public class Fenetre extends JFrame{
 			create_date_box.setSelectedItem(Zero(Integer.valueOf(ardate.get(0).split(" ")[0])) + " / " + Zero(Integer.valueOf(ardate.get(0).split(" ")[2])) 
 					+ " / " + Zero(Integer.valueOf(ardate.get(0).split(" ")[4])));
 			create_date_box.setFont(new Font("Dominique", Font.PLAIN, 14));
-			create_date_box.setBounds(0+40+5, 140+10+40, 90, 40);
+			create_date_box.setBounds(0+40+5, y, 90, 40);
 			cp_c_c_c_right.add(create_date_box);
-			
-			JLabel de = new JLabel("de");
-			de.setFont(new Font("Dominique", Font.PLAIN, 25));
-			de.setText("de");
-			de.setForeground(Color.DARK_GRAY);
-			de.setHorizontalAlignment(JLabel.LEFT);
-			de.setBounds(0+40+5+90+1, 140+10+40, 40, 35);
-			cp_c_c_c_right.add(de);
-			
-			String[] choicesStrings = new String[ar.size()];
-			choicesStrings = ar.toArray(choicesStrings);
-			String[] choicesStringsEnd = new String[arend.size()];
-			choicesStringsEnd = arend.toArray(choicesStringsEnd);
+			if (time!=0 || (type==2 || type==3)){
+				JLabel de = new JLabel("de");
+				de.setFont(new Font("Dominique", Font.PLAIN, 25));
+				de.setText("de");
+				de.setForeground(Color.DARK_GRAY);
+				de.setHorizontalAlignment(JLabel.LEFT);
+				de.setBounds(0+40+5+90+1, y, 40, 35);
+				cp_c_c_c_right.add(de);
+				
+				String[] choicesStrings = new String[ar.size()];
+				choicesStrings = ar.toArray(choicesStrings);
+				String[] choicesStringsEnd = new String[arend.size()];
+				choicesStringsEnd = arend.toArray(choicesStringsEnd);
 
-			create_hour_start = new JComboBox(choicesStrings);
-			create_hour_start.setSelectedItem("<html> 8h <hidden "+v.getID()+" /> </html>");
-			create_hour_start.setFont(new Font("Dominique", Font.PLAIN, 14));
-			create_hour_start.setBounds(100+15+40+5+5,140+10+40, 45, 40);
-			cp_c_c_c_right.add(create_hour_start);
+				create_hour_start = new JComboBox(choicesStrings);
+				create_hour_start.setSelectedItem("<html> 8h </html>");
+				create_hour_start.setFont(new Font("Dominique", Font.PLAIN, 14));
+				create_hour_start.setBounds(100+15+40+5+5,y, 45, 40);
+				cp_c_c_c_right.add(create_hour_start);
+				
+				JLabel a = new JLabel("a");
+				a.setFont(new Font("Dominique", Font.PLAIN, 25));
+				a.setText("a");
+				a.setForeground(Color.DARK_GRAY);
+				a.setHorizontalAlignment(JLabel.LEFT);
+				a.setBounds(100+15+40+5+5+45+1, y, 40, 35);
+				cp_c_c_c_right.add(a);
+				
+				cp_c_c_c_right.add(de);
+				create_hour_end = new JComboBox(choicesStringsEnd);
+				create_hour_end.setSelectedItem("<html> 9h </html>");
+				create_hour_end.setFont(new Font("Dominique", Font.PLAIN, 14));
+				create_hour_end.setBounds(45+10+115+40+15, y, 45, 40);
+				cp_c_c_c_right.add(create_hour_end);
+			}
 			
-			JLabel a = new JLabel("a");
-			a.setFont(new Font("Dominique", Font.PLAIN, 25));
-			a.setText("a");
-			a.setForeground(Color.DARK_GRAY);
-			a.setHorizontalAlignment(JLabel.LEFT);
-			a.setBounds(100+15+40+5+5+45+1, 140+10+40, 40, 35);
-			cp_c_c_c_right.add(a);
-			
-			cp_c_c_c_right.add(de);
-			create_hour_end = new JComboBox(choicesStringsEnd);
-			create_hour_end.setSelectedItem("<html> 9h <hidden "+v.getID()+" /> </html>");
-			create_hour_end.setFont(new Font("Dominique", Font.PLAIN, 14));
-			create_hour_end.setBounds(45+10+115+40+15, 140+10+40, 45, 40);
-			cp_c_c_c_right.add(create_hour_end);
 			
 			JButton but_accept = new JButton("Ajouter");
 			but_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
-			but_accept.setBounds(0, 140+10+45+40, 110, 40);
+			but_accept.setBounds(0, y+45, 110, 40);
 			cp_c_c_c_right.add(but_accept);
 			but_accept.addActionListener(new CreateStepThree(type,v,time));
 			cp_c_c_c_right.updateUI();
@@ -2778,7 +2853,11 @@ public class Fenetre extends JFrame{
 		while(bool){
 			tot=boucle==0?video.getEcritureRemain():boucle==1?video.getTournageRemain():boucle==2?video.getMontageRemain():video.getPostprodRemain();
 			if (tot!=0){
-				status=boucle;
+				if (tot<0){
+					status=6;
+				}else{
+					status=boucle;
+				}		
 				bool=false;
 			}
 			if (boucle==4){

@@ -338,6 +338,10 @@ public class MainClient {
             });
         }
     }
+    public static void TriEvents(){
+    	Collections.sort(evenements, new EventComparator());
+        Collections.reverse(evenements);
+   }
     
     public static void TriVideos(){
  		Collections.sort(videos, new VideosComparator());
