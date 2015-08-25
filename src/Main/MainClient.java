@@ -22,6 +22,7 @@ import accessoires.Camera;
 import accessoires.CameraPerformance;
 import accessoires.MicroPerformance;
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
+import frames.Progress;
 import utilities.Evenement;
 import utilities.EventComparator;
 import utilities.Planning;

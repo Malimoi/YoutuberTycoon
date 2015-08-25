@@ -2626,19 +2626,16 @@ public class Fenetre extends JFrame{
 		String[] choicesVie;
 		if(i==1){
 			int status;
-			int DispoTime;
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("<html><font color=gray>Choix</font></html>");
 			for (int a = 0;a<MainClient.videos.size();a++){
 				if (a!=MainClient.videos.size()-1 && MainClient.videos.get(a).getDay()==0){
 					status = getStatus(MainClient.videos.get(a));
-					DispoTime = status==0?MainClient.videos.get(a).getEcritureRemain():status==1?MainClient.videos.get(a).getTournageRemain():status==2?
-							MainClient.videos.get(a).getMontageRemain():MainClient.videos.get(a).getPostprodRemain();
 					if (status!=5){
 						ar.add(status==0?"<html><font color=yellow>█</font> ecriture: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
 							status==1?"<html><font color=green>█</font> tournage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
-							status==2?"<html><font color=aqua>█</font> montage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
-							"<html><font color=blue>█</font> post-production: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>");
+							status==2?"<html><font style=\"color:#5AEFEA\">█</font> montage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
+							"<html><font style=\"color:#5863C3\">█</font> post-production: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>");
 					}
 					
 					
@@ -2658,6 +2655,23 @@ public class Fenetre extends JFrame{
 			create_2ndbut_accept.setBounds(0, 95+40+5, 110, 40);
 			cp_c_c_c_right.add(create_2ndbut_accept);
 			
+		}if (i==2){
+			ArrayList<String> ar = new ArrayList<String>();
+			ar.add("<html><font color=gray>Choix</font></html>");
+			
+			choicesApprenti = new String[ar.size()];
+			choicesApprenti = ar.toArray(choicesApprenti);
+			
+			create_2nd_choice = new JComboBox(choicesApprenti);
+			create_2nd_choice.setSelectedIndex(0);
+			create_2nd_choice.setFont(new Font("Dominique", Font.PLAIN, 15));
+			create_2nd_choice.setBounds(0, 85+10, (largeur-255-10-10-15-15-810)<350?(largeur-255-10-10-15-15-810):350, 40);
+			cp_c_c_c_right.add(create_2nd_choice);
+			
+			create_2ndbut_accept = new JButton("Suivant");
+			create_2ndbut_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
+			create_2ndbut_accept.setBounds(0, 95+40+5, 110, 40);
+			cp_c_c_c_right.add(create_2ndbut_accept);
 		}
 		
 		create_2ndbut_accept.addActionListener(new CreateStepTwo(i));
@@ -2747,7 +2761,7 @@ public class Fenetre extends JFrame{
 			create_hour_end.setBounds(45+10+115+40+15, 140+10+40, 45, 40);
 			cp_c_c_c_right.add(create_hour_end);
 			
-			JButton but_accept = new JButton("Modifier");
+			JButton but_accept = new JButton("Ajouter");
 			but_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
 			but_accept.setBounds(0, 140+10+45+40, 110, 40);
 			cp_c_c_c_right.add(but_accept);

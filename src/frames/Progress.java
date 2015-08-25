@@ -3,8 +3,17 @@ package frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import Main.Fenetre;
@@ -15,35 +24,22 @@ public class Progress extends JFrame{
 
   private Thread t;
 
-  private JProgressBar bar;
+  private JPanel bar = new Traitement();
    
   public Progress(){      
 
-    this.setSize(300, 80);
-
-    this.setTitle("Création de votre partie");
-
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-    this.setResizable(false);
-
-    this.setLocationRelativeTo(null);      
+	  this.setTitle("Youtuber Tycoon by Malimoi");
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.NORMAL);
+		//this.setDefaultLookAndFeelDecorated(false);    /*-> Plein écran.*/
+		this.setExtendedState(this.MAXIMIZED_BOTH);
+		this.setUndecorated(false);
+		this.setResizable(true); 
 
       
 
-    t = new Thread(new Traitement());
-    
-    t.start();
-
-    bar  = new JProgressBar();
-
-    bar.setMaximum(500);
-
-    bar.setMinimum(0);
-
-    bar.setStringPainted(true);
-    
-    bar.setPreferredSize(new Dimension(300,80));
+	
 
     this.getContentPane().add(bar, BorderLayout.CENTER);
 
@@ -56,33 +52,17 @@ public class Progress extends JFrame{
 	  this.dispose();
   }
 
-  class Traitement implements Runnable{   
+  class Traitement extends JPanel{
 
-    @SuppressWarnings("static-access")
-	public void run(){
-    	
-      for(int val = 0; val <= 500; val++){
-
-        bar.setValue(val);
-
-        try {
-
-          t.sleep(10);
-
-        } catch (InterruptedException e) {
-
-          // TODO Auto-generated catch block
-
-        e.printStackTrace();
-
-        }
-
-      }
-
-      Close();
-      new Fenetre();
-
-    }   
+     public void paintComponent(Graphics g){
+    	 try{
+    		 Graphics2D g2d = (Graphics2D) g;
+    		 BufferedImage img = ImageIO.read(new File("image/1080P Objets.png"));
+    		 g2d.drawImage(img, 0, 0, Fenetre.largeur-300, (int) ((Fenetre.largeur-300)/1.77777), this);
+    	 }catch (IOException ex){
+    		 ex.printStackTrace();
+    	 }
+     }
 
   }
 
