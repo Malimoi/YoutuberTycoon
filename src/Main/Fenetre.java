@@ -1433,8 +1433,9 @@ public class Fenetre extends JFrame{
 				}
 			}
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+			cal.add(Calendar.DAY_OF_YEAR, 0); // <--//
 			Date date = cal.getTime();
+			//dddd
 			SimpleDateFormat formater = new SimpleDateFormat("HH/dd");
 			String st = formater.format(date);
 			String[] sf = st.split("/");
