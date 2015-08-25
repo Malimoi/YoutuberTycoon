@@ -750,19 +750,21 @@ public class Fenetre extends JFrame{
 		}if (i==2){
 			s="2";
 		}if (i==3){
-			s="2";
-		}if (i==4){
-			s="b";
-		}if (i==5){
-			s="d";
-		}if (i==6){
 			s="e";
+		}if (i==4){
+			s="2";
+		}if (i==5){
+			s="b";
+		}if (i==6){
+			s="9";
 		}if (i==7){
+			s="d";
+		}if (i==8){
 			s="9";
 		}
 		return s;
 	}
-	public static String ActivityId (Integer i, Long l){
+	public static String ActivityId (Integer i, Long l, String s2){
 		String s = "Glandouillette";
 		String name = "";
 		if (i==1){
@@ -780,30 +782,36 @@ public class Fenetre extends JFrame{
 					name = MainClient.videos.get(a).getName();
 				}
 			}
-			s="Tournage \""+name+"\"";
+			s="Écriture \""+name+"\"";
 		}if (i==4){
 			for (int a = 0;a<MainClient.videos.size();a++){
 				if (MainClient.videos.get(a).getID()==l){
 					name = MainClient.videos.get(a).getName();
 				}
 			}
-			s="Montage \""+name+"\"";
+			s="Tournage \""+name+"\"";
 		}if (i==5){
-			s="Jour de paye";
+			for (int a = 0;a<MainClient.videos.size();a++){
+				if (MainClient.videos.get(a).getID()==l){
+					name = MainClient.videos.get(a).getName();
+				}
+			}
+			s="Montage \""+name+"\"";
 		}if (i==6){
 			for (int a = 0;a<MainClient.videos.size();a++){
 				if (MainClient.videos.get(a).getID()==l){
 					name = MainClient.videos.get(a).getName();
 				}
 			}
-			s="Écriture \""+name+"\"";
-		}if (i==7){
-			for (int a = 0;a<MainClient.videos.size();a++){
-				if (MainClient.videos.get(a).getID()==l){
-					name = MainClient.videos.get(a).getName();
-				}
-			}
 			s="Post-Prod \""+name+"\"";
+		}if (i==7){
+			s="Jour de paye";
+		}if (i==8){
+			if (l.equals(1L)){
+				s="Apprentissage: "+s2.toUpperCase();
+			}else{
+				s="Cours: "+s2.toUpperCase();
+			}	
 		}
 		return s;
 	}
@@ -1332,13 +1340,13 @@ public class Fenetre extends JFrame{
 					create_2ndbut_accept.setEnabled(false);
 					int time;
 					if (s.contains("ecriture")){
-						time=vi.getEcritureTime();
+						time=vi.getEcritureRemain();
 					}else if (s.contains("tournage")){
-						time=vi.getTournageTime();
+						time=vi.getTournageRemain();
 					}else if (s.contains("montage")){
-						time=vi.getMontageTime();
+						time=vi.getMontageRemain();
 					}else{
-						time=vi.getPostprodTime();
+						time=vi.getPostprodRemain();
 					}
 					CREATE_PLAN_STEP_3(i,vi,time);
 				}
@@ -1349,16 +1357,119 @@ public class Fenetre extends JFrame{
 	public static class CreateStepThree implements ActionListener{
 		private Video vi;
 		private Integer type;
-		public CreateStepThree(Integer type, Video video){
+		private Integer time;
+		public CreateStepThree(Integer type, Video video, Integer time){
 			this.vi=video;
 			this.type=type;
+			this.time=time;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (type.equals(1)){
-				
-			}		
+			ArrayList<Integer> ar = new ArrayList<Integer>();
+			String s = (String) create_hour_start.getSelectedItem();
+			String s2 = (String) create_hour_end.getSelectedItem();
+			String sd = (String) create_date_box.getSelectedItem();
+			Boolean v = false;
+			Long l = 0L;
+			Planning pl = null;
+			Integer h1 = 0;
+			Integer h2 = 0;
+			Integer day = 0;
+			Integer month = 0;
+			Integer year = 0;
+
+			day=Integer.valueOf(sd.split(" ")[0]);
+			month=Integer.valueOf(sd.split(" ")[2]);
+			year=Integer.valueOf(sd.split(" ")[4]);
+			
+			if (!s.contains("Choix")){
+				for (int a = 0;a<MainClient.planning.size();a++){
+					if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
+							MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year){
+						for (int x = MainClient.planning.get(a).getHour_start();x<MainClient.planning.get(a).getHour();x++){
+							ar.add(x);
+						}
+					}
+				}
+				String si = s.split(" ")[1].replace("h", "");
+				Integer hour = Integer.valueOf(si);
+				h1=hour;
+				if (ar.contains(hour)){
+					create_hour_start.setBackground(Col("c"));
+				}else{
+					create_hour_start.setBackground(Color.decode("#C4FECA"));
+				}
+			}
+			ar.clear();
+			if (!s2.contains("Choix")){
+				for (int a = 0;a<MainClient.planning.size();a++){
+					if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getDay()==day &&
+							MainClient.planning.get(a).getMonth()==month && MainClient.planning.get(a).getYear()==year){
+						for (int x = MainClient.planning.get(a).getHour_start()+1;x<MainClient.planning.get(a).getHour();x++){
+							ar.add(x);
+						}
+					}
+				}
+				String si = s2.split(" ")[1].replace("h", "");
+				Integer hour = Integer.valueOf(si);
+				h2=hour;
+				if (ar.contains(hour)){
+					create_hour_end.setBackground(Col("c"));
+				}else{
+					create_hour_end.setBackground(Color.decode("#C4FECA"));
+				}
+			}
+			if (h1>=h2){
+				create_hour_end.setBackground(Col("c"));
+				create_hour_start.setBackground(Col("c"));
+			}if ((h2-h1)>time){
+				create_hour_end.setBackground(Col("c"));
+				create_hour_start.setBackground(Col("c"));
+			}
+			for (int d = h1;d<=h2;d++){
+				if (ar.contains(d)){
+					create_hour_end.setBackground(Col("c"));
+				}
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_YEAR, 0); // <--
+			Date date = cal.getTime();
+			SimpleDateFormat formater = new SimpleDateFormat("HH/dd");
+			String st = formater.format(date);
+			String[] sf = st.split("/");
+			if (Integer.valueOf(sf[0])>=h1-2&&day==Integer.valueOf(sf[1])){
+				create_hour_end.setBackground(Col("c"));
+				create_hour_start.setBackground(Col("c"));
+			}
+			/*
+			 * Vérification du côté client. Le serveur vérifira aussi. En cas d'erreur,
+			 * le joueur sera banni 1 an du mode online automatiquement.
+			 */
+			if (create_hour_end.getBackground().equals(Color.decode("#C4FECA"))&&
+					create_hour_start.getBackground().equals(Color.decode("#C4FECA"))){
+				if (type.equals(1)){
+					Integer status = getStatus(vi);
+					MainClient.planning.add(new Planning(h1, h2, day, month, year, status+3, vi.getID(), (long)MainClient.planning.size()));
+					for (int v2 = 0;v2<MainClient.videos.size();v2++){
+						if (MainClient.videos.get(v2).getID()==vi.getID()){
+							if (status.equals(0)){
+								MainClient.videos.get(v2).setEcritureRemain(h2-h1-MainClient.videos.get(v2).getEcritureRemain());
+							}else if(status.equals(1)){
+								MainClient.videos.get(v2).setTournageRemain(h2-h1-MainClient.videos.get(v2).getTournageRemain());
+							}else if(status.equals(2)){
+								MainClient.videos.get(v2).setMontageRemain(h2-h1-MainClient.videos.get(v2).getMontageRemain());
+							}else{
+								MainClient.videos.get(v2).setPostprodRemain(h2-h1-MainClient.videos.get(v2).getPostprodRemain());
+							}
+						}
+					}		
+				}else if (type.equals(2)){
+					
+				}
+				MainClient.TriPlanning();
+				resetPlanningPage();
+			}
 		}		
 	}
 	
@@ -1547,7 +1658,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label = new JLabel();
 							label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData()));
+							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData(),null));
 							label.setForeground(Color.WHITE);
 							label.setHorizontalAlignment(JLabel.LEFT);
 							
@@ -1609,7 +1720,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label_name = new JLabel();
 							label_name.setFont(new Font("Tahoma", Font.PLAIN, 18));
-							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData()));
+							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData(),null));
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
 							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -1955,7 +2066,6 @@ public class Fenetre extends JFrame{
 		}
 		else if (number_of_step.equals(2)){
 			
-			int[] colorr = { 6, 3, 4, 7 };
 			String[] name = { "Écriture","Tournage","Montage","Post-prod." } ;
 			String categ="";
 			for (int a = 0;a<MainClient.videos.size()-1;a++){
@@ -1965,7 +2075,7 @@ public class Fenetre extends JFrame{
 			}
 			for (int a = 0;a<4;a++){
 				JPanel color = new JPanel();
-				color.setBackground(Col(ColId(colorr[a])));
+				color.setBackground(Col(ColId(a+3)));
 				color.setBounds(25, 80+75*(a), 50, 50);
 				cv_c_south.add(color);
 				JLabel label = new JLabel();
@@ -2187,7 +2297,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label = new JLabel();
 							label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData()));
+							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData(),null));
 							label.setForeground(Color.WHITE);
 							label.setHorizontalAlignment(JLabel.LEFT);
 							
@@ -2252,7 +2362,7 @@ public class Fenetre extends JFrame{
 							
 							JLabel label_name = new JLabel();
 							label_name.setFont(new Font("Dominique", Font.PLAIN, 20));
-							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData()).toLowerCase());
+							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData(),null).toLowerCase());
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
 							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
@@ -2349,7 +2459,7 @@ public class Fenetre extends JFrame{
 			for (int a = 0;a<MainClient.planning.size();a++){
 				if (a!=MainClient.planning.size()-1 && MainClient.planning.get(a).getId()!=1){
 					if (MainClient.planning.get(a).getDay()>=Integer.valueOf(sf[0])&&!(MainClient.planning.get(a).getMonth()<Integer.valueOf(sf[1]))){			
-						ar.add(("<html>"+ActivityId(MainClient.planning.get(a).getId(),MainClient.planning.get(a).getData())+" le "+
+						ar.add(("<html>"+ActivityId(MainClient.planning.get(a).getId(),MainClient.planning.get(a).getData(),null)+" le "+
 								Zero(MainClient.planning.get(a).getDay())+"/"+Zero(MainClient.planning.get(a).getMonth())+" de "+
 								MainClient.planning.get(a).getHour_start()+"h a "+MainClient.planning.get(a).getHour()+"h <hidden "+
 								MainClient.planning.get(a).getUUID()+" /> </html>").toLowerCase());
@@ -2524,10 +2634,10 @@ public class Fenetre extends JFrame{
 					DispoTime = status==0?MainClient.videos.get(a).getEcritureRemain():status==1?MainClient.videos.get(a).getTournageRemain():status==2?
 							MainClient.videos.get(a).getMontageRemain():MainClient.videos.get(a).getPostprodRemain();
 					if (status!=5){
-						ar.add(status==0?"<html><font color=yellow>█</font> ecriture: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+DispoTime+" /></html>":
-							status==1?"<html><font color=green>█</font> tournage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+DispoTime+" /></html>":
-							status==2?"<html><font color=aqua>█</font> montage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+DispoTime+" /></html>":
-							"<html><font color=blue>█</font> post-production: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+DispoTime+" /></html>");
+						ar.add(status==0?"<html><font color=yellow>█</font> ecriture: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
+							status==1?"<html><font color=green>█</font> tournage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
+							status==2?"<html><font color=aqua>█</font> montage: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>":
+							"<html><font color=blue>█</font> post-production: "+MainClient.videos.get(a).getName().toLowerCase()+" <hidden "+MainClient.videos.get(a).getID()+" /></html>");
 					}
 					
 					
@@ -2640,7 +2750,7 @@ public class Fenetre extends JFrame{
 			but_accept.setFont(new Font("Dominique", Font.PLAIN, 20));
 			but_accept.setBounds(0, 140+10+45+40, 110, 40);
 			cp_c_c_c_right.add(but_accept);
-			but_accept.addActionListener(new CreateStepThree(type,v));
+			but_accept.addActionListener(new CreateStepThree(type,v,time));
 			cp_c_c_c_right.updateUI();
 
 	}
