@@ -109,18 +109,18 @@ public class MainClient {
  		 * On récupère les vidéos
  		 * format : new Videos(name[0],day[1],month[2],year[3],views[4],likes[5],dislikes[6],share[7],...)
  		 */
- 		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1L));
- 		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2L));
- 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3L));
- 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4L));
- 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5L));
- 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6L));
- 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7L));
- 		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8L));
- 		videos.add(new Video("J'AIME LES ASTICOTS", 25, 8, 15, 0L, 0L, 0L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9L));
+ 		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1L));
+ 		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2L));
+ 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3L));
+ 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4L));
+ 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5L));
+ 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6L));
+ 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7L));
+ 		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8L));
+ 		videos.add(new Video("J'AIME LES ASTICOTS", 25, 8, 15, 0L, 0L, 0L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9L));
  		Collections.sort(videos, new VideosComparator());
          Collections.reverse(videos);
-         videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
+         videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
          
  		/*
  		 * Evenements

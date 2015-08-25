@@ -20,7 +20,10 @@ public class Video {
 	private Integer TournageTime;
 	private Integer MontageTime;
 	private Integer PostprodTime;
-	private Integer fait;
+	private Integer EcritureRemain;
+	private Integer TournageRemain;
+	private Integer MontageRemain;
+	private Integer PostprodRemain;
 	private Integer MontageQualite;
 	private Integer ImageQualite;
 	private Integer EcritureQualite;
@@ -30,7 +33,8 @@ public class Video {
 	
 	public Video (String name, Integer day, Integer month, Integer year, Long views, Long likes, Long dislikes, Long share,
 			String videogenre, Integer longueur, Accessoire camera, Accessoire micro, Accessoire ordi, Integer EcritureTime,
-			Integer TournageTime, Integer MontageTime, Integer fait, Integer PostprodTime, Integer MontageQualite, Integer ImageQualite, 
+			Integer TournageTime, Integer MontageTime, Integer PostprodTime, Integer EcritureRemain, Integer TournageRemain,
+			Integer MontageRemain, Integer PostprodRemain, Integer MontageQualite, Integer ImageQualite, 
 			Integer EcritureQualite, Integer JeuQualite, Long ID){
 		
 		this.day=day;
@@ -50,7 +54,10 @@ public class Video {
 		this.TournageTime=TournageTime;
 		this.MontageTime=MontageTime;
 		this.PostprodTime=PostprodTime;
-		this.fait=fait;
+		this.EcritureRemain=EcritureRemain;
+		this.TournageRemain=TournageRemain;
+		this.MontageRemain=MontageRemain;
+		this.PostprodRemain=PostprodRemain;
 		this.MontageQualite=MontageQualite;
 		this.ImageQualite=ImageQualite;
 		this.EcritureQualite=EcritureQualite;
@@ -59,12 +66,36 @@ public class Video {
 		
 	}
 
-	public Integer getFait() {
-		return fait;
+	public Integer getEcritureRemain() {
+		return EcritureRemain;
 	}
 
-	public void setFait(Integer fait) {
-		this.fait = fait;
+	public void setEcritureRemain(Integer ecritureRemain) {
+		EcritureRemain = ecritureRemain;
+	}
+
+	public Integer getTournageRemain() {
+		return TournageRemain;
+	}
+
+	public void setTournageRemain(Integer tournageRemain) {
+		TournageRemain = tournageRemain;
+	}
+
+	public Integer getMontageRemain() {
+		return MontageRemain;
+	}
+
+	public void setMontageRemain(Integer montageRemain) {
+		MontageRemain = montageRemain;
+	}
+
+	public Integer getPostprodRemain() {
+		return PostprodRemain;
+	}
+
+	public void setPostprodRemain(Integer postprodRemain) {
+		PostprodRemain = postprodRemain;
 	}
 
 	public Accessoire getCamera() {
