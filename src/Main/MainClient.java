@@ -53,9 +53,15 @@ public class MainClient {
 	public static Long MAX_UUID_PLANNING;
 	
 	/*
+	 * For server
+	 */
+	public static boolean send = false;
+	public static String str_send = "";
+	
+	/*
 	 * ICI : PRESENT QUE DANS LES VERSIONS TEST POUR NE PAS PASSER PAS LE LAUCHER / SERVER
 	 */
-	public static Boolean IsTest = true;
+	public static Boolean IsTest = false;
 	
 	public static List<Video> videos = new ArrayList<Video>();
 	public static List<Accessoire> cameras = new ArrayList<Accessoire>();
@@ -69,6 +75,8 @@ public class MainClient {
 	public static String[] categ_list = {"HUMOUR","DIVERTISSEMENT","GAMING","ANIMAUX","MONTAGE","DEVELOPPEMENT","MUSIQUE",
 		"SCIENCES","EDUCATION","MAKEUP/MODE","CUISINE"};
 	
+	public static ChatAccess access = null; 
+	
     public static JFrame frame;
 
     public static void main(String[] args) {
@@ -76,7 +84,7 @@ public class MainClient {
     	if (!IsTest){
     		String server = "127.0.0.1";
             int port = 2009;
-            ChatAccess access = null;
+            //ChatAccess access = null;
             try {
                 access = new ChatAccess(server, port);
             } catch (IOException ex) {
@@ -225,13 +233,19 @@ public class MainClient {
                         BufferedReader in = new BufferedReader(
                                 new InputStreamReader(socket.getInputStream()));
                         String line;
-                        while ((line = in.readLine()) != null)
-                            if (!line.contains("connecte")) {
-                                notifyObservers(line);
-                            } else {
-                            	setJFrames();
-                            }
-
+                        while (true)
+                        	if ((line = in.readLine()) != null){
+                        		System.out.println("WHILE : "+line);
+                        		if (line.contains("connecte")) {
+                                	setJFrames();                               
+                                }else if (line.contains("<server>")) {
+                                	System.out.println("Le server à bien reçu notre commande !");                           
+                                }
+                        		else{
+                                	notifyObservers(line);
+                                }
+                        	}
+                            
                     } catch (IOException ex) {
                         notifyObservers(ex);
                     }

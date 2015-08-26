@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 
+import Main.MainClient.ChatAccess;
 import accessoires.Accessoire;
 import accessoires.Camera;
 import accessoires.Micro;
@@ -209,6 +211,7 @@ public class Fenetre extends JFrame{
 	public Thread t;
 	public static int test = 0;
 	public static int videopage = 1;
+
 	
 	@SuppressWarnings("static-access")
 	public Fenetre() {
@@ -1073,14 +1076,15 @@ public class Fenetre extends JFrame{
 	}
 	
 	class BoutonCompetListener implements ActionListener{
-
+		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			boutonAcc.setEnabled(true);
 			boutonVideoGest.setEnabled(true);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(false);
-			
+			MainClient.access.send("Malimoi password start");
+			System.out.println("send is now true");
 			if (test==1){
 				content.remove(center);
 			}
