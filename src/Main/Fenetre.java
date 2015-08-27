@@ -69,6 +69,7 @@ import frames.SUBS;
 import frames.VIDEOS_NORTH;
 import frames.buttons.Bouton;
 import frames.buttons.Bouton_PlanningAddRemove;
+import frames.buttons.SubsClicks_Button;
 import frames.buttons.ToutAfficher;
 
 @SuppressWarnings({"serial","rawtypes"})
@@ -210,6 +211,8 @@ public class Fenetre extends JFrame{
 				public JLabel lab_scInfo = new JLabel();
 			public JPanel csc_c_center = new COLOR(Color.gray);
 				public JPanel csc_c_c_left = new COLOR(Color.white);
+					public JButton subs_clicks = new SubsClicks_Button();
+					public static JLabel tot_clicks_subs = new JLabel();
 				public JPanel csc_c_c_center = new COLOR(Color.decode("#EEEFEF"));
 				public JPanel csc_c_c_right = new COLOR(Color.white);
 	//Variable Creator Step 1
@@ -712,11 +715,33 @@ public class Fenetre extends JFrame{
 			 */
 			csc_c_center.setLayout(new BorderLayout());
 				csc_c_c_left.setPreferredSize(new Dimension((largeur-300)/3,hauteur));
+				csc_c_c_left.setLayout(null);
+					JPanel logo = new JPanel();
+					logo.setBackground(Color.ORANGE); //Get couleur image de profil.
+					logo.setBounds(((largeur-300)/3)/2-60, 50, 120, 120);
+					logo.setLayout(new BorderLayout());
+						JLabel lab_lettre1 = new JLabel();
+						lab_lettre1.setFont(new Font("Tahoma", Font.PLAIN, 75));
+						lab_lettre1.setText("M");//Ici: get la première lettre du pseudo.
+						lab_lettre1.setForeground(Color.WHITE);
+						lab_lettre1.setHorizontalAlignment(JLabel.CENTER);
+						lab_lettre1.setPreferredSize(new Dimension(200, 200));
+					logo.add(lab_lettre1,BorderLayout.CENTER);
+					subs_clicks.setBounds(((largeur-300)/3)/2-100, 50+120, 200, 50);
+					subs_clicks.setLayout(null);
+						tot_clicks_subs.setFont(new Font("Arial", Font.PLAIN, 12));
+						tot_clicks_subs.setText("10 000 00"+MainClient.Total_Clicks_Subs);
+						tot_clicks_subs.setForeground(Color.gray);
+						tot_clicks_subs.setHorizontalAlignment(JLabel.CENTER);
+						tot_clicks_subs.setBounds(98, 40/2+4, 100, 16);
+					subs_clicks.add(tot_clicks_subs);
+				csc_c_c_left.add(logo);
+				csc_c_c_left.add(subs_clicks);
 				csc_c_c_center.setPreferredSize(new Dimension((largeur-245)/3,hauteur));
 				csc_c_c_right.setPreferredSize(new Dimension((largeur-300)/3,hauteur));
-			csc_c_center.add(csc_c_c_left,BorderLayout.EAST);
+			csc_c_center.add(csc_c_c_left,BorderLayout.WEST);
 			csc_c_center.add(csc_c_c_center,BorderLayout.CENTER);
-			csc_c_center.add(csc_c_c_right,BorderLayout.WEST);
+			csc_c_center.add(csc_c_c_right,BorderLayout.EAST);
 			//setSubsClicksPage();
 						
 		csc_center.add(csc_c_north,BorderLayout.NORTH);

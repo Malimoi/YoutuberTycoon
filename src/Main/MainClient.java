@@ -51,6 +51,10 @@ public class MainClient {
 			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
 	
 	public static Long MAX_UUID_PLANNING;
+	/*
+	 * Mini-Game stats
+	 */
+	public static Integer Total_Clicks_Subs = 0;
 	
 	/*
 	 * For server
