@@ -156,9 +156,9 @@ public class Fenetre extends JFrame{
 				public JButton mettreenligne = new ClassicButton("Faire une vidéo");
 			public JPanel cv_c_south = new NOR();
 	public JPanel center_planning = new JPanel();
-		public JPanel cp_east = new COLOR(Color.decode("#9BFCA1"));
-		public JPanel cp_west = new COLOR(Color.decode("#9BFCA1"));
-		public JPanel cp_north = new COLOR(Color.decode("#9BFCA1"));
+		public JPanel cp_east = new COLOR(Color.gray);
+		public JPanel cp_west = new COLOR(Color.gray);
+		public JPanel cp_north = new COLOR(Color.gray);
 		public JPanel cp_center = new NOR();
 			public JPanel cp_c_north = new VIDEOS_NORTH(3);
 				public JLabel lab_planning = new JLabel();
@@ -202,9 +202,9 @@ public class Fenetre extends JFrame{
 				public JLabel lab_levelsInfo = new JLabel();
 			public JPanel cl_c_center = new COLOR(Color.decode("#ffffff"));
 	public JPanel center_subsclick = new JPanel();
-		public JPanel csc_east = new COLOR(Color.red);
-		public JPanel csc_west = new COLOR(Color.red);
-		public JPanel csc_north = new COLOR(Color.red);
+		public JPanel csc_east = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel csc_west = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel csc_north = new COLOR(Color.decode("#F3F3F3"));
 		public JPanel csc_center = new NOR();
 			public JPanel csc_c_north = new VIDEOS_NORTH(4);
 				public JLabel lab_sc = new JLabel();
@@ -213,7 +213,7 @@ public class Fenetre extends JFrame{
 				public JPanel csc_c_c_left = new COLOR(Color.white);
 					public JButton subs_clicks = new SubsClicks_Button();
 					public static JLabel tot_clicks_subs = new JLabel();
-				public JPanel csc_c_c_center = new COLOR(Color.decode("#EEEFEF"));
+				public JPanel csc_c_c_center = new COLOR(Color.decode("#F3F3F3"));
 				public JPanel csc_c_c_right = new COLOR(Color.white);
 	//Variable Creator Step 1
 	public JComboBox categoriescombo;
