@@ -61,7 +61,7 @@ public class MainClient {
 	/*
 	 * ICI : PRESENT QUE DANS LES VERSIONS TEST POUR NE PAS PASSER PAS LE LAUCHER / SERVER
 	 */
-	public static Boolean IsTest = false;
+	public static Boolean IsTest = true;
 	
 	public static List<Video> videos = new ArrayList<Video>();
 	public static List<Accessoire> cameras = new ArrayList<Accessoire>();

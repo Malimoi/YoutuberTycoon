@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -38,6 +39,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -82,10 +84,13 @@ public class Fenetre extends JFrame{
 	public static int hauteur = (int) maximumWindowBounds.getHeight();
 	public static int largeur = (int) maximumWindowBounds.getWidth();
 	
+	//Principaux
 	public JButton boutonAcc = new Bouton("Page d'accueil",1);
 	public JButton boutonVideoGest = new Bouton("Gestionnaire de vidéos",2);
 	public JButton boutonPlanning = new Bouton("Mon planning",3);
 	public JButton bouton3 = new Bouton("Mes compétences",4);
+	//Mini-Jeux
+	public JButton boutonSubClick = new Bouton("Subscribers Clickers",5);
 	
 	//-CONTENT
 	public static JPanel content = new JPanel();
@@ -150,9 +155,9 @@ public class Fenetre extends JFrame{
 				public JButton mettreenligne = new ClassicButton("Faire une vidéo");
 			public JPanel cv_c_south = new NOR();
 	public JPanel center_planning = new JPanel();
-		public JPanel cp_east = new COLOR(Color.gray);
-		public JPanel cp_west = new COLOR(Color.gray);
-		public JPanel cp_north = new COLOR(Color.gray);
+		public JPanel cp_east = new COLOR(Color.decode("#9BFCA1"));
+		public JPanel cp_west = new COLOR(Color.decode("#9BFCA1"));
+		public JPanel cp_north = new COLOR(Color.decode("#9BFCA1"));
 		public JPanel cp_center = new NOR();
 			public JPanel cp_c_north = new VIDEOS_NORTH(3);
 				public JLabel lab_planning = new JLabel();
@@ -161,13 +166,13 @@ public class Fenetre extends JFrame{
 				public JPanel cp_c_c_north = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_west = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_east = new COLOR(Color.decode("#ffffff"));
-				public static JPanel cp_c_c_center = new COLOR(Color.decode("#ffffff"));
+				public static JPanel cp_c_c_center = new NOR();
 					public static JLabel DATE_OF_DAY = new JLabel();
 					public static JLabel Agenda = new JLabel();
 					public static JPanel cp_c_c_c_1 = new NOR();
-						public static JPanel cp_c_c_c_1_center = new NOR();
+						public static JPanel cp_c_c_c_1_center = new AllImages("image/carreaux.jpg",400,500);
 					public static JPanel cp_c_c_c_2 = new NOR();
-						public static JPanel cp_c_c_c_2_center = new NOR();
+						public static JPanel cp_c_c_c_2_center = new AllImages("image/carreaux.jpg",400,500);
 					public static JPanel cp_c_c_c_right = new NOR();
 						public static JComboBox edit_first_choice = new JComboBox();
 						public static JButton edit_but_accept;
@@ -195,6 +200,18 @@ public class Fenetre extends JFrame{
 				public JLabel lab_levels = new JLabel();
 				public JLabel lab_levelsInfo = new JLabel();
 			public JPanel cl_c_center = new COLOR(Color.decode("#ffffff"));
+	public JPanel center_subsclick = new JPanel();
+		public JPanel csc_east = new COLOR(Color.red);
+		public JPanel csc_west = new COLOR(Color.red);
+		public JPanel csc_north = new COLOR(Color.red);
+		public JPanel csc_center = new NOR();
+			public JPanel csc_c_north = new VIDEOS_NORTH(4);
+				public JLabel lab_sc = new JLabel();
+				public JLabel lab_scInfo = new JLabel();
+			public JPanel csc_c_center = new COLOR(Color.gray);
+				public JPanel csc_c_c_left = new COLOR(Color.white);
+				public JPanel csc_c_c_center = new COLOR(Color.decode("#EEEFEF"));
+				public JPanel csc_c_c_right = new COLOR(Color.white);
 	//Variable Creator Step 1
 	public JComboBox categoriescombo;
 	public JComboBox formatscombo;
@@ -348,17 +365,27 @@ public class Fenetre extends JFrame{
 	boutonPlanning.addActionListener(new BoutonPlanningListener());
 	bouton3.addActionListener(new BoutonCompetListener());
 	boutonVideoGest.addActionListener(new BoutonVideosListener());
+	boutonSubClick.addActionListener(new BoutonSubsClicksListener());
 	vid_affich.addActionListener(new BoutonToutaffichListener());
 	
 	boutonAcc.setBounds(0, 0, 225, 35);
 	boutonVideoGest.setBounds(0, 35, 225, 35);
 	boutonPlanning.setBounds(0, 70, 225, 35);
 	bouton3.setBounds(0, 105, 225, 35);
+	JLabel mini_games = new JLabel();
+	mini_games.setFont(new Font("Tahoma", Font.PLAIN, 17));
+	mini_games.setText("<html><u>Mini-Jeux</u><html>");
+	mini_games.setForeground(Color.RED);
+	mini_games.setHorizontalAlignment(JLabel.LEFT);
+	mini_games.setBounds(0, 140, 225, 20);
+	boutonSubClick.setBounds(0, 160, 225, 35);
 	
 	w_center.add(boutonAcc);
 	w_center.add(boutonVideoGest);
 	w_center.add(boutonPlanning);
 	w_center.add(bouton3);
+	w_center.add(mini_games);
+	w_center.add(boutonSubClick);
 	
 	west.add(w_center,BorderLayout.CENTER);
 				
@@ -392,7 +419,7 @@ public class Fenetre extends JFrame{
 				//Lettre
 				JLabel lab_lettre = new JLabel();
 				lab_lettre.setFont(new Font("Tahoma", Font.PLAIN, 35));
-				lab_lettre.setText("M");
+				lab_lettre.setText("M");//Ici: get la première lettre du pseudo.
 				lab_lettre.setForeground(Color.WHITE);
 				lab_lettre.setHorizontalAlignment(JLabel.CENTER);
 				lab_lettre.setPreferredSize(new Dimension(50, 50));
@@ -656,6 +683,53 @@ public class Fenetre extends JFrame{
 	
 	/*
 	 * End Center_Levels
+	 * Start Subscribers_Clikers
+	 */
+	
+	center_subsclick.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10),hauteur));
+	center_subsclick.setLayout(new BorderLayout());
+		csc_west.setPreferredSize(new Dimension(10, hauteur));
+		csc_east.setPreferredSize(new Dimension(10, hauteur));
+		csc_north.setPreferredSize(new Dimension(largeur, 10));
+		csc_center.setLayout(new BorderLayout());
+			/*
+			 * North
+			 */
+			csc_c_north.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), Fenetre.hauteur/7));
+			csc_c_north.setLayout(null);
+			lab_sc.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			lab_sc.setText("Mini-Jeu");
+			lab_sc.setForeground(Color.decode("#424242"));
+			lab_sc.setHorizontalAlignment(JLabel.LEFT);
+			lab_sc.setBounds(10, 22, 200, 30);
+			lab_scInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			lab_scInfo.setText("Subscribers Clicker : MORE SUBS !");
+			lab_scInfo.setForeground(Color.decode("#424242"));
+			lab_scInfo.setHorizontalAlignment(JLabel.LEFT);
+			lab_scInfo.setBounds(10, 22+50, 600, 20);
+			/*
+			 * Center
+			 */
+			csc_c_center.setLayout(new BorderLayout());
+				csc_c_c_left.setPreferredSize(new Dimension((largeur-300)/3,hauteur));
+				csc_c_c_center.setPreferredSize(new Dimension((largeur-245)/3,hauteur));
+				csc_c_c_right.setPreferredSize(new Dimension((largeur-300)/3,hauteur));
+			csc_c_center.add(csc_c_c_left,BorderLayout.EAST);
+			csc_c_center.add(csc_c_c_center,BorderLayout.CENTER);
+			csc_c_center.add(csc_c_c_right,BorderLayout.WEST);
+			//setSubsClicksPage();
+						
+		csc_center.add(csc_c_north,BorderLayout.NORTH);
+		csc_center.add(csc_c_center,BorderLayout.CENTER);
+		csc_c_north.add(lab_sc);
+		csc_c_north.add(lab_scInfo);
+	center_subsclick.add(csc_west,BorderLayout.WEST);
+	center_subsclick.add(csc_east,BorderLayout.EAST);
+	center_subsclick.add(csc_north,BorderLayout.NORTH);
+	center_subsclick.add(csc_center,BorderLayout.CENTER);
+	
+	/*
+	 * End Subscribers_Clikers
 	 * Start Game
 	 */
 	
@@ -1017,12 +1091,15 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(true);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(true);
+			boutonSubClick.setEnabled(true);
 			if (test==3){
 				content.remove(center_planning);
 			}else if (test==2){
 				content.remove(center_videos);
 			}else if (test==4){
 				content.remove(center_levels);
+			}else if (test==5){
+				content.remove(center_subsclick);
 			}
 			test=1;
 			try {
@@ -1051,12 +1128,15 @@ public class Fenetre extends JFrame{
 			boutonPlanning.setEnabled(false);
 			boutonVideoGest.setEnabled(true);
 			bouton3.setEnabled(true);
+			boutonSubClick.setEnabled(true);
 			if (test==1){
 				content.remove(center);
 			}else if (test==2){
 				content.remove(center_videos);
 			}else if (test==4){
 				content.remove(center_levels);
+			}else if (test==5){
+				content.remove(center_subsclick);
 			}
 			test=3;
 			try {
@@ -1083,8 +1163,8 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(true);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(false);
+			boutonSubClick.setEnabled(true);
 			MainClient.access.send("Malimoi password start");
-			System.out.println("send is now true");
 			if (test==1){
 				content.remove(center);
 			}
@@ -1092,6 +1172,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_planning);
 			}else if (test==2){
 				content.remove(center_videos);
+			}else if (test==5){
+				content.remove(center_subsclick);
 			}
 			test=4;
 			try {
@@ -1119,7 +1201,7 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(false);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(true);
-			
+			boutonSubClick.setEnabled(true);
 			if (test==1){
 				content.remove(center);
 			}
@@ -1127,6 +1209,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_planning);
 			}else if (test==4){
 				content.remove(center_levels);
+			}else if (test==5){
+				content.remove(center_subsclick);
 			}
 			test=2;
 			try {
@@ -1138,6 +1222,43 @@ public class Fenetre extends JFrame{
 			cv_c_south.removeAll();
 			setVideosGestionnaire();
 			content.add(center_videos,BorderLayout.CENTER);
+			try{
+				content.updateUI();
+			}catch(Exception e){
+				System.out.println("Erreur : "+test);
+			}
+			
+
+		}
+	}
+	
+	class BoutonSubsClicksListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			boutonAcc.setEnabled(true);
+			boutonVideoGest.setEnabled(true);
+			boutonPlanning.setEnabled(true);
+			bouton3.setEnabled(true);
+			boutonSubClick.setEnabled(false);
+			
+			if (test==1){
+				content.remove(center);
+			}else if (test==2){
+				content.remove(center_videos);
+			}else if (test==3){
+				content.remove(center_planning);
+			}else if (test==4){
+				content.remove(center_levels);
+			}
+			test=5;
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			content.add(center_subsclick,BorderLayout.CENTER);
 			try{
 				content.updateUI();
 			}catch(Exception e){
@@ -2378,12 +2499,12 @@ public class Fenetre extends JFrame{
 				}
 				else{
 						if (MainClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
-							Color c = Color.decode("#DCDCDC");
+							Color c = new Color(220,220,220,95);
 							if (encours==true){
 								if (MainClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&MainClient.planning.get(i).getDay()==day){
-									c = Color.decode("#C4FECA");
+									c = new Color(196,254,202,95);
 								}else{
-									c = Color.decode("#FBE369");
+									c = new Color(251,227,105,95);
 								}
 							}
 							encours=false;
@@ -2894,6 +3015,30 @@ public class Fenetre extends JFrame{
 			clip.play();
 
 	    }   
+
+	  }
+	
+	static class AllImages extends JPanel{
+		
+		private String path;
+		private int x;
+		private int y;
+		
+		public AllImages(String path, int x, int y){
+			this.path=path;
+			this.x=x;
+			this.y=y;
+		}
+		
+	     public void paintComponent(Graphics g){
+	    	 try{
+	    		 Graphics2D g2d = (Graphics2D) g;
+	    		 BufferedImage img = ImageIO.read(new File(path));
+	    		 g2d.drawImage(img, 0, 0, x, y, this);
+	    	 }catch (IOException ex){
+	    		 ex.printStackTrace();
+	    	 }
+	     }
 
 	  }
 }

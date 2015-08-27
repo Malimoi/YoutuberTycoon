@@ -22,7 +22,9 @@ public class VIDEOS_NORTH extends JPanel {
 		}else if (c==2){
 			g2d.setColor(Fenetre.Col("6"));
 		}else if (c==3){
-			g2d.setColor(Color.GRAY);
+			g2d.setColor(Color.decode("#9BFCA1"));
+		}else if (c==4){
+			g2d.setColor(Color.red);
 		}
 		
 		g2d.drawLine(0, Fenetre.hauteur/7-1, Fenetre.largeur-(225+10+10+10+10+9), Fenetre.hauteur/7-1);
