@@ -30,12 +30,15 @@ import utilities.PlanningComparator;
 import utilities.Video;
 import utilities.VideosComparator;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -55,6 +58,12 @@ public class MainClient {
 	 * Mini-Game stats
 	 */
 	public static Integer Total_Clicks_Subs = 0;
+	public static Integer sc_upgrade_1 = 0;
+	public static Integer sc_upgrade_2 = 0;
+	public static Integer sc_upgrade_3 = 0;
+	public static Integer sc_upgrade_4 = 0;
+	public static boolean Subs_Clicks_Play = false;
+	public static Thread thread_sc = new Thread(new SubscribersClickersRun());
 	
 	/*
 	 * For server
@@ -79,14 +88,14 @@ public class MainClient {
 	public static String[] categ_list = {"HUMOUR","DIVERTISSEMENT","GAMING","ANIMAUX","MONTAGE","DEVELOPPEMENT","MUSIQUE",
 		"SCIENCES","EDUCATION","MAKEUP/MODE","CUISINE"};
 	
-	public static ChatAccess access = null; 
+	public static ChatAccess access;
 	
     public static JFrame frame;
 
     public static void main(String[] args) {
     	
     	if (!IsTest){
-    		String server = "127.0.0.1";
+    		String server = "5.196.72.214";
             int port = 2009;
             //ChatAccess access = null;
             try {
@@ -217,7 +226,7 @@ public class MainClient {
     /**
      * Chat client access
      */
-    static class ChatAccess extends Observable {
+    public static class ChatAccess extends Observable {
         private static final String CRLF = "\r\n"; // newline
         private Socket socket;
         private OutputStream outputStream;
@@ -231,7 +240,8 @@ public class MainClient {
             outputStream = socket.getOutputStream();
 
             Thread receivingThread = new Thread() {
-                @Override
+                @SuppressWarnings("deprecation")
+				@Override
                 public void run() {
                     try {
                         BufferedReader in = new BufferedReader(
@@ -240,10 +250,18 @@ public class MainClient {
                         while (true)
                         	if ((line = in.readLine()) != null){
                         		System.out.println("WHILE : "+line);
-                        		if (line.contains("connecte")) {
+                        		if (line.contains("startthegame")) {
                                 	setJFrames();                               
-                                }else if (line.contains("<server>")) {
-                                	System.out.println("Le server à bien reçu notre commande !");                           
+                                }else if (line.contains("sc")) {
+                                	if (line.split(" ")[1].contains("start") && Fenetre.test==5){
+                                		Subs_Clicks_Play=true;
+                                		thread_sc.start();  
+                                	}else if(line.split(" ")[1].contains("stop")){
+                                		Subs_Clicks_Play=false;
+                                		thread_sc.stop();
+                                	}else{
+                                		Total_Clicks_Subs=Integer.valueOf(line.split(" ")[1]);  
+                                	}                          	
                                 }
                         		else{
                                 	notifyObservers(line);
@@ -474,6 +492,27 @@ public class MainClient {
     	int i = (int) (50*Math.pow(1.5, lvl));
     	
     	return i;
+    }
+    
+    public static class SubscribersClickersRun implements Runnable{ 
+
+		public void run(){
+	    	while(true){
+	    		Fenetre.tot_clicks_subs.setText(Total_Clicks_Subs+"");
+	    		try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    	}
+
+	    }   
+
+	  }
+    
+    public void resetSubsClicks(){
+    	
     }
     
 }

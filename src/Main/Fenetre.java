@@ -71,6 +71,7 @@ import frames.buttons.Bouton;
 import frames.buttons.Bouton_PlanningAddRemove;
 import frames.buttons.SubsClicks_Button;
 import frames.buttons.ToutAfficher;
+import frames.buttons.events.SubsClicksUpgradeEvent;
 
 @SuppressWarnings({"serial","rawtypes"})
 public class Fenetre extends JFrame{
@@ -730,7 +731,7 @@ public class Fenetre extends JFrame{
 					subs_clicks.setBounds(((largeur-300)/3)/2-100, 50+120, 200, 50);
 					subs_clicks.setLayout(null);
 						tot_clicks_subs.setFont(new Font("Arial", Font.PLAIN, 12));
-						tot_clicks_subs.setText("10 000 00"+MainClient.Total_Clicks_Subs);
+						tot_clicks_subs.setText(""+MainClient.Total_Clicks_Subs);
 						tot_clicks_subs.setForeground(Color.gray);
 						tot_clicks_subs.setHorizontalAlignment(JLabel.CENTER);
 						tot_clicks_subs.setBounds(98, 40/2+4, 100, 16);
@@ -739,6 +740,35 @@ public class Fenetre extends JFrame{
 				csc_c_c_left.add(subs_clicks);
 				csc_c_c_center.setPreferredSize(new Dimension((largeur-245)/3,hauteur));
 				csc_c_c_right.setPreferredSize(new Dimension((largeur-300)/3,hauteur));
+				csc_c_c_right.setLayout(null);
+					for (int nb = 0;nb<4;nb++){
+						String[] img_name = {"image/MINIGAMES/themc42.jpg","image/MINIGAMES/malimoi.png",
+								"image/MINIGAMES/cypri2.jpg","image/MINIGAMES/pewdiepie.png"};
+						String[] up_name = {"TheKevin PgmXxGamingFunDelireMc","The Malimoi","Cypri2","PewDiePia"};
+						JPanel upgrade = new AllImages(img_name[nb], 100, 100);
+						upgrade.setBounds(20, 20+120*nb, 100, 100);
+						csc_c_c_right.add(upgrade);
+						JLabel upg_lab = new JLabel();
+						upg_lab.setFont(new Font("Tahoma", Font.PLAIN, 18));
+						upg_lab.setText(up_name[nb]);
+						upg_lab.setForeground(Color.DARK_GRAY);
+						upg_lab.setHorizontalAlignment(JLabel.LEFT);
+						upg_lab.setBounds(20+100+20, 20+8+120*nb, 300, 20);
+						JLabel pri_lab = new JLabel();
+						pri_lab.setFont(new Font("Tahoma", Font.PLAIN, 15));
+						pri_lab.setText(nb==0?"Prix : "+(int)(15*Math.pow(1.2, MainClient.sc_upgrade_1))+" subs.":nb==1?
+								"Prix : "+(int)(100*Math.pow(1.2, MainClient.sc_upgrade_2))+" subs.":nb==2?
+								"Prix : "+(int)(500*Math.pow(1.2, MainClient.sc_upgrade_3))+" subs.":"Prix : "+(int)(2000*Math.pow(1.2, MainClient.sc_upgrade_4))+" subs.");
+						pri_lab.setForeground(Color.GRAY);
+						pri_lab.setHorizontalAlignment(JLabel.LEFT);
+						pri_lab.setBounds(20+100+20, 20+8+120*nb+20, 300, 20);
+						csc_c_c_right.add(upg_lab);
+						csc_c_c_right.add(pri_lab);
+						JButton upg_but = new JButton("Upgrade");
+						upg_but.setBounds(20+100+20, 20+8+120*nb+30, 70, 45);
+						upg_but.addActionListener(new SubsClicksUpgradeEvent(nb));
+					}
+				
 			csc_c_center.add(csc_c_c_left,BorderLayout.WEST);
 			csc_c_center.add(csc_c_c_center,BorderLayout.CENTER);
 			csc_c_center.add(csc_c_c_right,BorderLayout.EAST);
@@ -1189,7 +1219,7 @@ public class Fenetre extends JFrame{
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(false);
 			boutonSubClick.setEnabled(true);
-			MainClient.access.send("Malimoi password start");
+			
 			if (test==1){
 				content.remove(center);
 			}

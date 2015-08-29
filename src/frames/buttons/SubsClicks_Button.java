@@ -46,8 +46,9 @@ public class SubsClicks_Button extends JButton implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		MainClient.Total_Clicks_Subs++;
-		Fenetre.tot_clicks_subs.setText(MainClient.Total_Clicks_Subs+"");
+		if (MainClient.Subs_Clicks_Play){
+			MainClient.access.send("Malimoi password sc +1");
+		}	
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
