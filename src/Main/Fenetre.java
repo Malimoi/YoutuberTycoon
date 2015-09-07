@@ -214,8 +214,13 @@ public class Fenetre extends JFrame{
 				public JPanel csc_c_c_left = new COLOR(Color.white);
 					public JButton subs_clicks = new SubsClicks_Button();
 					public static JLabel tot_clicks_subs = new JLabel();
+					public static JLabel subs_by_sec = new JLabel();
 				public JPanel csc_c_c_center = new COLOR(Color.decode("#F3F3F3"));
 				public JPanel csc_c_c_right = new COLOR(Color.white);
+					public static JLabel pri_lab = new JLabel();
+					public static JLabel pri_lab2 = new JLabel();
+					public static JLabel pri_lab3 = new JLabel();
+					public static JLabel pri_lab4 = new JLabel();
 	//Variable Creator Step 1
 	public JComboBox categoriescombo;
 	public JComboBox formatscombo;
@@ -244,7 +249,7 @@ public class Fenetre extends JFrame{
 	
 	test();
 	
-	this.setTitle("Youtuber Tycoon by Malimoi");
+	this.setTitle("Youtuber Tycoon by Malimoi V.Alpha.Alpha.Alpha");
 	this.setSize(1200,720);
 	this.setLocationRelativeTo(null);
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -423,7 +428,10 @@ public class Fenetre extends JFrame{
 				//Lettre
 				JLabel lab_lettre = new JLabel();
 				lab_lettre.setFont(new Font("Tahoma", Font.PLAIN, 35));
-				lab_lettre.setText("M");//Ici: get la première lettre du pseudo.
+				String s = MainClient.player.getPseudo();
+				char[] c = s.toCharArray();
+				String s2 = c[0]+"";
+				lab_lettre.setText(s2.toUpperCase());
 				lab_lettre.setForeground(Color.WHITE);
 				lab_lettre.setHorizontalAlignment(JLabel.CENTER);
 				lab_lettre.setPreferredSize(new Dimension(50, 50));
@@ -723,7 +731,10 @@ public class Fenetre extends JFrame{
 					logo.setLayout(new BorderLayout());
 						JLabel lab_lettre1 = new JLabel();
 						lab_lettre1.setFont(new Font("Tahoma", Font.PLAIN, 75));
-						lab_lettre1.setText("M");//Ici: get la première lettre du pseudo.
+						String s3 = MainClient.player.getPseudo();
+						char[] c2 = s.toCharArray();
+						String s4 = c[0]+"";
+						lab_lettre1.setText(s2.toUpperCase());
 						lab_lettre1.setForeground(Color.WHITE);
 						lab_lettre1.setHorizontalAlignment(JLabel.CENTER);
 						lab_lettre1.setPreferredSize(new Dimension(200, 200));
@@ -731,11 +742,17 @@ public class Fenetre extends JFrame{
 					subs_clicks.setBounds(((largeur-300)/3)/2-100, 50+120, 200, 50);
 					subs_clicks.setLayout(null);
 						tot_clicks_subs.setFont(new Font("Arial", Font.PLAIN, 12));
-						tot_clicks_subs.setText(""+MainClient.Total_Clicks_Subs);
+						tot_clicks_subs.setText(""+(int)MainClient.Total_Clicks_Subs);
 						tot_clicks_subs.setForeground(Color.gray);
 						tot_clicks_subs.setHorizontalAlignment(JLabel.CENTER);
 						tot_clicks_subs.setBounds(98, 40/2+4, 100, 16);
+					    subs_by_sec.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						subs_by_sec.setText(MainClient.Subs_By_Secs+" subs/sec");
+						subs_by_sec.setForeground(Color.gray);
+						subs_by_sec.setHorizontalAlignment(JLabel.CENTER);
+						subs_by_sec.setBounds(0, 50+120+55, ((largeur-300)/3), 16);
 					subs_clicks.add(tot_clicks_subs);
+				csc_c_c_left.add(subs_by_sec);
 				csc_c_c_left.add(logo);
 				csc_c_c_left.add(subs_clicks);
 				csc_c_c_center.setPreferredSize(new Dimension((largeur-245)/3,hauteur));
@@ -754,21 +771,36 @@ public class Fenetre extends JFrame{
 						upg_lab.setForeground(Color.DARK_GRAY);
 						upg_lab.setHorizontalAlignment(JLabel.LEFT);
 						upg_lab.setBounds(20+100+20, 20+8+120*nb, 300, 20);
-						JLabel pri_lab = new JLabel();
-						pri_lab.setFont(new Font("Tahoma", Font.PLAIN, 15));
-						pri_lab.setText(nb==0?"Prix : "+(int)(15*Math.pow(1.2, MainClient.sc_upgrade_1))+" subs.":nb==1?
-								"Prix : "+(int)(100*Math.pow(1.2, MainClient.sc_upgrade_2))+" subs.":nb==2?
-								"Prix : "+(int)(500*Math.pow(1.2, MainClient.sc_upgrade_3))+" subs.":"Prix : "+(int)(2000*Math.pow(1.2, MainClient.sc_upgrade_4))+" subs.");
-						pri_lab.setForeground(Color.GRAY);
-						pri_lab.setHorizontalAlignment(JLabel.LEFT);
-						pri_lab.setBounds(20+100+20, 20+8+120*nb+20, 300, 20);
 						csc_c_c_right.add(upg_lab);
-						csc_c_c_right.add(pri_lab);
 						JButton upg_but = new JButton("Upgrade");
-						upg_but.setBounds(20+100+20, 20+8+120*nb+30, 70, 45);
+						upg_but.setBounds(20+100+20, 20+8+120*nb+50, 100, 45);
 						upg_but.addActionListener(new SubsClicksUpgradeEvent(nb));
-					}
-				
+						csc_c_c_right.add(upg_but);
+					}					
+					pri_lab.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					pri_lab.setText("Prix : "+(int)(15*Math.pow(1.2, MainClient.sc_upgrade_1))+" subs.");
+					pri_lab.setForeground(Color.GRAY);
+					pri_lab.setHorizontalAlignment(JLabel.LEFT);
+					pri_lab.setBounds(20+100+20, 20+8+20, 300, 20);
+					pri_lab2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					pri_lab2.setText("Prix : "+(int)(100*Math.pow(1.2, MainClient.sc_upgrade_2))+" subs.");
+					pri_lab2.setForeground(Color.GRAY);
+					pri_lab2.setHorizontalAlignment(JLabel.LEFT);
+					pri_lab2.setBounds(20+100+20, 20+8+20+120, 300, 20);
+					pri_lab3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					pri_lab3.setText("Prix : "+(int)(500*Math.pow(1.2, MainClient.sc_upgrade_3))+" subs.");
+					pri_lab3.setForeground(Color.GRAY);
+					pri_lab3.setHorizontalAlignment(JLabel.LEFT);
+					pri_lab3.setBounds(20+100+20, 20+8+20+120*2, 300, 20);
+					pri_lab4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					pri_lab4.setText("Prix : "+(int)(2000*Math.pow(1.2, MainClient.sc_upgrade_4))+" subs.");
+					pri_lab4.setForeground(Color.GRAY);
+					pri_lab4.setHorizontalAlignment(JLabel.LEFT);
+					pri_lab4.setBounds(20+100+20, 20+8+20+120*3, 300, 20);
+				csc_c_c_right.add(pri_lab);
+				csc_c_c_right.add(pri_lab2);
+				csc_c_c_right.add(pri_lab3);
+				csc_c_c_right.add(pri_lab4);
 			csc_c_center.add(csc_c_c_left,BorderLayout.WEST);
 			csc_c_center.add(csc_c_c_center,BorderLayout.CENTER);
 			csc_c_center.add(csc_c_c_right,BorderLayout.EAST);

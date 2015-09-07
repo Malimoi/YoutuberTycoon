@@ -51,19 +51,19 @@ public class MainClient {
 	 */
 	public static String first_choice = "";
 	public static Player player = /* Ceci est UNIQUEMENT des valeurs de test. Toutes les valeurs seront envoyés par le serveur. */ 
-			new PlayerC("Malimoi",1000,100,100,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
+			new PlayerC(null,16146,53120,21244,1,2335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
 	
 	public static Long MAX_UUID_PLANNING;
 	/*
 	 * Mini-Game stats
 	 */
-	public static Integer Total_Clicks_Subs = 0;
+	public static double Total_Clicks_Subs = 0;
+	public static double Subs_By_Secs = 0;
 	public static Integer sc_upgrade_1 = 0;
 	public static Integer sc_upgrade_2 = 0;
 	public static Integer sc_upgrade_3 = 0;
 	public static Integer sc_upgrade_4 = 0;
 	public static boolean Subs_Clicks_Play = false;
-	public static Thread thread_sc = new Thread(new SubscribersClickersRun());
 	
 	/*
 	 * For server
@@ -74,7 +74,7 @@ public class MainClient {
 	/*
 	 * ICI : PRESENT QUE DANS LES VERSIONS TEST POUR NE PAS PASSER PAS LE LAUCHER / SERVER
 	 */
-	public static Boolean IsTest = true;
+	public static Boolean IsTest = false;
 	
 	public static List<Video> videos = new ArrayList<Video>();
 	public static List<Accessoire> cameras = new ArrayList<Accessoire>();
@@ -95,8 +95,8 @@ public class MainClient {
     public static void main(String[] args) {
     	
     	if (!IsTest){
-    		String server = "5.196.72.214";
-            int port = 2009;
+    		String server = "127.0.0.1";
+            int port = 25565;
             //ChatAccess access = null;
             try {
                 access = new ChatAccess(server, port);
@@ -147,7 +147,6 @@ public class MainClient {
  		/*
  		 * Evenements
  		 */
-         evenements.add(new Evenement(31, 7, 15, 5, 0L));
          evenements.add(new Evenement(0, 0, 0, null, 0L));
 
          Collections.sort(evenements, new EventComparator());
@@ -240,7 +239,6 @@ public class MainClient {
             outputStream = socket.getOutputStream();
 
             Thread receivingThread = new Thread() {
-                @SuppressWarnings("deprecation")
 				@Override
                 public void run() {
                     try {
@@ -252,15 +250,18 @@ public class MainClient {
                         		System.out.println("WHILE : "+line);
                         		if (line.contains("startthegame")) {
                                 	setJFrames();                               
+                                }else if (line.contains("yourpseudo")) {
+                                	player.setPseudo(line.split(" ")[1]);                           
                                 }else if (line.contains("sc")) {
                                 	if (line.split(" ")[1].contains("start") && Fenetre.test==5){
                                 		Subs_Clicks_Play=true;
-                                		thread_sc.start();  
                                 	}else if(line.split(" ")[1].contains("stop")){
                                 		Subs_Clicks_Play=false;
-                                		thread_sc.stop();
                                 	}else{
-                                		Total_Clicks_Subs=Integer.valueOf(line.split(" ")[1]);  
+                                		Total_Clicks_Subs=Double.valueOf(line.split(" ")[1]);  
+                                		int tot = (int) Total_Clicks_Subs;
+                                		Fenetre.tot_clicks_subs.setText(tot+"");
+                                		
                                 	}                          	
                                 }
                         		else{
@@ -493,23 +494,7 @@ public class MainClient {
     	
     	return i;
     }
-    
-    public static class SubscribersClickersRun implements Runnable{ 
 
-		public void run(){
-	    	while(true){
-	    		Fenetre.tot_clicks_subs.setText(Total_Clicks_Subs+"");
-	    		try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	    	}
-
-	    }   
-
-	  }
     
     public void resetSubsClicks(){
     	
