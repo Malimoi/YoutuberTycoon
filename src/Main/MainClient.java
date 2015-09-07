@@ -63,7 +63,6 @@ public class MainClient {
 	public static Integer sc_upgrade_2 = 0;
 	public static Integer sc_upgrade_3 = 0;
 	public static Integer sc_upgrade_4 = 0;
-	public static boolean Subs_Clicks_Play = false;
 	
 	/*
 	 * For server
@@ -253,16 +252,10 @@ public class MainClient {
                                 }else if (line.contains("yourpseudo")) {
                                 	player.setPseudo(line.split(" ")[1]);                           
                                 }else if (line.contains("sc")) {
-                                	if (line.split(" ")[1].contains("start") && Fenetre.test==5){
-                                		Subs_Clicks_Play=true;
-                                	}else if(line.split(" ")[1].contains("stop")){
-                                		Subs_Clicks_Play=false;
-                                	}else{
-                                		Total_Clicks_Subs=Double.valueOf(line.split(" ")[1]);  
-                                		int tot = (int) Total_Clicks_Subs;
-                                		Fenetre.tot_clicks_subs.setText(tot+"");
-                                		
-                                	}                          	
+                                	Total_Clicks_Subs=Double.valueOf(line.split(" ")[1]);  
+                                	int tot = (int) Total_Clicks_Subs;
+                                	Fenetre.tot_clicks_subs.setText(tot+"");
+                                		                       	
                                 }
                         		else{
                                 	notifyObservers(line);

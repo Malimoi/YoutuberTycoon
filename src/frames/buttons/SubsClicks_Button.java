@@ -46,10 +46,8 @@ public class SubsClicks_Button extends JButton implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (MainClient.Subs_Clicks_Play){
-			System.out.println("Envoi de +1");
-			MainClient.access.send(MainClient.player.getPseudo()+" password sc +1");
-		}	
+		System.out.println("Envoi de +1");
+		MainClient.access.send(MainClient.player.getPseudo()+" password sc +1");
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
