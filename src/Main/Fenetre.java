@@ -216,6 +216,11 @@ public class Fenetre extends JFrame{
 					public static JLabel tot_clicks_subs = new JLabel();
 					public static JLabel subs_by_sec = new JLabel();
 				public JPanel csc_c_c_center = new COLOR(Color.decode("#F3F3F3"));
+					public static JLabel sc_lab_status = new JLabel();
+					public static JLabel sc_lab_time = new JLabel();
+					public static JLabel sc_lab_1st = new JLabel();
+					public static JLabel sc_lab_2nd = new JLabel();
+					public static JLabel sc_lab_3rd = new JLabel();
 				public JPanel csc_c_c_right = new COLOR(Color.white);
 					public static JLabel pri_lab = new JLabel();
 					public static JLabel pri_lab2 = new JLabel();
@@ -242,9 +247,8 @@ public class Fenetre extends JFrame{
 	@SuppressWarnings("static-access")
 	public Fenetre() {
 		
-		Thread th = new Thread(new Music());
-	    
-	    th.start();
+	Thread th = new Thread(new SubsClicksScoreboard());
+	th.start();
 		
 	
 	test();
@@ -756,6 +760,19 @@ public class Fenetre extends JFrame{
 				csc_c_c_left.add(logo);
 				csc_c_c_left.add(subs_clicks);
 				csc_c_c_center.setPreferredSize(new Dimension((largeur-245)/3,hauteur));
+				csc_c_c_center.setLayout(null);
+					sc_lab_status.setFont(new Font("Tahoma", Font.PLAIN, 32));
+					sc_lab_status.setText(MainClient.Sc_Status);
+					sc_lab_status.setForeground(Color.DARK_GRAY);
+					sc_lab_status.setHorizontalAlignment(JLabel.CENTER);
+					sc_lab_status.setBounds(0, 0, (largeur-245)/3, 35);
+					sc_lab_time.setFont(new Font("Tahoma", Font.PLAIN, 45));
+					sc_lab_time.setText(MainClient.getStringTime(MainClient.Sc_Time));
+					sc_lab_time.setForeground(Color.DARK_GRAY);
+					sc_lab_time.setHorizontalAlignment(JLabel.CENTER);
+					sc_lab_time.setBounds(0, 34, (largeur-245)/3, 50);
+				csc_c_c_center.add(sc_lab_status);
+				csc_c_c_center.add(sc_lab_time);
 				csc_c_c_right.setPreferredSize(new Dimension((largeur-300)/3,hauteur));
 				csc_c_c_right.setLayout(null);
 					for (int nb = 0;nb<4;nb++){
@@ -3081,25 +3098,13 @@ public class Fenetre extends JFrame{
 		return status;
 	}
 	
-	class Music implements Runnable{   
+	class SubsClicksScoreboard implements Runnable{   
 
-		@SuppressWarnings("deprecation")
 		public void run(){
-	    	
-	    	/*
-			 * Music
-			 */
-			File son = new File("musics/MUSIC_1.wav");
-			AudioClip clip = null;
-			try
-			{
-			clip = Applet.newAudioClip(son.toURL());
-			}
-			catch (MalformedURLException e)
-			{
-			System.out.println(e.getMessage());
-			}
-			clip.play();
+	    	 while (true){
+	 	    		sc_lab_status.setText(MainClient.Sc_Status);
+	 	    		sc_lab_time.setText(MainClient.getStringTime(MainClient.Sc_Time));
+	    	 }  	
 
 	    }   
 

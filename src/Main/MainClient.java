@@ -63,6 +63,8 @@ public class MainClient {
 	public static Integer sc_upgrade_2 = 0;
 	public static Integer sc_upgrade_3 = 0;
 	public static Integer sc_upgrade_4 = 0;
+	public static String Sc_Status = "Début dans";
+	public static Integer Sc_Time = 120;
 	
 	/*
 	 * For server
@@ -252,9 +254,19 @@ public class MainClient {
                                 }else if (line.contains("yourpseudo")) {
                                 	player.setPseudo(line.split(" ")[1]);                           
                                 }else if (line.contains("sc")) {
-                                	Total_Clicks_Subs=Double.valueOf(line.split(" ")[1]);  
-                                	int tot = (int) Total_Clicks_Subs;
-                                	Fenetre.tot_clicks_subs.setText(tot+"");
+                                	if (line.split(" ")[1].contains("time")){
+                                		Sc_Time=Integer.valueOf(line.split(" ")[2]);
+                                	}else if (line.split(" ")[1].contains("status")){
+                                		if(line.split(" ")[2].contains("game")){
+                                			Sc_Status="Fin dans";
+                                		}else{
+                                			Sc_Status="Début dans";
+                                		}
+                                	}else{
+                                		Total_Clicks_Subs=Double.valueOf(line.split(" ")[1]);  
+                                    	int tot = (int) Total_Clicks_Subs;
+                                    	Fenetre.tot_clicks_subs.setText(tot+"");
+                                	}                        	
                                 		                       	
                                 }
                         		else{
@@ -487,6 +499,20 @@ public class MainClient {
     	
     	return i;
     }
+    
+    public static String getStringTime(Integer i){
+		String s = "";
+		Integer one = Sc_Time/60;
+		Integer two = Sc_Time%60;
+		s=one+":"+ZERO(two);
+		return s;
+	}
+	
+	public static String ZERO(Integer i){
+		String s = "";
+		s=i>=10?i+"":"0"+i;
+		return s;
+	}
 
     
     public void resetSubsClicks(){
