@@ -57,6 +57,8 @@ public class MainClient {
 	/*
 	 * Mini-Game stats
 	 */
+	public static List<String> sc_scoreboard_pl = new ArrayList<String>();
+	public static List<Integer> sc_scoreboard_subs = new ArrayList<Integer>();
 	public static double Total_Clicks_Subs = 0;
 	public static double Subs_By_Secs = 0;
 	public static Integer sc_upgrade_1 = 0;
@@ -94,7 +96,10 @@ public class MainClient {
     public static JFrame frame;
 
     public static void main(String[] args) {
-    	
+    	sc_scoreboard_pl.add("AUCUN JOUEUR");
+    	sc_scoreboard_pl.add("AUCUN JOUEUR");
+    	sc_scoreboard_subs.add(0);
+    	sc_scoreboard_subs.add(0);
     	if (!IsTest){
     		String server = "127.0.0.1";
             int port = 25565;
