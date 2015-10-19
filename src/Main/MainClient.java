@@ -267,6 +267,28 @@ public class MainClient {
                                 		}else{
                                 			Sc_Status="Début dans";
                                 		}
+                                	}else if (line.split(" ")[1].contains("cl")){
+                                		String name1 = line.split(" ")[2].split(":")[0];
+                                		Integer sc1 = Integer.valueOf(line.split(" ")[2].split(":")[1]);
+                                		String name2 = line.split(" ")[3].split(":")[0];
+                                		Integer sc2;
+                                		try{
+                                			sc2 = Integer.valueOf(line.split(" ")[3].split(":")[1]);
+                                		}catch (Exception e){
+                                			sc2 = 0;
+                                		}
+                                		sc_scoreboard_pl.clear();
+                                		sc_scoreboard_subs.clear();
+                                		sc_scoreboard_pl.add(name1);
+                                		sc_scoreboard_pl.add(name2);
+                                		sc_scoreboard_subs.add(sc1);
+                                		sc_scoreboard_subs.add(sc2);
+                                		try {
+											Thread.sleep(50);
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
                                 	}else{
                                 		Total_Clicks_Subs=Double.valueOf(line.split(" ")[1]);  
                                     	int tot = (int) Total_Clicks_Subs;

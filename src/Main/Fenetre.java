@@ -12,6 +12,7 @@ package Main;
  *  ******************************************************
  */
 
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.BorderLayout;
@@ -32,7 +33,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +48,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+
+import org.jnativehook.GlobalScreen;
 
 import Main.MainClient.ChatAccess;
 import accessoires.Accessoire;
@@ -96,6 +98,7 @@ public class Fenetre extends JFrame{
 	
 	//-CONTENT
 	public static JPanel content = new JPanel();
+	public static JPanel content_nosite = new JPanel();
 	
 	
 	//--CENTER
@@ -156,26 +159,25 @@ public class Fenetre extends JFrame{
 				public JPanel nbvideopan = new COLOR(Color.GRAY);
 				public JButton mettreenligne = new ClassicButton("Faire une vidéo");
 			public JPanel cv_c_south = new NOR();
-	public JPanel center_planning = new JPanel();
+	public JPanel center_planning = new COLOR(Color.decode("#3c2016"));
 		public JPanel cp_east = new COLOR(Color.gray);
 		public JPanel cp_west = new COLOR(Color.gray);
 		public JPanel cp_north = new COLOR(Color.gray);
-		public JPanel cp_center = new NOR();
+		public JPanel cp_center = new COLOR(Color.decode("#3c2016"));
 			public JPanel cp_c_north = new VIDEOS_NORTH(3);
 				public JLabel lab_planning = new JLabel();
 				public JLabel lab_planningInfo = new JLabel();
-			public JPanel cp_c_center = new COLOR(Color.decode("#F3F3F3"));
+			public JPanel cp_c_center = new AllImages("image/TABLE.png", 1280, 720);/*COLOR(Color.decode("#F3F3F3"));*/
 				public JPanel cp_c_c_north = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_west = new COLOR(Color.decode("#ffffff"));
 				public JPanel cp_c_c_east = new COLOR(Color.decode("#ffffff"));
 				public static JPanel cp_c_c_center = new NOR();
 					public static JLabel DATE_OF_DAY = new JLabel();
 					public static JLabel Agenda = new JLabel();
-					public static JPanel cp_c_c_c_1 = new NOR();
-						public static JPanel cp_c_c_c_1_center = new AllImages("image/carreaux.jpg",400,500);
-					public static JPanel cp_c_c_c_2 = new NOR();
-						public static JPanel cp_c_c_c_2_center = new AllImages("image/carreaux.jpg",400,500);
-					public static JPanel cp_c_c_c_right = new NOR();
+					public static JPanel cp_c_c_c_1 = new COLOR(Color.decode("#fcffbe"));
+					public static JPanel cp_c_c_c_2 = new COLOR(Color.decode("#fcffbe"));
+					
+					public static JPanel cp_c_c_c_right = new COLOR(Color.decode("#ffffff"));
 						public static JComboBox edit_first_choice = new JComboBox();
 						public static JButton edit_but_accept;
 						public static JComboBox edit_hour_start = new JComboBox();
@@ -247,6 +249,7 @@ public class Fenetre extends JFrame{
 	
 	public Thread t;
 	public static int test = 0;
+	public static int change = 0;
 	public static int videopage = 1;
 
 	
@@ -256,6 +259,12 @@ public class Fenetre extends JFrame{
 	Thread th = new Thread(new SubsClicksScoreboard());
 	th.start();
 		
+	try{
+		GlobalScreen.registerNativeHook();
+	}catch(Exception e){
+		
+	}
+	GlobalScreen.getInstance().addNativeKeyListener(new NativeKeyboard());
 	
 	test();
 	
@@ -269,9 +278,8 @@ public class Fenetre extends JFrame{
 	this.setUndecorated(false);
 	this.setResizable(true);
 	
-		
-	
 	content.setLayout(new BorderLayout());
+	content_nosite.setLayout(new BorderLayout());
 	int TotalInt = 0;
 				
 	//-- HAUT
@@ -407,7 +415,10 @@ public class Fenetre extends JFrame{
 	w_center.add(boutonSubClick);
 	
 	west.add(w_center,BorderLayout.CENTER);
-				
+		
+	//-- BUREAU
+	JPanel bureau = new AllImages("image/TABLE.png", largeur, (largeur*9)/16);
+	
 	//-- CENTER (Acc)
 	center.setBackground(Color.decode("#F3F3F3"));
 	center.setLayout(new BorderLayout());
@@ -600,62 +611,27 @@ public class Fenetre extends JFrame{
 		cp_east.setPreferredSize(new Dimension(10, hauteur));
 		cp_north.setPreferredSize(new Dimension(largeur, 10));
 		cp_center.setLayout(new BorderLayout());
-			/*
-			 * North
-			 */
-			cp_c_north.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), Fenetre.hauteur/7));
-			cp_c_north.setLayout(null);
-			lab_planning.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			lab_planning.setText("Planning");
-			lab_planning.setForeground(Color.decode("#424242"));
-			lab_planning.setHorizontalAlignment(JLabel.CENTER);
-			lab_planning.setBounds(8, 22, 120, 30);
-			lab_planningInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			lab_planningInfo.setText("C'est ici que vous gérez votre emploi du temps !");
-			lab_planningInfo.setForeground(Color.decode("#424242"));
-			lab_planningInfo.setHorizontalAlignment(JLabel.CENTER);
-			lab_planningInfo.setBounds(10, 22+50, 400, 20);
-			/*
-			 * Center
-			 */
-			cp_c_center.setLayout(new BorderLayout());
-			cp_c_center.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10), hauteur-Fenetre.hauteur/7));
-			cp_c_c_north.setPreferredSize(new Dimension(largeur,15));
-			cp_c_c_west.setPreferredSize(new Dimension(15,hauteur));
-			cp_c_c_east.setPreferredSize(new Dimension(15,hauteur));
-			cp_c_c_center.setLayout(null);
+			cp_c_center.setLayout(null);
+			cp_c_c_c_1.setBounds(45, 68+30, 320, 560);
+			cp_c_c_c_2.setBounds(45+350+25, 68+30, 320, 560);
+			cp_c_c_c_1.setLayout(null);
+			cp_c_c_c_2.setLayout(null);
+			
+			JPanel north_right = new COLOR(Color.white);
+			north_right.setBounds(813, 68, 413, 80);
+			north_right.setLayout(null);
+				plan_add.setBounds(413-110, 0, 60, 60);
+				plan_edit.setBounds(413-60, 0, 60, 60);
+			
+				north_right.add(plan_add);
+				north_right.add(plan_edit);
+			cp_c_c_c_right.setBounds(813, 68+80, 413, 555-80);
+			cp_c_c_c_right.setLayout(null);
 				
-				cp_c_c_c_1.setBounds(0,100,400,450);
-				cp_c_c_c_1.setLayout(new BorderLayout());
-				cp_c_c_c_2.setBounds(399,100,400,450);
-				cp_c_c_c_2.setLayout(new BorderLayout());
-				cp_c_c_c_1_center.setLayout(null);
-				cp_c_c_c_2_center.setLayout(null);			
-				
-				setPlanningPage();
-				/*
-				 * setModifPage(); ??
-				 */
-				plan_add.setBounds(largeur-255-10-10-15-15-110, 0, 60, 60);
-				plan_edit.setBounds(largeur-255-10-10-15-15-60, 0, 60, 60);
-				cp_c_c_c_right.setBounds(810,100,(largeur-10-10-255)-810-30,450);
-				cp_c_c_c_right.setLayout(null);
-				
-				cp_c_c_center.add(DATE_OF_DAY);
-				cp_c_c_center.add(Agenda);
-				cp_c_c_center.add(cp_c_c_c_1);
-				cp_c_c_center.add(cp_c_c_c_2);
-				cp_c_c_center.add(cp_c_c_c_right);
-				cp_c_c_center.add(plan_add);
-				cp_c_c_center.add(plan_edit);
-				
-			cp_c_north.add(lab_planning);
-			cp_c_north.add(lab_planningInfo);
-			cp_c_center.add(cp_c_c_north,BorderLayout.NORTH);
-			cp_c_center.add(cp_c_c_west,BorderLayout.WEST);
-			cp_c_center.add(cp_c_c_east,BorderLayout.EAST);
-			cp_c_center.add(cp_c_c_center,BorderLayout.CENTER);
-		cp_center.add(cp_c_north,BorderLayout.NORTH);
+			cp_c_center.add(cp_c_c_c_1);
+			cp_c_center.add(cp_c_c_c_2);
+			cp_c_center.add(north_right);
+			cp_c_center.add(cp_c_c_c_right);
 		cp_center.add(cp_c_center,BorderLayout.CENTER);
 	center_planning.add(cp_west,BorderLayout.WEST);
 	center_planning.add(cp_east,BorderLayout.EAST);
@@ -788,12 +764,12 @@ public class Fenetre extends JFrame{
 					sc_score_first_name.setText(MainClient.sc_scoreboard_pl.get(0));
 					sc_score_first_name.setForeground(Color.darkGray);
 					sc_score_first_name.setHorizontalAlignment(JLabel.LEFT);
-					sc_score_first_name.setBounds(60, 170, 150, 25);
+					sc_score_first_name.setBounds(60, 174, 550, 25);
 					sc_score_first_subs.setFont(new Font("Tahoma", Font.PLAIN, 23));
-					sc_score_first_subs.setText((int)(MainClient.sc_scoreboard_subs.get(0))+"");
+					sc_score_first_subs.setText((int)(MainClient.sc_scoreboard_subs.get(0))+" subs");
 					sc_score_first_subs.setForeground(Color.gray);
 					sc_score_first_subs.setHorizontalAlignment(JLabel.LEFT);
-					sc_score_first_subs.setBounds(60, 170+25, 150, 25);
+					sc_score_first_subs.setBounds(60, 170+25, 550, 25);
 					
 					sc_score_2nd.setFont(new Font("Tahoma", Font.PLAIN, 45));
 					sc_score_2nd.setText("2.");
@@ -804,12 +780,12 @@ public class Fenetre extends JFrame{
 					sc_score_2nd_name.setText(MainClient.sc_scoreboard_pl.get(1));
 					sc_score_2nd_name.setForeground(Color.darkGray);
 					sc_score_2nd_name.setHorizontalAlignment(JLabel.LEFT);
-					sc_score_2nd_name.setBounds(60, 170+25+20, 150, 25);
+					sc_score_2nd_name.setBounds(60, 174+25+20, 550, 25);
 					sc_score_2nd_subs.setFont(new Font("Tahoma", Font.PLAIN, 23));
-					sc_score_2nd_subs.setText((int)(MainClient.sc_scoreboard_subs.get(1))+"");
+					sc_score_2nd_subs.setText((int)(MainClient.sc_scoreboard_subs.get(1))+" subs");
 					sc_score_2nd_subs.setForeground(Color.gray);
 					sc_score_2nd_subs.setHorizontalAlignment(JLabel.LEFT);
-					sc_score_2nd_subs.setBounds(60, 170+50+20, 150, 25);
+					sc_score_2nd_subs.setBounds(60, 170+50+20, 550, 25);
 				
 				csc_c_c_center.add(sc_lab_status);
 				csc_c_c_center.add(sc_lab_time);
@@ -883,16 +859,17 @@ public class Fenetre extends JFrame{
 	 * Start Game
 	 */
 	
-	content.add(haut, BorderLayout.NORTH);
-	content.add(west, BorderLayout.WEST);
-	
 	content.setPreferredSize(new Dimension(largeur, hauteur));
 
 	this.setContentPane(content);
+	
 	this.setVisible(true);	
 	
 	boutonAcc.setEnabled(false);
-	content.add(center,BorderLayout.CENTER);
+	
+	content.add(haut, BorderLayout.NORTH);
+	content.add(west, BorderLayout.WEST);
+	content.add(center,BorderLayout.CENTER); // HERE
 	test=1;
 
 	}
@@ -942,8 +919,8 @@ public class Fenetre extends JFrame{
 	public static void resetPlanningPage(){
 		cp_c_c_c_1.removeAll();
 		cp_c_c_c_2.removeAll();
-		cp_c_c_c_1_center.removeAll();
-		cp_c_c_c_2_center.removeAll();
+		//cp_c_c_c_1_center.removeAll();
+		//cp_c_c_c_2_center.removeAll();
 		cp_c_c_c_right.removeAll();
 		try {
 			Thread.sleep(10);
@@ -2499,29 +2476,6 @@ public class Fenetre extends JFrame{
 	}
 	
 	public static void setPlanningPage(){
-		for (int a = 0;a<2;a++){
-			JPanel n = new BORDER_PL(1);
-			JPanel s = new BORDER_PL(2);
-			JPanel w = new BORDER_PL(3);
-			JPanel e = new BORDER_PL(4);
-			w.setPreferredSize(new Dimension(26,450));
-			e.setPreferredSize(new Dimension(26,450));
-			n.setPreferredSize(new Dimension(400,5));
-			s.setPreferredSize(new Dimension(400,15));
-			if (a==1){
-				cp_c_c_c_1.add(w,BorderLayout.WEST);
-				cp_c_c_c_1.add(e,BorderLayout.EAST);
-				cp_c_c_c_1.add(n,BorderLayout.NORTH);
-				cp_c_c_c_1.add(s,BorderLayout.SOUTH);
-				cp_c_c_c_1.add(cp_c_c_c_1_center,BorderLayout.CENTER);
-			}else{
-				cp_c_c_c_2.add(w,BorderLayout.WEST);
-				cp_c_c_c_2.add(e,BorderLayout.EAST);
-				cp_c_c_c_2.add(n,BorderLayout.NORTH);
-				cp_c_c_c_2.add(s,BorderLayout.SOUTH);
-				cp_c_c_c_2.add(cp_c_c_c_2_center,BorderLayout.CENTER);
-			}
-		}
 		//Label : Name
 		int TotalNotifY = 0;
 		Boolean encours = true;
@@ -2554,9 +2508,23 @@ public class Fenetre extends JFrame{
 			JLabel dem = new JLabel();
 			dem.setFont(new Font("Dominique", Font.PLAIN, 23));
 			dem.setText("Demain");
-			dem.setForeground(Color.DARK_GRAY);
+			dem.setForeground(Color.decode("#1b2b45"));
 			dem.setHorizontalAlignment(JLabel.LEFT);
 			dem.setBounds(0, 15, (((largeur-255)-15-(largeur-255)/4))/2, 23);
+			TotalNotifY = TotalNotifY+20+5+15;
+			
+			JLabel note1 = new JLabel();
+			note1.setFont(new Font("Dominique", Font.PLAIN, 25));
+			note1.setText("Notes :");
+			note1.setForeground(Color.RED);
+			note1.setHorizontalAlignment(JLabel.LEFT);
+			note1.setBounds(0, 450, 200, 30);
+			JLabel note2 = new JLabel();
+			note2.setFont(new Font("Dominique", Font.PLAIN, 25));
+			note2.setText("Notes :");
+			note2.setForeground(Color.RED);
+			note2.setHorizontalAlignment(JLabel.LEFT);
+			note2.setBounds(0, 450, 200, 30);
 			TotalNotifY = TotalNotifY+20+5+15;
 			if (d==1){
 				day=Integer.valueOf(sf[2]);
@@ -2578,7 +2546,8 @@ public class Fenetre extends JFrame{
 				Agenda.setForeground(Color.GRAY);
 				Agenda.setHorizontalAlignment(JLabel.LEFT);
 				Agenda.setBounds(0, 60, 400, 30);
-				cp_c_c_c_1_center.add(jour);
+				cp_c_c_c_1.add(jour);
+				cp_c_c_c_1.add(note1);
 				while(plan){
 					if (MainClient.planning.size()-1==i){
 						plan=false;
@@ -2591,7 +2560,8 @@ public class Fenetre extends JFrame{
 				i=0;
 				plan=true;
 			}else{
-				cp_c_c_c_2_center.add(dem);
+				cp_c_c_c_2.add(dem);
+				cp_c_c_c_2.add(note2);
 			}
 			
 			/*
@@ -2602,37 +2572,22 @@ public class Fenetre extends JFrame{
 					plan=false;
 				}
 				else{
+					int TotalNoteY = 450+30;
 						if (MainClient.evenements.get(i).getDay()==Integer.parseInt(sf[2])){
-							JPanel panel = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
-							panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 17);
-							TotalNotifY=TotalNotifY+15+5;
-							panel.setLayout(new BorderLayout());
-							JPanel nordd = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
-							nordd.setPreferredSize(new Dimension(largeur,1));
-							JPanel sudd = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
-							sudd.setPreferredSize(new Dimension(largeur,1));
-							JPanel westt = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
-							westt.setPreferredSize(new Dimension(5,hauteur));
-							JPanel centerr = new COLOR(Col(ColId(MainClient.evenements.get(i).getId())));
-							//centerr.setPreferredSize(new Dimension(largeur,hauteur));
-							panel.add(nordd,BorderLayout.NORTH);
-							panel.add(sudd,BorderLayout.SOUTH);
-							panel.add(westt,BorderLayout.WEST);
-							centerr.setLayout(new BorderLayout());
 							
 							JLabel label = new JLabel();
-							label.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							label.setFont(new Font("Tahoma", Font.PLAIN, 17));
 							label.setText(ActivityId(MainClient.evenements.get(i).getId(),MainClient.evenements.get(i).getData()));
-							label.setForeground(Color.WHITE);
+							label.setForeground(Color.DARK_GRAY);
 							label.setHorizontalAlignment(JLabel.LEFT);
+							label.setBounds(0, TotalNoteY, 320, 22);
 							
-							centerr.add(label, BorderLayout.CENTER);
-							panel.add(centerr,BorderLayout.CENTER);
 							if (d==1){
-								cp_c_c_c_1_center.add(panel);
+								cp_c_c_c_1.add(label);
 							}else{
-								cp_c_c_c_2_center.add(panel);
-							}				
+								cp_c_c_c_2.add(label);
+							}	
+							TotalNoteY+=22;
 						}
 						i++;
 					}
@@ -2649,79 +2604,44 @@ public class Fenetre extends JFrame{
 				}
 				else{
 						if (MainClient.planning.get(i).getDay()==Integer.parseInt(sf[2])){
-							Color c = new Color(220,220,220,95);
-							if (encours==true){
-								if (MainClient.planning.get(i).getHour_start()<=Integer.valueOf(sf[3])&&MainClient.planning.get(i).getDay()==day){
-									c = new Color(196,254,202,95);
-								}else{
-									c = new Color(251,227,105,95);
-								}
-							}
+
 							encours=false;
-							JPanel panel = new COLOR(c);
-							panel.setBounds(0, TotalNotifY, (((largeur-255)-15-(largeur-255)/4))/2, 50);
-							TotalNotifY=TotalNotifY+50+5;
-							panel.setLayout(new BorderLayout());
-							JPanel nordd = new COLOR(c);
-							nordd.setPreferredSize(new Dimension(largeur,5));
-							JPanel sudd = new COLOR(c);
-							sudd.setPreferredSize(new Dimension(largeur,5));
-							JPanel westt = new COLOR(c);
-							westt.setPreferredSize(new Dimension(5,hauteur));
-							JPanel centerr = new COLOR(c);
-							//centerr.setPreferredSize(new Dimension(largeur,hauteur));
-							panel.add(nordd,BorderLayout.NORTH);
-							panel.add(sudd,BorderLayout.SOUTH);
-							panel.add(westt,BorderLayout.WEST);
-							
-							centerr.setLayout(new BorderLayout());
-							JPanel norddd = new COLOR(c);
-							norddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
-							norddd.setLayout(null);
-							JPanel suddd = new COLOR(c);
-							suddd.setPreferredSize(new Dimension(largeur,(50-5-5)/2));
-							suddd.setLayout(null);
-							
-							JPanel color = new COLOR(Col(ColId(MainClient.planning.get(i).getId())));
-							color.setBounds(0, 0, (50-5-5)/2, (50-5-5)/2);
 							
 							JLabel label_name = new JLabel();
-							label_name.setFont(new Font("Dominique", Font.PLAIN, 20));
+							label_name.setFont(new Font("Dominique", Font.PLAIN, 18));
 							label_name.setText(ActivityId(MainClient.planning.get(i).getId(),MainClient.planning.get(i).getData()).toLowerCase());
 							label_name.setForeground(Color.DARK_GRAY);
 							label_name.setHorizontalAlignment(JLabel.LEFT);
-							label_name.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
+							label_name.setBounds(70, TotalNotifY+3-20, largeur, 25);
 							
 							JLabel label_hours = new JLabel();
-							label_hours.setFont(new Font("Dominique", Font.PLAIN, 16));
-							String HourEnd = MainClient.planning.get(i).getHour() < 22 ? ""+MainClient.planning.get(i).getHour()+":00" : "<font color=red>"+
-									MainClient.planning.get(i).getHour()+":00 <i>(rique de fatigue !)</i></font>";
-							label_hours.setText("<html>"+MainClient.planning.get(i).getHour_start()+":00 a "+HourEnd+"</html>");
-							//label_hours.setForeground(Color.GRAY);
+							label_hours.setFont(new Font("Dominique", Font.PLAIN, 17));
+							String HourEnd = ""+MainClient.planning.get(i).getHour()+"h";
+							label_hours.setText("<html>"+MainClient.planning.get(i).getHour_start()+"h - "+HourEnd+" :</html>");
+							label_hours.setForeground(Color.DARK_GRAY);
 							label_hours.setHorizontalAlignment(JLabel.LEFT);
-							label_hours.setBounds((50-5-5)/2+5, 0, largeur, (50-5-5)/2);
-							
-							norddd.add(color);
-							norddd.add(label_name);
-							suddd.add(label_hours);
-							centerr.add(norddd,BorderLayout.NORTH);
-							centerr.add(suddd,BorderLayout.SOUTH);
-							panel.add(centerr,BorderLayout.CENTER);
+							label_hours.setBounds(0, TotalNotifY-20, 70, 25);
+
 							if (d==1){
-								cp_c_c_c_1_center.add(panel);
+								cp_c_c_c_1.add(label_hours);
+								cp_c_c_c_1.add(label_name);
 							}else{
-								cp_c_c_c_2_center.add(panel);
+								cp_c_c_c_2.add(label_hours);
+								cp_c_c_c_2.add(label_name);
 							}
+							TotalNotifY+=25;
 						}
 						i++;
 					}
 			}
+			/*
 			if (d==1){
 				cp_c_c_c_1_center.setBounds(0,0,400,450);
 			}else{
 				cp_c_c_c_2_center.setBounds(((largeur-(255+10+10))/2/4)*3+7,0
 						,400,450);
 			}
+			*/
 			d++;
 		}			
 	}
@@ -3148,8 +3068,56 @@ public class Fenetre extends JFrame{
 
 		public void run(){
 	    	 while (true){
+	    		 if (change!=0){
+	    			 change=0;
+	    			 boutonAcc.setEnabled(false);
+	    			 boutonVideoGest.setEnabled(true);
+	    			 boutonPlanning.setEnabled(true);
+	    			 bouton3.setEnabled(true);
+	    			 boutonSubClick.setEnabled(true);
+	    			 if (test==3){
+	    					content.remove(center_planning);
+	    				}else if (test==2){
+	    					content.remove(center_videos);
+	    				}else if (test==4){
+	    					content.remove(center_levels);
+	    				}else if (test==5){
+	    					content.remove(center_subsclick);
+	    				}
+	    				test=1;
+	    				try {
+	    					Thread.sleep(10);
+	    				} catch (InterruptedException e) {
+	    					// TODO Auto-generated catch block
+	    					e.printStackTrace();
+	    				}
+	    				content.add(center,BorderLayout.CENTER);
+	    				/* Existe-t-il une meilleur méthode ? */
+	    				try{
+	    					content.updateUI();
+	    				}catch(Exception e){
+	    					/* Petit test personnel pour vérifier le bon fonctionnement */
+	    					System.out.println("Erreur : "+test);
+	    				}	
+	    				resetPlanning();
+	    		 }
 	 	    		sc_lab_status.setText(MainClient.Sc_Status);
 	 	    		sc_lab_time.setText(MainClient.getStringTime(MainClient.Sc_Time));
+	 	    		try{
+	 	    			sc_score_2nd_name.setText(MainClient.sc_scoreboard_pl.get(0));
+		 	    		sc_score_2nd_subs.setText(MainClient.sc_scoreboard_subs.get(0)+" subs.");
+		 	    		sc_score_first_name.setText(/*MainClient.sc_scoreboard_pl.get(1)*/"Arganthros");
+		 	    		sc_score_first_subs.setText(/*MainClient.sc_scoreboard_subs.get(1)+*/"863 subs.");
+	 	    		}catch (Exception e){
+	 	    			
+	 	    		}
+	 	    		if (MainClient.Sc_Status.startsWith("Fin")){
+	 	    			pri_lab.setText("15 subs.");
+	 	    			pri_lab2.setText("100 subs.");
+	 	    			pri_lab3.setText("500 subs.");
+	 	    			pri_lab4.setText("2000 subs.");
+	 	    			MainClient.Subs_By_Secs=0;
+	 	    		}
 	    	 }  	
 
 	    }   
