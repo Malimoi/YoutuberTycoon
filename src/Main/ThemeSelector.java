@@ -44,17 +44,13 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public int phase = 1;
 	@SuppressWarnings("static-access")
 	public ThemeSelector(){
-		
-		Thread th = new Thread(new Music());
-	    
-	    th.start();
 	    
 		this.setTitle("Youtuber Tycoon by Malimoi");
 		this.setSize(1200,720);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.NORMAL);
-		this.setUndecorated(true);
+		this.setUndecorated(false);
 		this.setResizable(true);
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.setVisible(true);
@@ -109,7 +105,6 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public void Close(){
 		MainClient.first_choice=theme.getText();
 		MainClient.FirstStart();
-		clip.stop();
 		this.setVisible(false);
 		this.dispose();
 	}
@@ -143,30 +138,6 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 		}
 		
 	}
-	class Music implements Runnable{   
-
-		@SuppressWarnings("deprecation")
-		public void run(){
-	    	
-	    	/*
-			 * Music
-			 */
-			File son = new File("musics/MUSIC_2.wav");
-			
-			try
-			{
-			clip = Applet.newAudioClip(son.toURL());
-			}
-			catch (MalformedURLException e)
-			{
-			System.out.println(e.getMessage());
-			}
-			clip.play();
-			
-
-	    }   
-
-	  }
 }
 
 

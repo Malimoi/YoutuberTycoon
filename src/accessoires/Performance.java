@@ -2,15 +2,24 @@ package accessoires;
 
 public abstract class Performance {
 	
-	protected Integer qualite; // For GAMING
-	protected Integer montage; // For MONTAGE
+	protected Integer son;
+	protected Integer montage;
+	protected Integer image;
+	protected Integer gaming;
 	
-	public Integer getQualite() {
-		return qualite;
+	public Integer getSon() {
+		return son;
 	}
 	
 	public Integer getMontage() {
 		return montage;
 	}
-
+	
+	public Integer getImage() {
+		return image;
+	}
+	
+	public Integer getGaming() {
+		return gaming;
+	}
 }

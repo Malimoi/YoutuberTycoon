@@ -15,14 +15,18 @@ package Main;
 
 import javax.swing.*;
 
+import org.jnativehook.GlobalScreen;
+
 import player.Player;
 import player.PlayerC;
 import accessoires.Accessoire;
 import accessoires.Camera;
 import accessoires.CameraPerformance;
+import accessoires.Micro;
 import accessoires.MicroPerformance;
+import accessoires.OrdiPerformance;
+import accessoires.Ordinateur;
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
-import frames.Progress;
 import utilities.Evenement;
 import utilities.EventComparator;
 import utilities.Planning;
@@ -30,15 +34,12 @@ import utilities.PlanningComparator;
 import utilities.Video;
 import utilities.VideosComparator;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -80,6 +81,7 @@ public class MainClient {
 	public static Boolean IsTest = false;
 	
 	public static List<Video> videos = new ArrayList<Video>();
+	public static List<Accessoire> ordis = new ArrayList<Accessoire>();
 	public static List<Accessoire> cameras = new ArrayList<Accessoire>();
 	public static List<Accessoire> micros = new ArrayList<Accessoire>();
 	public static List<Planning> planning = new ArrayList<Planning>();
@@ -120,7 +122,7 @@ public class MainClient {
             frame.setVisible(true);
     	}else{
     		setJFrames();
-    	}    
+    	}
     }
     public static void setJFrames(){
      	 /*
@@ -130,9 +132,15 @@ public class MainClient {
     	/*
     	 * Accessoires
     	 */
-    	cameras.add(new Camera("Yaton 600T", 400, new CameraPerformance(30), "ACCESSOIRES/CAMERAS/1", 1, true));
-    	//System.out.println(access.get(0).getClass().getName());
-    	micros.add(new Camera("Micro intégré", 0, new MicroPerformance(20), null, 2, true));
+    	cameras.add(new Camera("Caméscope", 149, new CameraPerformance(15,5), "image/ACC/CAMESCOPE.png", 1, false));
+    	cameras.add(new Camera("Yaton 600T", 390, new CameraPerformance(35,20), "image/ACC/YATON-600T.png", 2, false));
+    	cameras.add(new Camera("Yaton 60T", 763, new CameraPerformance(55,35), "image/ACC/YATON-60T.png", 3, false));
+    	cameras.add(new Camera("Yaton 6T", 1614, new CameraPerformance(75,40), "image/ACC/YATON-6T.png", 4, false));
+    	ordis.add(new Ordinateur("MASIS X050 - Black version", 199, new OrdiPerformance(15, 15, 15), "image/ACC/MASIS-X050-BLACK.png", 1, true));
+    	ordis.add(new Ordinateur("MASIS X200 - White version", 399, new OrdiPerformance(30, 25, 20), "image/ACC/MASIS-X200-WHITE.png", 2, false));
+    	ordis.add(new Ordinateur("ALIAN-WHERE Z150 - Black version", 599, new OrdiPerformance(65, 50, 0), "image/ACC/ALIAN-WHERE-Z150-BLACK.png", 3, false));
+    	micros.add(new Micro("Micro-Casque M2-A", 99, new MicroPerformance(35), "image/ACC/MIRCO-CASQUE-Z2-A.png", 1, false));
+    	micros.add(new Micro("Red Yuti - Black version", 129, new MicroPerformance(65), "image/ACC/RED-YUTI-BLACK.png", 2, false));
  		/*
  		 * On récupère les vidéos
  		 * format : new Videos(name[0],day[1],month[2],year[3],views[4],likes[5],dislikes[6],share[7],...)

@@ -27,5 +27,14 @@ public abstract class Accessoire {
 	public boolean isBuy() {
 		return buy;
 	}
+	public void setBuy(boolean buy) {
+		this.buy = buy;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public void setPerf(Performance perf) {
+		this.perf = perf;
+	}
 
 }

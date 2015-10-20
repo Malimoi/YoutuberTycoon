@@ -28,6 +28,8 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -48,18 +50,22 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
-import Main.MainClient.ChatAccess;
 import accessoires.Accessoire;
 import accessoires.Camera;
+import accessoires.CameraPerformance;
 import accessoires.Micro;
+import accessoires.MicroPerformance;
+import accessoires.OrdiPerformance;
+import accessoires.Performance;
 import utilities.Evenement;
 import utilities.Planning;
 import utilities.Video;
 import frames.ACC;
-import frames.BORDER_PL;
 import frames.COLOR;
 import frames.IMAGE_;
 import frames.MINI;
@@ -93,6 +99,7 @@ public class Fenetre extends JFrame{
 	public JButton boutonVideoGest = new Bouton("Gestionnaire de vidéos",2);
 	public JButton boutonPlanning = new Bouton("Mon planning",3);
 	public JButton bouton3 = new Bouton("Mes compétences",4);
+	public JButton boutonShop = new Bouton("La boutique",6);
 	//Mini-Jeux
 	public JButton boutonSubClick = new Bouton("Subscribers Clickers",5);
 	
@@ -204,6 +211,11 @@ public class Fenetre extends JFrame{
 				public JLabel lab_levels = new JLabel();
 				public JLabel lab_levelsInfo = new JLabel();
 			public JPanel cl_c_center = new COLOR(Color.decode("#ffffff"));
+	public JPanel center_shop = new JPanel();
+		public JPanel cs_east = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel cs_west = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel cs_north = new COLOR(Color.decode("#F3F3F3"));
+		public JPanel cs_center = new AllImages("image/fond-camille.jpg", largeur-255, hauteur);			
 	public JPanel center_subsclick = new JPanel();
 		public JPanel csc_east = new COLOR(Color.decode("#F3F3F3"));
 		public JPanel csc_west = new COLOR(Color.decode("#F3F3F3"));
@@ -240,6 +252,8 @@ public class Fenetre extends JFrame{
 	public JTextArea enter_titre;
 	public JComboBox camerascombo;
 	public JComboBox microscombo;
+	public JComboBox montagecombo;
+	public JComboBox gamingcombo;
 	
 	//Variable Creator Step 2
 	public JSlider ecrituretimeslid;
@@ -250,21 +264,28 @@ public class Fenetre extends JFrame{
 	public Thread t;
 	public static int test = 0;
 	public static int change = 0;
+	public static int place_shop = 1;
+	public static int stage_shop = 1;
 	public static int videopage = 1;
 
 	
 	@SuppressWarnings("static-access")
 	public Fenetre() {
 		
+		try{
+			GlobalScreen.registerNativeHook();
+			System.out.println("Registering native hooks");
+		}catch(NativeHookException e){
+			e.printStackTrace();
+			System.out.println("Failed to register native hooks");
+		}
+		
+		GlobalScreen.getInstance().addNativeKeyListener(new NativeKeyboard());
+		
 	Thread th = new Thread(new SubsClicksScoreboard());
 	th.start();
 		
-	try{
-		GlobalScreen.registerNativeHook();
-	}catch(Exception e){
-		
-	}
-	GlobalScreen.getInstance().addNativeKeyListener(new NativeKeyboard());
+	
 	
 	test();
 	
@@ -393,24 +414,27 @@ public class Fenetre extends JFrame{
 	bouton3.addActionListener(new BoutonCompetListener());
 	boutonVideoGest.addActionListener(new BoutonVideosListener());
 	boutonSubClick.addActionListener(new BoutonSubsClicksListener());
+	boutonShop.addActionListener(new BoutonShopListener());
 	vid_affich.addActionListener(new BoutonToutaffichListener());
 	
 	boutonAcc.setBounds(0, 0, 225, 35);
 	boutonVideoGest.setBounds(0, 35, 225, 35);
 	boutonPlanning.setBounds(0, 70, 225, 35);
 	bouton3.setBounds(0, 105, 225, 35);
+	boutonShop.setBounds(0, 140, 225, 35);
 	JLabel mini_games = new JLabel();
 	mini_games.setFont(new Font("Tahoma", Font.PLAIN, 17));
 	mini_games.setText("<html><u>Mini-Jeux</u><html>");
 	mini_games.setForeground(Color.RED);
 	mini_games.setHorizontalAlignment(JLabel.LEFT);
-	mini_games.setBounds(0, 140, 225, 20);
-	boutonSubClick.setBounds(0, 160, 225, 35);
+	mini_games.setBounds(0, 175, 225, 20);
+	boutonSubClick.setBounds(0, 195, 225, 35);
 	
 	w_center.add(boutonAcc);
 	w_center.add(boutonVideoGest);
 	w_center.add(boutonPlanning);
 	w_center.add(bouton3);
+	w_center.add(boutonShop);
 	w_center.add(mini_games);
 	w_center.add(boutonSubClick);
 	
@@ -681,6 +705,17 @@ public class Fenetre extends JFrame{
 	
 	/*
 	 * End Center_Levels
+	 * Start Shop
+	 */
+	
+	center_shop.setPreferredSize(new Dimension(Fenetre.largeur-(225+10+10),hauteur));
+	center_shop.setLayout(new BorderLayout());
+		cs_center.setLayout(null);
+			
+	center_shop.add(cs_center,BorderLayout.CENTER);
+	
+	/*
+	 * End Shop
 	 * Start Subscribers_Clikers
 	 */
 	
@@ -973,6 +1008,38 @@ public class Fenetre extends JFrame{
 		}
 		return s;
 	}
+	
+	public String NoteItems (Integer i){
+		String s = "";
+		if (i==0){
+			s = "RIEN";
+		}else if (i>0 && i<10){
+			s = "<font color=red>D</font>";
+		}else if (i<20){
+			s = "<font color=orange>C-</font>";
+		}else if (i<30){
+			s = "<font color=orange>C</font>";
+		}else if (i<40){
+			s = "<font color=orange>C+</font>";
+		}else if (i<50){
+			s = "<font color=yellow>B-</font>";
+		}else if (i<60){
+			s = "<font color=yellow>B</font>";
+		}else if (i<70){
+			s = "<font color=yellow>B+</font>";
+		}else if (i<80){
+			s = "<font color=green>A-</font>";
+		}else if (i<90){
+			s = "<font color=green>A</font>";
+		}else if (i<100){
+			s = "<font color=green>A+</font>";
+		}else{
+			s = "<font color=green>A++</font>";
+		}
+		
+		return s;
+	}
+	
 	public static String ActivityId (Integer i, Long l){
 		String s = "Glandouillette";
 		String name = "";
@@ -1131,7 +1198,38 @@ public class Fenetre extends JFrame{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			this.FOND=Color.decode("#D3D3D3");	
-			if (!name.contains("Faire une vidéo")){
+			if (name.contains("Acheter")){
+				if (stage_shop==1){
+					MainClient.cameras.get(place_shop-1).setBuy(true);
+				}else if (stage_shop==2){
+					MainClient.ordis.get(place_shop-1).setBuy(true);
+				}else if (stage_shop==3){
+					MainClient.micros.get(place_shop-1).setBuy(true);
+				}
+				cs_center.removeAll();
+				setShopPage(place_shop, stage_shop);
+				try{
+					content.updateUI();
+				}catch(Exception ex){
+					System.out.println("Erreur : "+test);
+				}
+			}
+			else if (name.contains("Faire une vidéo")){
+				cv_c_south.removeAll();
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+				setVideosCreator(1);
+				cv_center.add(cv_c_south,BorderLayout.CENTER);
+				try{
+					content.updateUI();
+				}catch(Exception ex){
+					System.out.println("Erreur : "+test);
+				}
+			}else{
 				int page = Integer.parseInt(name);
 				Fenetre.videopage=page;
 				cv_c_south.removeAll();
@@ -1142,22 +1240,6 @@ public class Fenetre extends JFrame{
 					ex.printStackTrace();
 				}
 				setVideosGestionnaire();
-				cv_center.add(cv_c_south,BorderLayout.CENTER);
-				try{
-					content.updateUI();
-				}catch(Exception ex){
-					System.out.println("Erreur : "+test);
-				}
-			}
-			if (name.contains("Faire une vidéo")){
-				cv_c_south.removeAll();
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException ex) {
-					// TODO Auto-generated catch block
-					ex.printStackTrace();
-				}
-				setVideosCreator(1);
 				cv_center.add(cv_c_south,BorderLayout.CENTER);
 				try{
 					content.updateUI();
@@ -1218,6 +1300,7 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(true);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(true);
+			boutonShop.setEnabled(true);
 			boutonSubClick.setEnabled(true);
 			if (test==3){
 				content.remove(center_planning);
@@ -1227,6 +1310,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_levels);
 			}else if (test==5){
 				content.remove(center_subsclick);
+			}else if (test==6){
+				content.remove(center_shop);
 			}
 			test=1;
 			try {
@@ -1255,6 +1340,7 @@ public class Fenetre extends JFrame{
 			boutonPlanning.setEnabled(false);
 			boutonVideoGest.setEnabled(true);
 			bouton3.setEnabled(true);
+			boutonShop.setEnabled(true);
 			boutonSubClick.setEnabled(true);
 			if (test==1){
 				content.remove(center);
@@ -1264,6 +1350,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_levels);
 			}else if (test==5){
 				content.remove(center_subsclick);
+			}else if (test==6){
+				content.remove(center_shop);
 			}
 			test=3;
 			try {
@@ -1290,6 +1378,7 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(true);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(false);
+			boutonShop.setEnabled(true);
 			boutonSubClick.setEnabled(true);
 			
 			if (test==1){
@@ -1301,6 +1390,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_videos);
 			}else if (test==5){
 				content.remove(center_subsclick);
+			}else if (test==6){
+				content.remove(center_shop);
 			}
 			test=4;
 			try {
@@ -1328,6 +1419,7 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(false);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(true);
+			boutonShop.setEnabled(true);
 			boutonSubClick.setEnabled(true);
 			if (test==1){
 				content.remove(center);
@@ -1338,6 +1430,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_levels);
 			}else if (test==5){
 				content.remove(center_subsclick);
+			}else if (test==6){
+				content.remove(center_shop);
 			}
 			test=2;
 			try {
@@ -1367,6 +1461,7 @@ public class Fenetre extends JFrame{
 			boutonVideoGest.setEnabled(true);
 			boutonPlanning.setEnabled(true);
 			bouton3.setEnabled(true);
+			boutonShop.setEnabled(true);
 			boutonSubClick.setEnabled(false);
 			
 			if (test==1){
@@ -1377,6 +1472,8 @@ public class Fenetre extends JFrame{
 				content.remove(center_planning);
 			}else if (test==4){
 				content.remove(center_levels);
+			}else if (test==6){
+				content.remove(center_shop);
 			}
 			test=5;
 			try {
@@ -1386,6 +1483,47 @@ public class Fenetre extends JFrame{
 				e.printStackTrace();
 			}
 			content.add(center_subsclick,BorderLayout.CENTER);
+			try{
+				content.updateUI();
+			}catch(Exception e){
+				System.out.println("Erreur : "+test);
+			}
+			
+
+		}
+	}
+	
+	class BoutonShopListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			boutonAcc.setEnabled(true);
+			boutonVideoGest.setEnabled(true);
+			boutonPlanning.setEnabled(true);
+			bouton3.setEnabled(true);
+			boutonSubClick.setEnabled(true);
+			boutonShop.setEnabled(false);
+			
+			if (test==1){
+				content.remove(center);
+			}else if (test==2){
+				content.remove(center_videos);
+			}else if (test==3){
+				content.remove(center_planning);
+			}else if (test==4){
+				content.remove(center_levels);
+			}else if (test==5){
+				content.remove(center_subsclick);
+			}
+			test=6;
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			setShopPage(1, 1);
+			content.add(center_shop,BorderLayout.CENTER);	
 			try{
 				content.updateUI();
 			}catch(Exception e){
@@ -2355,10 +2493,51 @@ public class Fenetre extends JFrame{
 			lab_3.setHorizontalAlignment(JLabel.LEFT);
 			lab_3.setBounds(25+200+50, 75+40+25+50+25+50+30, 175, 20);
 			cv_c_south.add(lab_3);
-			String[] MicrosList = { "<html><font color=red>Pas de micro</font></html>","Micro intégré" };
+			ArrayList<String> armic = new ArrayList<String>();
+			armic.add("<html><font color=red>Pas de micro</font></html>");
+			for (int a = 0;a<MainClient.micros.size();a++){		
+				armic.add("<html>"+MainClient.micros.get(a).getName()+" <hidden "+MainClient.micros.get(a).getID()+" /> </html>");
+			}
+			String[] MicrosList = new String[armic.size()];
+			MicrosList = armic.toArray(MicrosList);
 			microscombo = new JComboBox(MicrosList);
 			microscombo.setBounds(25+200+50, 75+40+25+50+25+25+50+30, 200, 50);
 			cv_c_south.add(microscombo);
+			JLabel lab_4 = new JLabel();
+			lab_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lab_4.setText("Choisissez votre ordinateur (Montage):");
+			lab_4.setForeground(Color.DARK_GRAY);
+			lab_4.setHorizontalAlignment(JLabel.LEFT);
+			lab_4.setBounds(25+250+250, 75+40+25+50+25+50+30, 275, 20);
+			cv_c_south.add(lab_4);
+			ar.clear();
+			ar.add("<html><font color=red>Pas de montage</font></html>");
+			for (int a = 0;a<MainClient.ordis.size();a++){		
+				ar.add("<html>"+MainClient.ordis.get(a).getName()+" <hidden "+MainClient.ordis.get(a).getID()+" /> </html>");
+			}
+			String[] MontageList = new String[ar.size()];
+			MontageList = ar.toArray(MontageList);
+			montagecombo = new JComboBox(MontageList);
+			montagecombo.setBounds(25+250+250, 75+40+25+50+25+25+50+30, 200, 50);
+			cv_c_south.add(montagecombo);
+			
+			JLabel lab_5 = new JLabel();
+			lab_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lab_5.setText("Choisissez votre ordinateur (Gaming):");
+			lab_5.setForeground(Color.DARK_GRAY);
+			lab_5.setHorizontalAlignment(JLabel.LEFT);
+			lab_5.setBounds(25+250+250+275, 75+40+25+50+25+50+30, 275, 20);
+			cv_c_south.add(lab_5);
+			ar.clear();
+			ar.add("<html><font color=red>Pas de gaming</font></html>");
+			for (int a = 0;a<MainClient.ordis.size();a++){		
+				ar.add("<html>"+MainClient.ordis.get(a).getName()+" <hidden "+MainClient.ordis.get(a).getID()+" /> </html>");
+			}
+			String[] GamingList = new String[ar.size()];
+			GamingList = ar.toArray(GamingList);
+			gamingcombo = new JComboBox(GamingList);
+			gamingcombo.setBounds(25+250+250+275, 75+40+25+50+25+25+50+30, 200, 50);
+			cv_c_south.add(gamingcombo);
 			
 			JButton valid = new JButton("Valider");
 			valid.setBounds(25, 80+75*4, 80, 40);
@@ -2644,6 +2823,121 @@ public class Fenetre extends JFrame{
 			*/
 			d++;
 		}			
+	}
+	
+	public void setShopPage(Integer nb, Integer stage){
+		place_shop=nb;
+		stage_shop=stage;
+		cs_center.removeAll();
+		
+		int place = nb-1;
+		Accessoire acc = null;
+		Performance perf = null;
+		if (stage == 1){
+			acc=(Accessoire) MainClient.cameras.get(place);
+			perf=(CameraPerformance) acc.getPerf();
+		}else if (stage == 2){
+			acc=(Accessoire) MainClient.ordis.get(place);
+			perf=(OrdiPerformance) acc.getPerf();
+		}else if (stage == 3){
+			acc=(Accessoire) MainClient.micros.get(place);
+			perf=(MicroPerformance) acc.getPerf();
+		}
+		Integer image=0;
+		Integer gaming=0;
+		Integer montage=0;
+		Integer son=0;
+		if (stage == 1){
+			image=acc.getPerf().getImage();
+		}else if (stage == 2){
+			gaming=acc.getPerf().getGaming();
+			montage=acc.getPerf().getMontage();
+		}
+		son=acc.getPerf().getSon();
+		JPanel image_mat = new AllImages(acc.getPath(), ((hauteur-50)/8)*6, ((hauteur-50)/8)*6);
+		image_mat.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16), ((hauteur-50)/8), ((hauteur-50)/8)*6, ((hauteur-50)/8)*6);
+		cs_center.add(image_mat);
+		JLabel item_name = new JLabel();
+		item_name.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		item_name.setText(acc.getName());
+		item_name.setForeground(Color.darkGray);
+		item_name.setHorizontalAlignment(JLabel.LEFT);
+		item_name.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6, ((hauteur-50)/4)+((hauteur-50)/8)-20, 400, 35);
+		JLabel item_buy = new JLabel();
+		item_buy.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		String buy = "<html><font color=red>(Vous ne possédez pas cet objet)</font></html>";
+		if (acc.isBuy()){
+			buy = "<html><font color=green>(Vous possédez cet objet)</font></html>";
+		}
+		item_buy.setText(buy);
+		item_buy.setForeground(Color.darkGray);
+		item_buy.setHorizontalAlignment(JLabel.LEFT);
+		item_buy.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6, ((hauteur-50)/4)+((hauteur-50)/8)+8, 400, 20);
+		int TotalY = ((hauteur-50)/4)+((hauteur-50)/8)+50;
+		if (stage == 1){
+			JLabel item_qual = new JLabel();
+			item_qual.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			item_qual.setText("<html>QUALITÉ DE L'IMAGE : "+NoteItems(image)+"</html>");
+			item_qual.setForeground(Color.darkGray);
+			item_qual.setHorizontalAlignment(JLabel.LEFT);
+			item_qual.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6,
+					TotalY, 400, 25);
+			TotalY+=22;
+			cs_center.add(item_qual);
+		}if (stage == 2){
+			JLabel item_gam = new JLabel();
+			item_gam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			item_gam.setText("<html>PERFORMANCE GAMING : "+NoteItems(gaming)+"</html>");
+			item_gam.setForeground(Color.darkGray);
+			item_gam.setHorizontalAlignment(JLabel.LEFT);
+			item_gam.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6,
+					TotalY, 400, 25);
+			TotalY+=22;
+			cs_center.add(item_gam);
+			JLabel item_qual = new JLabel();
+			item_qual.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			item_qual.setText("<html>MONTAGE : "+NoteItems(montage)+"</html>");
+			item_qual.setForeground(Color.darkGray);
+			item_qual.setHorizontalAlignment(JLabel.LEFT);
+			item_qual.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6,
+					TotalY, 400, 25);
+			TotalY+=22;
+			cs_center.add(item_qual);
+		}
+		JLabel item_qual = new JLabel();
+		item_qual.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		item_qual.setText("<html>QUALITÉ DU SON : "+NoteItems(son)+"</html>");
+		item_qual.setForeground(Color.darkGray);
+		item_qual.setHorizontalAlignment(JLabel.LEFT);
+		item_qual.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6,
+				TotalY, 400, 25);
+		TotalY+=22;
+		cs_center.add(item_qual);
+		
+		cs_center.add(item_name);
+		cs_center.add(item_buy);
+		
+		JLabel item_price = new JLabel();
+		item_price.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		item_price.setText(acc.getPrice()+" $");
+		item_price.setForeground(Color.GRAY);
+		item_price.setHorizontalAlignment(JLabel.LEFT);
+		item_price.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6,
+				((hauteur-50)/4)+((hauteur-50)/8)+130, 400, 45);
+		cs_center.add(item_price);
+		
+		if (!acc.isBuy()){
+			JButton buy_button = new ClassicButton("Acheter");
+			buy_button.setBounds(((largeur-255)/2)-((hauteur-50)/8)*6+((largeur-255)/16)+((hauteur-50)/8)*6,
+					((hauteur-50)/4)+((hauteur-50)/8)+187, 88, 50);
+			cs_center.add(buy_button);
+		}
+		
+		try{
+			content.updateUI();
+		}catch(Exception ex){
+			System.out.println("Erreur : "+test);
+		}
 	}
 	
 	public void setLevelsPage(){
@@ -3069,37 +3363,35 @@ public class Fenetre extends JFrame{
 		public void run(){
 	    	 while (true){
 	    		 if (change!=0){
+	    			 if (change==1){
+	    				 if (place_shop>1){
+	    					 place_shop--;
+	    				 }
+	    			 }else if (change==2){
+	    				 if (stage_shop<3){
+	    					 stage_shop++;
+	    					 place_shop=1;
+	    				 }
+	    			 }else if (change==3){
+	    				 int max = 1;
+	    				 if (stage_shop==1){
+	    					 max=MainClient.cameras.size();
+	    				 }else if (stage_shop==2){
+	    					 max=MainClient.ordis.size();
+	    				 }else if (stage_shop==3){
+	    					 max=MainClient.micros.size();
+	    				 }
+	    				 if (place_shop<max){
+	    					 place_shop++;
+	    				 }
+	    			 }else if (change==4){
+	    				 if (stage_shop>1){
+	    					 stage_shop--;
+	    					 place_shop=1;
+	    				 }
+	    			 }
+	    			 setShopPage(place_shop, stage_shop);
 	    			 change=0;
-	    			 boutonAcc.setEnabled(false);
-	    			 boutonVideoGest.setEnabled(true);
-	    			 boutonPlanning.setEnabled(true);
-	    			 bouton3.setEnabled(true);
-	    			 boutonSubClick.setEnabled(true);
-	    			 if (test==3){
-	    					content.remove(center_planning);
-	    				}else if (test==2){
-	    					content.remove(center_videos);
-	    				}else if (test==4){
-	    					content.remove(center_levels);
-	    				}else if (test==5){
-	    					content.remove(center_subsclick);
-	    				}
-	    				test=1;
-	    				try {
-	    					Thread.sleep(10);
-	    				} catch (InterruptedException e) {
-	    					// TODO Auto-generated catch block
-	    					e.printStackTrace();
-	    				}
-	    				content.add(center,BorderLayout.CENTER);
-	    				/* Existe-t-il une meilleur méthode ? */
-	    				try{
-	    					content.updateUI();
-	    				}catch(Exception e){
-	    					/* Petit test personnel pour vérifier le bon fonctionnement */
-	    					System.out.println("Erreur : "+test);
-	    				}	
-	    				resetPlanning();
 	    		 }
 	 	    		sc_lab_status.setText(MainClient.Sc_Status);
 	 	    		sc_lab_time.setText(MainClient.getStringTime(MainClient.Sc_Time));
