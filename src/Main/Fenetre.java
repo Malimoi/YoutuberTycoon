@@ -2375,12 +2375,28 @@ public class Fenetre extends JFrame {
 				lab_c_c_nt_c_date.setHorizontalAlignment(JLabel.LEFT);
 				lab_c_c_nt_c_date.setBounds(0, TotalNotifY, (((largeur - 255) - 15 - (largeur - 255) / 4)) / 2, 20);
 				TotalNotifY = TotalNotifY + 20 + 5;
+				Boolean noth = true;
 				while (plan) {
 					if (MainClient.planning.size() - 1 == i) {
 						plan = false;
+						if (noth){
+							JPanel panel = new AllImages("image/RAS.png", 35, 35);
+							panel.setBounds(0, TotalNotifY, 35, 35);
+							
+							JLabel label = new JLabel();
+							label.setFont(new Font("Tahoma", Font.PLAIN, 18));
+							label.setText("Rien à signaler !");
+							label.setForeground(Color.DARK_GRAY);
+							label.setHorizontalAlignment(JLabel.LEFT);
+							label.setBounds(35+5, TotalNotifY+5, (((largeur - 255) - 15 - (largeur - 255) / 4)) / 2, 25);
+							c_c_nt_center.add(panel);
+							c_c_nt_center.add(label);
+							TotalNotifY = TotalNotifY + 35 + 5;
+						}
 					} else if (MainClient.planning.get(i).getHour() <= Integer.parseInt(sf[3])
 							&& Integer.parseInt(sf[2]) == MainClient.planning.get(i).getDay()) {
 						MainClient.planning.remove(i);
+						noth=false;
 					}
 					i++;
 				}
@@ -2445,11 +2461,27 @@ public class Fenetre extends JFrame {
 			/*
 			 * Boucle 1 - horraire (jour j)
 			 */
+			Boolean noth = true;
 			while (plan) {
 				if (MainClient.planning.size() - 1 == i) {
 					plan = false;
+					if (noth){
+						JPanel panel = new AllImages("image/RAS.png", 35, 35);
+						panel.setBounds(0, TotalNotifY, 35, 35);
+						
+						JLabel label = new JLabel();
+						label.setFont(new Font("Tahoma", Font.PLAIN, 18));
+						label.setText("Rien à signaler !");
+						label.setForeground(Color.DARK_GRAY);
+						label.setHorizontalAlignment(JLabel.LEFT);
+						label.setBounds(35+5, TotalNotifY+5, (((largeur - 255) - 15 - (largeur - 255) / 4)) / 2, 25);
+						c_c_nt_center.add(panel);
+						c_c_nt_center.add(label);
+						TotalNotifY = TotalNotifY + 35 + 5;
+					}
 				} else {
 					if (MainClient.planning.get(i).getDay() == Integer.parseInt(sf[2])) {
+						noth=false;
 						Color c = Color.decode("#DCDCDC");
 						if (encours == true) {
 							if (MainClient.planning.get(i).getHour_start() <= Integer.valueOf(sf[3])
