@@ -91,8 +91,8 @@ public class MainClient {
 	public static List<String> datapl = new ArrayList<String>();
 	public static List<String> dataev = new ArrayList<String>();
 	
-	public static String[] categ_list = {"HUMOUR","DIVERTISSEMENT","GAMING","MONTAGE","DEVELOPPEMENT","MUSIQUE",
-		"SCIENCES","EDUCATION","MAKEUP/MODE","CUISINE","ECRITURE","POST-PRODUCTION"};
+	public static String[] categ_list = {"HUMOUR","DIVERTISSEMENT","GAMING","MONTAGE","MUSIQUE",
+		"SCIENCES","MAKEUP/MODE","CUISINE","ECRITURE","POST-PRODUCTION"};
 	
 	public static ChatAccess access;
 	

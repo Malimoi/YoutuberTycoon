@@ -2392,6 +2392,7 @@ public class Fenetre extends JFrame {
 							c_c_nt_center.add(panel);
 							c_c_nt_center.add(label);
 							TotalNotifY = TotalNotifY + 35 + 5;
+							noth=false;
 						}
 					} else if (MainClient.planning.get(i).getHour() <= Integer.parseInt(sf[3])
 							&& Integer.parseInt(sf[2]) == MainClient.planning.get(i).getDay()) {
@@ -2478,6 +2479,7 @@ public class Fenetre extends JFrame {
 						c_c_nt_center.add(panel);
 						c_c_nt_center.add(label);
 						TotalNotifY = TotalNotifY + 35 + 5;
+						noth=false;
 					}
 				} else {
 					if (MainClient.planning.get(i).getDay() == Integer.parseInt(sf[2])) {
