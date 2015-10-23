@@ -73,6 +73,7 @@ public class Bouton_PlanningAddRemove extends JButton implements MouseListener{
 			Fenetre.cp_c_c_c_right.updateUI();
 		}
 		if (i==2){
+			/*
 			Fenetre.cp_c_c_c_right.removeAll();
 			try {
 				Thread.sleep(10);
@@ -82,6 +83,7 @@ public class Bouton_PlanningAddRemove extends JButton implements MouseListener{
 			}
 			Fenetre.EDIT_PLAN(1,0);
 			Fenetre.cp_c_c_c_right.updateUI();
+			*/
 		}
 	}
 	@Override

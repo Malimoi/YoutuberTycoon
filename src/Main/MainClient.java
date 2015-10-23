@@ -50,9 +50,10 @@ public class MainClient {
 	/*
 	 * Client propieties
 	 */
+	public static Boolean first_conn = true;
 	public static String first_choice = "";
-	public static Player player = /* Ceci est UNIQUEMENT des valeurs de test. Toutes les valeurs seront envoyés par le serveur. */ 
-			new PlayerC(null,16146,53120,21244,1,2335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);
+	public static Player player; /* Ceci est UNIQUEMENT des valeurs de test. Toutes les valeurs seront envoyés par le serveur.
+			new PlayerC("Malimoi",null,16146,53120,21244,72.8,1,2335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0);*/
 	
 	public static Long MAX_UUID_PLANNING;
 	/*
@@ -90,8 +91,8 @@ public class MainClient {
 	public static List<String> datapl = new ArrayList<String>();
 	public static List<String> dataev = new ArrayList<String>();
 	
-	public static String[] categ_list = {"HUMOUR","DIVERTISSEMENT","GAMING","ANIMAUX","MONTAGE","DEVELOPPEMENT","MUSIQUE",
-		"SCIENCES","EDUCATION","MAKEUP/MODE","CUISINE"};
+	public static String[] categ_list = {"HUMOUR","DIVERTISSEMENT","GAMING","MONTAGE","DEVELOPPEMENT","MUSIQUE",
+		"SCIENCES","EDUCATION","MAKEUP/MODE","CUISINE","ECRITURE","POST-PRODUCTION"};
 	
 	public static ChatAccess access;
 	
@@ -120,6 +121,19 @@ public class MainClient {
             frame.setLocationRelativeTo(null);
             frame.setResizable(false);
             frame.setVisible(true);
+            
+            /*
+        	 * Accessoires
+        	 */
+        	cameras.add(new Camera("Caméscope", 163, new CameraPerformance(15,5), "image/ACC/CAMESCOPE.png", 1, false));
+        	cameras.add(new Camera("Yaton 600T", 429, new CameraPerformance(35,20), "image/ACC/YATON-600T.png", 2, false));
+        	cameras.add(new Camera("Yaton 60T", 839, new CameraPerformance(55,35), "image/ACC/YATON-60T.png", 3, false));
+        	cameras.add(new Camera("Yaton 6T", 1775, new CameraPerformance(75,40), "image/ACC/YATON-6T.png", 4, false));
+        	ordis.add(new Ordinateur("MASIS X050 - Black version", 219, new OrdiPerformance(15, 15, 15), "image/ACC/MASIS-X050-BLACK.png", 1, true));
+        	ordis.add(new Ordinateur("MASIS X200 - White version", 439, new OrdiPerformance(30, 25, 20), "image/ACC/MASIS-X200-WHITE.png", 2, false));
+        	ordis.add(new Ordinateur("ALIAN-WHERE Z150 - Black version", 659, new OrdiPerformance(65, 50, 0), "image/ACC/ALIAN-WHERE-Z150-BLACK.png", 3, false));
+        	micros.add(new Micro("Micro-Casque M2-A", 109, new MicroPerformance(35), "image/ACC/MIRCO-CASQUE-Z2-A.png", 1, false));
+        	micros.add(new Micro("Red Yuti - Black version", 142, new MicroPerformance(65), "image/ACC/RED-YUTI-BLACK.png", 2, false));
     	}else{
     		setJFrames();
     	}
@@ -129,34 +143,15 @@ public class MainClient {
           * Ceci sont des valeurs fictives. Il faudra seulement get toutes les horraires sur le server.
  		 */
     	
-    	/*
-    	 * Accessoires
-    	 */
-    	cameras.add(new Camera("Caméscope", 149, new CameraPerformance(15,5), "image/ACC/CAMESCOPE.png", 1, false));
-    	cameras.add(new Camera("Yaton 600T", 390, new CameraPerformance(35,20), "image/ACC/YATON-600T.png", 2, false));
-    	cameras.add(new Camera("Yaton 60T", 763, new CameraPerformance(55,35), "image/ACC/YATON-60T.png", 3, false));
-    	cameras.add(new Camera("Yaton 6T", 1614, new CameraPerformance(75,40), "image/ACC/YATON-6T.png", 4, false));
-    	ordis.add(new Ordinateur("MASIS X050 - Black version", 199, new OrdiPerformance(15, 15, 15), "image/ACC/MASIS-X050-BLACK.png", 1, true));
-    	ordis.add(new Ordinateur("MASIS X200 - White version", 399, new OrdiPerformance(30, 25, 20), "image/ACC/MASIS-X200-WHITE.png", 2, false));
-    	ordis.add(new Ordinateur("ALIAN-WHERE Z150 - Black version", 599, new OrdiPerformance(65, 50, 0), "image/ACC/ALIAN-WHERE-Z150-BLACK.png", 3, false));
-    	micros.add(new Micro("Micro-Casque M2-A", 99, new MicroPerformance(35), "image/ACC/MIRCO-CASQUE-Z2-A.png", 1, false));
-    	micros.add(new Micro("Red Yuti - Black version", 129, new MicroPerformance(65), "image/ACC/RED-YUTI-BLACK.png", 2, false));
+    	
  		/*
  		 * On récupère les vidéos
  		 * format : new Videos(name[0],day[1],month[2],year[3],views[4],likes[5],dislikes[6],share[7],...)
  		 */
- 		videos.add(new Video("JE MANGE DES CHIPS !", 28, 07, 15, 651L, 122L, 6L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1L));
- 		videos.add(new Video("JE M'APPELLE BYSLIDE", 27, 07, 15, 1254L, 215L, 3L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2L));
- 		videos.add(new Video("LE BYSLIDE CONTRE ATTAQUE", 29, 07, 15, 15254L, 2155L, 28L, 3L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3L));
- 		videos.add(new Video("5 CHOSES EXTRAORDINAIRES", 30, 07, 15, 2782L, 568L, 8L, 3L, "SCIENCES", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4L));
- 		videos.add(new Video("VLOG #1 : LA MONTAGNE", 1, 8, 15, 0L, 0L, 0L, 0L, "VLOG", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5L));
- 		videos.add(new Video("LE RETOUR DU BYSLIDE", 3, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6L));
- 		videos.add(new Video("EPICARRÉ : PVP SWAG", 5, 8, 15, 0L, 0L, 0L, 0L, "GAMING", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7L));
- 		videos.add(new Video("MON SETUP DE FOU 123", 8, 8, 15, 651L, 122L, 6L, 0L, "DIVERTISSEMENT", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8L));
- 		videos.add(new Video("J'AIME LES ASTICOTS", 25, 8, 15, 0L, 0L, 0L, 0L, "HUMOUR", 2, getCamera(1), null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9L));
- 		Collections.sort(videos, new VideosComparator());
-         Collections.reverse(videos);
-         videos.add(new Video(null, -1, -1, -1, 0L, 0L, 0L, 0L, null, 0, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0L));
+
+ 		//Collections.sort(videos, new VideosComparator());
+         //Collections.reverse(videos);
+         videos.add(new Video(null, null, -1, -1, -1,"", 0L, 0L, 0L, null,false, 0, null, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0L, 0L));
          
  		/*
  		 * Evenements
@@ -169,8 +164,8 @@ public class MainClient {
  		/*
  		 * Planning
  		 */
-         planning.add(new Planning(18, 19, 23, 8, 15, 3, 9L, 1L));
-         planning.add(new Planning(16, 17, 24, 8, 15, 4, 9L, 2L));
+         //planning.add(new Planning(18, 19, 23, 8, 15, 3, 9L, 1L));
+         //planning.add(new Planning(16, 17, 24, 8, 15, 4, 9L, 2L));
          MAX_UUID_PLANNING=(long) planning.size()+1;
          int d = 1;
          
@@ -221,10 +216,13 @@ public class MainClient {
      	} catch (Exception e) {
      		e.printStackTrace();
      	} 
-         /*
-          * If first_time
-          */
-         new ThemeSelector();
+         
+         if (first_conn){
+        	 new ThemeSelector();
+         }
+         else {
+        	 new Fenetre();
+         }
          
          /*
          JFrame frame = new JFrame();
@@ -263,9 +261,10 @@ public class MainClient {
                         	if ((line = in.readLine()) != null){
                         		System.out.println("WHILE : "+line);
                         		if (line.contains("startthegame")) {
+                        			if (!player.getTheme().equals("not")){
+                        				first_conn=false;
+                        			}
                                 	setJFrames();                               
-                                }else if (line.contains("yourpseudo")) {
-                                	player.setPseudo(line.split(" ")[1]);                           
                                 }else if (line.contains("sc")) {
                                 	if (line.split(" ")[1].contains("time")){
                                 		Sc_Time=Integer.valueOf(line.split(" ")[2]);
@@ -303,6 +302,62 @@ public class MainClient {
                                     	Fenetre.tot_clicks_subs.setText(tot+"");
                                 	}                        	
                                 		                       	
+                                }else if (line.contains("infop")){
+                                	String[] infos = line.split(" ");
+                                	player = new PlayerC(infos[1], infos[2], Long.valueOf(infos[3]), Long.valueOf(infos[4]), Long.valueOf(infos[5]),
+                                			Double.valueOf(infos[6]), Integer.valueOf(infos[7]), Integer.valueOf(infos[8]), Integer.valueOf(infos[9]),
+                                			Integer.valueOf(infos[10]), Integer.valueOf(infos[11]), Integer.valueOf(infos[12]), Integer.valueOf(infos[13]),
+                                			Integer.valueOf(infos[14]), Integer.valueOf(infos[15]), Integer.valueOf(infos[16]), Integer.valueOf(infos[17]),
+                                			Integer.valueOf(infos[18]), Integer.valueOf(infos[19]), Integer.valueOf(infos[20]), Integer.valueOf(infos[21]),
+                                			Integer.valueOf(infos[22]), Integer.valueOf(infos[23]), Integer.valueOf(infos[24]), Integer.valueOf(infos[25]),
+                                			Integer.valueOf(infos[26]), Integer.valueOf(infos[27]), Integer.valueOf(infos[28]), Integer.valueOf(infos[29]),
+                                			Integer.valueOf(infos[30]), Integer.valueOf(infos[31]), Integer.valueOf(infos[32]));
+                                }else if (line.contains("infov")){
+                                	String[] infos = line.split("`");
+                                	Camera cam = null;
+                                	if (!infos[13].equals("null")){
+                                		cam = getCamera(Integer.valueOf(infos[13]));
+                                	}
+                                	Micro mic = null;
+                                	if (!infos[14].equals("null")){
+                                		mic = getMicro(Integer.valueOf(infos[14]));
+                                	}
+                                	Ordinateur ord_g = null;
+                                	if (!infos[15].equals("null")){
+                                		ord_g = getOrdi(Integer.valueOf(infos[15]));
+                                	}
+                                	Ordinateur ord_m = null;
+                                	if (!infos[16].equals("null")){
+                                		ord_m = getOrdi(Integer.valueOf(infos[16]));
+                                	}
+                                	videos.add(new Video(infos[1], infos[2], Integer.valueOf(infos[3]), Integer.valueOf(infos[4]), Integer.valueOf(infos[5]),
+                                			infos[6], Long.valueOf(infos[7]), Long.valueOf(infos[8]), Long.valueOf(infos[9]), infos[10], Boolean.valueOf(infos[11]),
+                                			Integer.valueOf(infos[12]), cam, mic, ord_g, ord_m, Integer.valueOf(infos[17]), Integer.valueOf(infos[18]),
+                                			Integer.valueOf(infos[19]), Integer.valueOf(infos[20]), Integer.valueOf(infos[21]), Integer.valueOf(infos[22]),
+                                			Integer.valueOf(infos[23]), Integer.valueOf(infos[24]), Integer.valueOf(infos[25]), Integer.valueOf(infos[26]),
+                                			Integer.valueOf(infos[27]), Integer.valueOf(infos[28]), Long.valueOf(infos[29]), Long.valueOf(infos[30])));
+                                	
+                                	MainClient.TriVideos();
+                                }else if (line.contains("infoa")){
+                                	String[] infos = line.split(" ");
+                                	planning.add(new Planning(Integer.valueOf(infos[1]), Integer.valueOf(infos[2]), Integer.valueOf(infos[3]),
+                                			Integer.valueOf(infos[4]), Integer.valueOf(infos[5]), Integer.valueOf(infos[6]), Long.valueOf(infos[7]),
+                                			Long.valueOf(infos[8])));
+                                	TriPlanning();
+                                }else if (line.contains("infoe")){
+                                	String[] infos = line.split(" ");
+                                	evenements.add(new Evenement(Integer.valueOf(infos[1]), Integer.valueOf(infos[2]), Integer.valueOf(infos[3]),
+                                			Integer.valueOf(infos[4]), Long.valueOf(infos[5])));
+                                	TriEvents();
+                                }else if (line.contains("infob")){
+                                	String[] infos = line.split(" ");
+                                	if (infos[1].equals("camera")){
+                                		getCamera(Integer.valueOf(infos[2])).setBuy(true);
+                                	}else if (infos[1].equals("micro")){
+                                		getMicro(Integer.valueOf(infos[2])).setBuy(true);
+                                	}else if (infos[1].equals("ordinateur")){
+                                		getOrdi(Integer.valueOf(infos[2])).setBuy(true);
+                                	}
                                 }
                         		else{
                                 	notifyObservers(line);
@@ -435,16 +490,18 @@ public class MainClient {
     		i = player.getLvl_humour();
     	}if (categ.contains("ANIMATIONS/FILMS")){
     		i = player.getLvl_animations_films();
+    	}if (categ.contains("ANIMATIONS_FILMS")){
+    		i = player.getLvl_animations_films();
     	}if (categ.contains("DIVERTISSEMENT")){
     		i = player.getLvl_divertissement();
     	}if (categ.contains("MAKEUP/MODE")){
+    		i = player.getLvl_makeup_mode();
+    	}if (categ.contains("MAKEUP_MODE")){
     		i = player.getLvl_makeup_mode();
     	}if (categ.contains("CUISINE")){
     		i = player.getLvl_cuisine();
     	}if (categ.contains("GAMING")){
     		i = player.getLvl_gaming();
-    	}if (categ.contains("ANIMAUX")){
-    		i = player.getLvl_animaux();
     	}if (categ.contains("MUSIQUE")){
     		i = player.getLvl_musique();
     	}if (categ.contains("SCIENCES")){
@@ -474,8 +531,6 @@ public class MainClient {
     		i = player.getExp_cuisine();
     	}if (categ.contains("GAMING")){
     		i = player.getExp_gaming();
-    	}if (categ.contains("ANIMAUX")){
-    		i = player.getExp_animaux();
     	}if (categ.contains("MUSIQUE")){
     		i = player.getExp_musique();
     	}if (categ.contains("SCIENCES")){
@@ -486,12 +541,14 @@ public class MainClient {
     		i = player.getExp_montage();
     	}if (categ.contains("ECRITURE")){
     		i = player.getExp_ecriture();
+    	}if (categ.contains("POST-PRODUCTION")){
+    		i = player.getExp_ecriture();
     	}
     	
 		return i;
     }
     
-    public static Camera getCamera(long ID){
+    public static Camera getCamera(Integer ID){
     	Camera cam = null;
     	for (int i = 0;i<cameras.size();i++){
     		if (ID==cameras.get(i).getID()){
@@ -501,32 +558,24 @@ public class MainClient {
 		return cam;
     }
     
-    public static void FirstStart(){
-    	if (first_choice=="HUMOUR"){
-    		player.setLvl_humour(1);
-    	}if (first_choice=="ANIMATIONS/FILMS"){
-    		player.setLvl_animations_films(1);
-    	}if (first_choice=="DIVERTISSEMENT"){
-    		player.setLvl_divertissement(1);
-    	}if (first_choice=="MAKEUP/MODE"){
-    		player.setLvl_makeup_mode(1);
-    	}if (first_choice=="CUISINE"){
-    		player.setLvl_cuisine(1);
-    	}if (first_choice=="GAMING"){
-    		player.setLvl_gaming(1);
-    	}if (first_choice=="ANIMAUX"){
-    		player.setLvl_animaux(1);
-    	}if (first_choice=="MUSIQUE"){
-    		player.setLvl_musique(1);
-    	}if (first_choice=="SCIENCES"){
-    		player.setLvl_sciences(1);
-    	}if (first_choice=="SPORT"){
-    		player.setLvl_sport(1);
-    	}if (first_choice=="MONTAGE"){
-    		player.setLvl_montage(2);
-    	}if (first_choice=="ECRITURE"){
-    		player.setLvl_ecriture(1);
+    public static Ordinateur getOrdi(Integer ID){
+    	Ordinateur cam = null;
+    	for (int i = 0;i<ordis.size();i++){
+    		if (ID==ordis.get(i).getID()){
+    			cam=(Ordinateur) ordis.get(i);
+    		}
     	}
+		return cam;
+    }
+    
+    public static Micro getMicro(Integer ID){
+    	Micro cam = null;
+    	for (int i = 0;i<micros.size();i++){
+    		if (ID==micros.get(i).getID()){
+    			cam=(Micro) micros.get(i);
+    		}
+    	}
+		return cam;
     }
     
     public static Integer getExpTotalCat(Integer lvl){
@@ -548,8 +597,40 @@ public class MainClient {
 		s=i>=10?i+"":"0"+i;
 		return s;
 	}
+	
+	public static Video getVideoWithID(Long long1){
+		Video v = null;
+		for (int i = 0;i<videos.size();i++){
+			if (videos.get(i).getID().equals(long1)){
+				v=videos.get(i);
+				break;
+			}			
+		}
+		
+		return v;	
+	}
 
-    
+    public static String getLongueur(Integer i){
+    	String s = "";
+    	if (i==1){
+    		s="<b>Mini</b>";
+    	}else if (i==2){
+    		s="<b>Très courte</b>";
+    	}else if (i==3){
+    		s="<b>Courte</b>";
+    	}else if (i==4){
+    		s="<b>Moyenne</b>";
+    	}else if (i==5){
+    		s="<b>Longue</b>";
+    	}else if (i==6){
+    		s="<b>Très longue</b>";
+    	}else if (i==7){
+    		s="<b>Énorme</b>";
+    	}
+    	
+    	return s;
+    }
+	
     public void resetSubsClicks(){
     	
     }

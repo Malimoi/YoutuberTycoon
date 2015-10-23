@@ -37,7 +37,7 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	public AudioClip clip = null;
 	
 	public static int nb_theme = 1;
-	public static JPanel panel_img = new IMAGE_("ANIMAUX_THEMEbig",300,300);
+	public static JPanel panel_img = new IMAGE_("CUISINE_THEMEbig",300,300);
 	public static JPanel pan = new PaneauImg();
 	public static JLabel theme = new JLabel();
 	public JLabel lab2 = new JLabel();
@@ -64,7 +64,7 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 		lab.setBounds(0, 45, largeur, 150);
 		theme = new JLabel();
 		theme.setFont(new Font("Tahoma", Font.PLAIN, 60));
-		theme.setText("ANIMAUX");
+		theme.setText("CUISINE");
 		theme.setForeground(new Color(254,254,254,255));
 		theme.setHorizontalAlignment(JLabel.CENTER);
 		theme.setBounds(largeur/2-300, 213, 600, 150);
@@ -104,7 +104,7 @@ public static GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLoc
 	}
 	public void Close(){
 		MainClient.first_choice=theme.getText();
-		MainClient.FirstStart();
+		MainClient.access.send("theme "+theme.getText());
 		this.setVisible(false);
 		this.dispose();
 	}

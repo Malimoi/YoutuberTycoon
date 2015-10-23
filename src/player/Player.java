@@ -3,6 +3,8 @@ package player;
 public interface Player {
 	
 	public void setPseudo(String pseudo);
+	
+	public void setTheme(String theme);
 
 	public void setViews(long views);
 
@@ -15,8 +17,6 @@ public interface Player {
 	public void setSalaire(Integer salaire);
 
 	public void setLvl_animations_films(Integer lvl_animations_films);
-
-	public void setLvl_animaux(Integer lvl_animaux);
 
 	public void setLvl_divertissement(Integer lvl_divertissement);
 
@@ -42,8 +42,6 @@ public interface Player {
 
 	public void setExp_animations_films(long exp_animations_films);
 
-	public void setExp_animaux(long exp_animaux);
-
 	public void setExp_divertissement(long exp_divertissement);
 
 	public void setExp_gaming(long exp_gaming);
@@ -67,6 +65,8 @@ public interface Player {
 	public void setExp_post_prod(long exp_post_prod);
 	
 	public String getPseudo();
+	
+	public String getTheme();
 
 	public long getViews();
 
@@ -79,8 +79,6 @@ public interface Player {
 	public Integer getSalaire();
 
 	public Integer getLvl_animations_films();
-
-	public Integer getLvl_animaux();
 
 	public Integer getLvl_divertissement();
 
@@ -105,8 +103,6 @@ public interface Player {
 	public Integer getLvl_post_prod();
 
 	public long getExp_animations_films();
-
-	public long getExp_animaux();
 
 	public long getExp_divertissement();
 

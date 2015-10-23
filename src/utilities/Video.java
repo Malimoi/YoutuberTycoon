@@ -5,17 +5,21 @@ import accessoires.Accessoire;
 public class Video {
 	
 	private String name;
+	private String author;
 	private Integer day;
 	private Integer month;
 	private Integer year;
+	private String last_change;
 	private Long views;
 	private Long likes;
 	private Long dislikes;
 	private String videogenre;
+	private Boolean buzzpoint;
 	private Integer longueur; /* 1->mini : 2->très-courte : 3->courte : 4->moyenne : 5->longue : 6->très-longue : 7->Enorme */
 	private Accessoire camera;
 	private Accessoire micro;
-	private Accessoire ordinateur;
+	private Accessoire ordinateur_gaming;
+	private Accessoire ordinateur_montage;
 	private Integer EcritureTime;
 	private Integer TournageTime;
 	private Integer MontageTime;
@@ -31,25 +35,29 @@ public class Video {
 	private Long share;
 	private Long ID;
 	
-	public Video (String name, Integer day, Integer month, Integer year, Long views, Long likes, Long dislikes, Long share,
-			String videogenre, Integer longueur, Accessoire camera, Accessoire micro, Accessoire ordi, Integer EcritureTime,
+	public Video (String name, String author, Integer day, Integer month, Integer year, String last_change, Long views, Long likes, Long dislikes, 
+			String videogenre, Boolean buzzpoint, Integer longueur, Accessoire camera, Accessoire micro, Accessoire ordi, Accessoire ordi_mon, Integer EcritureTime,
 			Integer TournageTime, Integer MontageTime, Integer PostprodTime, Integer EcritureRemain, Integer TournageRemain,
 			Integer MontageRemain, Integer PostprodRemain, Integer MontageQualite, Integer ImageQualite, 
-			Integer EcritureQualite, Integer JeuQualite, Long ID){
+			Integer EcritureQualite, Integer JeuQualite, Long share, Long ID){
 		
 		this.day=day;
 		this.month=month;
 		this.year=year;
 		this.name=name;
+		this.author=author;
+		this.last_change=last_change;
 		this.views=views;
 		this.likes=likes;
 		this.dislikes=dislikes;
 		this.share=share;
 		this.videogenre=videogenre;
+		this.buzzpoint=buzzpoint;
 		this.longueur=longueur;
 		this.camera=camera;
 		this.micro=micro;
-		this.ordinateur=ordi;
+		this.ordinateur_gaming=ordi;
+		this.ordinateur_montage=ordi_mon;
 		this.EcritureTime=EcritureTime;
 		this.TournageTime=TournageTime;
 		this.MontageTime=MontageTime;
@@ -64,6 +72,22 @@ public class Video {
 		this.JeuQualite=JeuQualite;
 		this.ID=ID;
 		
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getLast_change() {
+		return last_change;
+	}
+
+	public void setLast_change(String last_change) {
+		this.last_change = last_change;
 	}
 
 	public Integer getEcritureRemain() {
@@ -114,12 +138,20 @@ public class Video {
 		this.micro = micro;
 	}
 
-	public Accessoire getOrdinateur() {
-		return ordinateur;
+	public Accessoire getOrdinateurGaming() {
+		return ordinateur_gaming;
 	}
 
-	public void setOrdinateur(Accessoire ordinateur) {
-		this.ordinateur = ordinateur;
+	public void setOrdinateurGaming(Accessoire ordinateur_gaming) {
+		this.ordinateur_gaming = ordinateur_gaming;
+	}
+
+	public Accessoire getOrdinateurMontage() {
+		return ordinateur_montage;
+	}
+
+	public void setOrdinateurMontage(Accessoire ordinateur_montage) {
+		this.ordinateur_montage = ordinateur_montage;
 	}
 
 	public Integer getLongueur() {
@@ -272,6 +304,14 @@ public class Video {
 
 	public void setID(Long iD) {
 		ID = iD;
+	}
+
+	public Boolean getBuzzpoint() {
+		return buzzpoint;
+	}
+
+	public void setBuzzpoint(Boolean buzzpoint) {
+		this.buzzpoint = buzzpoint;
 	}
 
 }
