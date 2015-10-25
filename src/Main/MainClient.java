@@ -46,7 +46,7 @@ import java.util.*;
 import java.util.List;
 
 public class MainClient {
-
+	public static String version = "Alpha 0.1.1";
 	/*
 	 * Client propieties
 	 */
@@ -101,6 +101,12 @@ public class MainClient {
     public static void main(String[] args) {
     	sc_scoreboard_pl.add("AUCUN JOUEUR");
     	sc_scoreboard_pl.add("AUCUN JOUEUR");
+    	sc_scoreboard_pl.add("AUCUN JOUEUR");
+    	sc_scoreboard_pl.add("AUCUN JOUEUR");
+    	sc_scoreboard_pl.add("AUCUN JOUEUR");
+    	sc_scoreboard_subs.add(0);
+    	sc_scoreboard_subs.add(0);
+    	sc_scoreboard_subs.add(0);
     	sc_scoreboard_subs.add(0);
     	sc_scoreboard_subs.add(0);
     	if (!IsTest){
@@ -115,12 +121,13 @@ public class MainClient {
                 System.exit(0);
             }
             frame = new ChatFrame(access);
-            frame.setTitle("Launcher YT");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setResizable(false);
-            frame.setVisible(true);
+            frame.setVisible(false);
+            
+            new Launcher();
             
             /*
         	 * Accessoires
@@ -260,12 +267,17 @@ public class MainClient {
                         while (true)
                         	if ((line = in.readLine()) != null){
                         		System.out.println("WHILE : "+line);
-                        		if (line.contains("startthegame")) {
-                        			if (!player.getTheme().equals("not")){
-                        				first_conn=false;
+                        		if (line.startsWith("startthegame")) {
+                        			if (line.split(":")[1].equals(version)){
+                        				if (!player.getTheme().equals("not")){
+                            				first_conn=false;
+                            			}
+                                    	setJFrames(); 
+                        			}else{
+                        				Launcher.lab2.setText("MERCI DE TELECHARGER LA DERNIERE VERSION !");
                         			}
-                                	setJFrames();                               
-                                }else if (line.contains("sc")) {
+                        			                              
+                                }else if (line.startsWith("sc")) {
                                 	if (line.split(" ")[1].contains("time")){
                                 		Sc_Time=Integer.valueOf(line.split(" ")[2]);
                                 	}else if (line.split(" ")[1].contains("status")){
@@ -278,7 +290,14 @@ public class MainClient {
                                 		String name1 = line.split(" ")[2].split(":")[0];
                                 		Integer sc1 = Integer.valueOf(line.split(" ")[2].split(":")[1]);
                                 		String name2 = line.split(" ")[3].split(":")[0];
-                                		Integer sc2;
+                                		Integer sc2 = Integer.valueOf(line.split(" ")[3].split(":")[1]);
+                                		String name3 = line.split(" ")[4].split(":")[0];
+                                		Integer sc3 = Integer.valueOf(line.split(" ")[4].split(":")[1]);
+                                		String name4 = line.split(" ")[5].split(":")[0];
+                                		Integer sc4= Integer.valueOf(line.split(" ")[5].split(":")[1]);
+                                		String name5 = line.split(" ")[6].split(":")[0];
+                                		Integer sc5 = Integer.valueOf(line.split(" ")[6].split(":")[1]);
+                                		
                                 		try{
                                 			sc2 = Integer.valueOf(line.split(" ")[3].split(":")[1]);
                                 		}catch (Exception e){
@@ -288,8 +307,14 @@ public class MainClient {
                                 		sc_scoreboard_subs.clear();
                                 		sc_scoreboard_pl.add(name1);
                                 		sc_scoreboard_pl.add(name2);
+                                		sc_scoreboard_pl.add(name3);
+                                		sc_scoreboard_pl.add(name4);
+                                		sc_scoreboard_pl.add(name5);
                                 		sc_scoreboard_subs.add(sc1);
                                 		sc_scoreboard_subs.add(sc2);
+                                		sc_scoreboard_subs.add(sc3);
+                                		sc_scoreboard_subs.add(sc4);
+                                		sc_scoreboard_subs.add(sc5);
                                 		try {
 											Thread.sleep(50);
 										} catch (InterruptedException e) {
@@ -302,7 +327,7 @@ public class MainClient {
                                     	Fenetre.tot_clicks_subs.setText(tot+"");
                                 	}                        	
                                 		                       	
-                                }else if (line.contains("infop")){
+                                }else if (line.startsWith("infop")){
                                 	String[] infos = line.split(" ");
                                 	player = new PlayerC(infos[1], infos[2], Long.valueOf(infos[3]), Long.valueOf(infos[4]), Long.valueOf(infos[5]),
                                 			Double.valueOf(infos[6]), Integer.valueOf(infos[7]), Integer.valueOf(infos[8]), Integer.valueOf(infos[9]),
@@ -312,7 +337,7 @@ public class MainClient {
                                 			Integer.valueOf(infos[22]), Integer.valueOf(infos[23]), Integer.valueOf(infos[24]), Integer.valueOf(infos[25]),
                                 			Integer.valueOf(infos[26]), Integer.valueOf(infos[27]), Integer.valueOf(infos[28]), Integer.valueOf(infos[29]),
                                 			Integer.valueOf(infos[30]), Integer.valueOf(infos[31]), Integer.valueOf(infos[32]));
-                                }else if (line.contains("infov")){
+                                }else if (line.startsWith("infov")){
                                 	String[] infos = line.split("`");
                                 	Camera cam = null;
                                 	if (!infos[13].equals("null")){
@@ -338,18 +363,18 @@ public class MainClient {
                                 			Integer.valueOf(infos[27]), Integer.valueOf(infos[28]), Long.valueOf(infos[29]), Long.valueOf(infos[30])));
                                 	
                                 	MainClient.TriVideos();
-                                }else if (line.contains("infoa")){
+                                }else if (line.startsWith("infoa")){
                                 	String[] infos = line.split(" ");
                                 	planning.add(new Planning(Integer.valueOf(infos[1]), Integer.valueOf(infos[2]), Integer.valueOf(infos[3]),
                                 			Integer.valueOf(infos[4]), Integer.valueOf(infos[5]), Integer.valueOf(infos[6]), Long.valueOf(infos[7]),
                                 			Long.valueOf(infos[8])));
                                 	TriPlanning();
-                                }else if (line.contains("infoe")){
+                                }else if (line.startsWith("infoe")){
                                 	String[] infos = line.split(" ");
                                 	evenements.add(new Evenement(Integer.valueOf(infos[1]), Integer.valueOf(infos[2]), Integer.valueOf(infos[3]),
                                 			Integer.valueOf(infos[4]), Long.valueOf(infos[5])));
                                 	TriEvents();
-                                }else if (line.contains("infob")){
+                                }else if (line.startsWith("infob")){
                                 	String[] infos = line.split(" ");
                                 	if (infos[1].equals("camera")){
                                 		getCamera(Integer.valueOf(infos[2])).setBuy(true);
@@ -358,6 +383,8 @@ public class MainClient {
                                 	}else if (infos[1].equals("ordinateur")){
                                 		getOrdi(Integer.valueOf(infos[2])).setBuy(true);
                                 	}
+                                }else if (line.startsWith("connection")){
+                                	return;
                                 }
                         		else{
                                 	notifyObservers(line);
@@ -512,6 +539,8 @@ public class MainClient {
     		i = player.getLvl_montage();
     	}if (categ.contains("ECRITURE")){
     		i = player.getLvl_ecriture();
+    	}if (categ.contains("POST-PRODUCTION")){
+    		i = player.getLvl_post_prod();
     	}
     	
 		return i;
@@ -542,7 +571,7 @@ public class MainClient {
     	}if (categ.contains("ECRITURE")){
     		i = player.getExp_ecriture();
     	}if (categ.contains("POST-PRODUCTION")){
-    		i = player.getExp_ecriture();
+    		i = player.getExp_post_prod();
     	}
     	
 		return i;
@@ -634,5 +663,17 @@ public class MainClient {
     public void resetSubsClicks(){
     	
     }
-    
+    public static class Timed_Out implements Runnable{   
+    	public void run(){
+    		while(true){
+    			try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			MainClient.access.send("connection");
+    		}
+    	}
+    }
 }

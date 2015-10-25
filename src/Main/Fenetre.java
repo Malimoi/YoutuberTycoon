@@ -116,7 +116,7 @@ public class Fenetre extends JFrame {
 	public JLabel lab_c_n_gold = new JLabel();
 	public JLabel lab_c_n_nbsubs = new JLabel();
 	public JLabel lab_c_n_nbviews = new JLabel();
-	public JLabel lab_c_n_nbgold = new JLabel();
+	public static JLabel lab_c_n_nbgold = new JLabel();
 	public JPanel c_west = new JPanel();
 	public JPanel c_east = new JPanel();
 	public JPanel c_center = new JPanel();
@@ -155,6 +155,7 @@ public class Fenetre extends JFrame {
 	public JLabel lab_c_c_vp_c_name = new JLabel();
 	public JButton vid_affich = new ToutAfficher("Tout afficher", 1);
 	public JPanel center_videos = new JPanel();
+	public JLabel idee_bug = new JLabel("Idée ? Bug ? -> Go sur le forum sur le site malimoi.fr");
 	// public JScrollPane scroll = new
 	// JScrollPane(center_videos,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	public JPanel cv_east = new COLOR(Color.decode("#F3F3F3"));
@@ -237,6 +238,15 @@ public class Fenetre extends JFrame {
 	public static JLabel sc_score_2nd = new JLabel();
 	public static JLabel sc_score_2nd_name = new JLabel();
 	public static JLabel sc_score_2nd_subs = new JLabel();
+	public static JLabel sc_score_3rd = new JLabel();
+	public static JLabel sc_score_3rd_name = new JLabel();
+	public static JLabel sc_score_3rd_subs = new JLabel();
+	public static JLabel sc_score_4th = new JLabel();
+	public static JLabel sc_score_4th_name = new JLabel();
+	public static JLabel sc_score_4th_subs = new JLabel();
+	public static JLabel sc_score_5th = new JLabel();
+	public static JLabel sc_score_5th_name = new JLabel();
+	public static JLabel sc_score_5th_subs = new JLabel();
 	public JPanel csc_c_c_center = new COLOR(Color.decode("#F3F3F3"));
 	public static JLabel sc_lab_status = new JLabel();
 	public static JLabel sc_lab_time = new JLabel();
@@ -349,9 +359,9 @@ public class Fenetre extends JFrame {
 		lab_c_n_nbviews.setForeground(Color.decode("#424242"));
 		lab_c_n_nbviews.setHorizontalAlignment(JLabel.CENTER);
 		lab_c_n_nbviews.setPreferredSize(new Dimension(225, 30));
-		// Euros
+		// $$$$
 		lab_c_n_gold.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lab_c_n_gold.setText("Euros");
+		lab_c_n_gold.setText("Dollars");
 		lab_c_n_gold.setForeground(Color.GRAY);
 		lab_c_n_gold.setHorizontalAlignment(JLabel.CENTER);
 		lab_c_n_gold.setPreferredSize(new Dimension(225, 30));
@@ -441,7 +451,7 @@ public class Fenetre extends JFrame {
 		west.add(w_center, BorderLayout.CENTER);
 
 		// -- BUREAU
-		JPanel bureau = new AllImages("image/TABLE.png", largeur, (largeur * 9) / 16);
+		JPanel bureau = new AllImages("image/TABLE.png", (largeur-255), ((largeur-255) * 9) / 16);
 
 		// -- CENTER (Acc)
 		center.setBackground(Color.decode("#F3F3F3"));
@@ -817,6 +827,60 @@ public class Fenetre extends JFrame {
 		sc_score_2nd_subs.setForeground(Color.gray);
 		sc_score_2nd_subs.setHorizontalAlignment(JLabel.LEFT);
 		sc_score_2nd_subs.setBounds(60, 170 + 50 + 20, 550, 25);
+		
+		int inAd = 45;
+		
+		sc_score_3rd.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		sc_score_3rd.setText("3.");
+		sc_score_3rd.setForeground(Color.darkGray);
+		sc_score_3rd.setHorizontalAlignment(JLabel.CENTER);
+		sc_score_3rd.setBounds(0, 170 + 25 + 20 + inAd, 50, 50);
+		sc_score_3rd_name.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		sc_score_3rd_name.setText(MainClient.sc_scoreboard_pl.get(2));
+		sc_score_3rd_name.setForeground(Color.darkGray);
+		sc_score_3rd_name.setHorizontalAlignment(JLabel.LEFT);
+		sc_score_3rd_name.setBounds(60, 174 + 25 + 20 + inAd, 550, 25);
+		sc_score_3rd_subs.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		sc_score_3rd_subs.setText((int) (MainClient.sc_scoreboard_subs.get(2)) + " subs");
+		sc_score_3rd_subs.setForeground(Color.gray);
+		sc_score_3rd_subs.setHorizontalAlignment(JLabel.LEFT);
+		sc_score_3rd_subs.setBounds(60, 170 + 50 + 20 + inAd, 550, 25);
+		
+		inAd+=45;
+		
+		sc_score_4th.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		sc_score_4th.setText("4.");
+		sc_score_4th.setForeground(Color.darkGray);
+		sc_score_4th.setHorizontalAlignment(JLabel.CENTER);
+		sc_score_4th.setBounds(0, 170 + 25 + 20 + inAd, 50, 50);
+		sc_score_4th_name.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		sc_score_4th_name.setText(MainClient.sc_scoreboard_pl.get(3));
+		sc_score_4th_name.setForeground(Color.darkGray);
+		sc_score_4th_name.setHorizontalAlignment(JLabel.LEFT);
+		sc_score_4th_name.setBounds(60, 174 + 25 + 20 + inAd, 550, 25);
+		sc_score_4th_subs.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		sc_score_4th_subs.setText((int) (MainClient.sc_scoreboard_subs.get(3)) + " subs");
+		sc_score_4th_subs.setForeground(Color.gray);
+		sc_score_4th_subs.setHorizontalAlignment(JLabel.LEFT);
+		sc_score_4th_subs.setBounds(60, 170 + 50 + 20 + inAd, 550, 25);
+		
+		inAd+=45;
+		
+		sc_score_5th.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		sc_score_5th.setText("5.");
+		sc_score_5th.setForeground(Color.darkGray);
+		sc_score_5th.setHorizontalAlignment(JLabel.CENTER);
+		sc_score_5th.setBounds(0, 170 + 25 + 20 + inAd, 50, 50);
+		sc_score_5th_name.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		sc_score_5th_name.setText(MainClient.sc_scoreboard_pl.get(4));
+		sc_score_5th_name.setForeground(Color.darkGray);
+		sc_score_5th_name.setHorizontalAlignment(JLabel.LEFT);
+		sc_score_5th_name.setBounds(60, 174 + 25 + 20 + inAd, 550, 25);
+		sc_score_5th_subs.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		sc_score_5th_subs.setText((int) (MainClient.sc_scoreboard_subs.get(4)) + " subs");
+		sc_score_5th_subs.setForeground(Color.gray);
+		sc_score_5th_subs.setHorizontalAlignment(JLabel.LEFT);
+		sc_score_5th_subs.setBounds(60, 170 + 50 + 20 + inAd, 550, 25);
 
 		csc_c_c_center.add(sc_lab_status);
 		csc_c_c_center.add(sc_lab_time);
@@ -826,6 +890,15 @@ public class Fenetre extends JFrame {
 		csc_c_c_center.add(sc_score_2nd);
 		csc_c_c_center.add(sc_score_2nd_name);
 		csc_c_c_center.add(sc_score_2nd_subs);
+		csc_c_c_center.add(sc_score_3rd);
+		csc_c_c_center.add(sc_score_3rd_name);
+		csc_c_c_center.add(sc_score_3rd_subs);
+		csc_c_c_center.add(sc_score_4th);
+		csc_c_c_center.add(sc_score_4th_name);
+		csc_c_c_center.add(sc_score_4th_subs);
+		csc_c_c_center.add(sc_score_5th);
+		csc_c_c_center.add(sc_score_5th_name);
+		csc_c_c_center.add(sc_score_5th_subs);
 		csc_c_c_right.setPreferredSize(new Dimension((largeur - 300) / 3, hauteur));
 		csc_c_c_right.setLayout(null);
 		for (int nb = 0; nb < 4; nb++) {
@@ -1252,6 +1325,7 @@ public class Fenetre extends JFrame {
 						MainClient.access.send("buy micro "+MainClient.micros.get(place_shop - 1).getID());
 					}	
 				}
+				lab_c_n_nbgold.setText(MainClient.player.getDollars()-MainClient.cameras.get(place_shop - 1).getPrice()+"");
 				cs_center.removeAll();
 				setShopPage(place_shop, stage_shop);
 				try {
@@ -1957,9 +2031,6 @@ public class Fenetre extends JFrame {
 				 * cas d'erreur, le joueur sera banni 1 an du mode online
 				 * automatiquement.
 				 */
-				// if
-				// (create_hour_end.getBackground().equals(Color.decode("#C4FECA"))&&
-				// create_hour_start.getBackground().equals(Color.decode("#C4FECA"))){
 				if (type.equals(1)) {
 
 					MainClient.planning.add(new Planning(h1, h2, day, month, year, status + 3, vi.getID(),
@@ -3831,7 +3902,7 @@ public class Fenetre extends JFrame {
 		}
 		if (i == 2) {
 
-			String[] choicesApprenti = { "<html><font color=gray>Choix</font></html>", "Tout seul", "Avec cours" };
+			String[] choicesApprenti = { "<html><font color=gray>Choix</font></html>", "Tout seul", "Avec cours (50$ par heure)" };
 
 			create_2nd_choice = new JComboBox(choicesApprenti);
 			create_2nd_choice.setSelectedIndex(0);
@@ -4039,12 +4110,16 @@ public class Fenetre extends JFrame {
 				sc_lab_status.setText(MainClient.Sc_Status);
 				sc_lab_time.setText(MainClient.getStringTime(MainClient.Sc_Time));
 				try {
-					sc_score_2nd_name.setText(MainClient.sc_scoreboard_pl.get(0));
-					sc_score_2nd_subs.setText(MainClient.sc_scoreboard_subs.get(0) + " subs.");
-					sc_score_first_name
-							.setText(/* MainClient.sc_scoreboard_pl.get(1) */"Arganthros");
-					sc_score_first_subs
-							.setText(/* MainClient.sc_scoreboard_subs.get(1)+ */"863 subs.");
+					sc_score_5th_name.setText(MainClient.sc_scoreboard_pl.get(4));
+					sc_score_5th_subs.setText(MainClient.sc_scoreboard_subs.get(4) + " subs.");
+					sc_score_4th_name.setText(MainClient.sc_scoreboard_pl.get(3));
+					sc_score_4th_subs.setText(MainClient.sc_scoreboard_subs.get(3) + " subs.");
+					sc_score_3rd_name.setText(MainClient.sc_scoreboard_pl.get(2));
+					sc_score_3rd_subs.setText(MainClient.sc_scoreboard_subs.get(2) + " subs.");
+					sc_score_2nd_name.setText(MainClient.sc_scoreboard_pl.get(1));
+					sc_score_2nd_subs.setText(MainClient.sc_scoreboard_subs.get(1) + " subs.");
+					sc_score_first_name.setText(MainClient.sc_scoreboard_pl.get(0));
+					sc_score_first_subs.setText(MainClient.sc_scoreboard_subs.get(0)+" subs.");
 				} catch (Exception e) {
 
 				}
